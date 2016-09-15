@@ -2,7 +2,7 @@ package spaApp.utils.repository.model;
 
 import org.springframework.data.domain.Persistable;
 
-public class DbModel implements Persistable<Long> {
+public class ModelDb implements Persistable<Long> {
 
     private Long id;
 
