@@ -1,10 +1,8 @@
-package quotes.model.Query;
+package spaApp.quotes.model.Query;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Quote {
