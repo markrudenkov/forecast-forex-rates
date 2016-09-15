@@ -1,14 +1,14 @@
-package quotes.controller;
+package spaApp.quotes.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import quotes.model.Query.QueryWrapper;
+import spaApp.quotes.model.Query.QueryWrapper;
 
 /**
- * Created by mark on 16.9.3.
+ Generator of YQL has not been created yet!!!!!!!!!
  */
 
 @RestController

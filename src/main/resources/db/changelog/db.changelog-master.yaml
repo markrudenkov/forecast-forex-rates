@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Mark
+      changes:
+        - createTable:
+            tableName: quotes
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: date
+                  type: timestamp
+              - column:
+                  name: symbol
+                  type: varchar(10)
+              - column:
+                  name: open
+                  type: float
+              - column:
+                  name: high
+                  type: float
+              - column:
+                  name: low
+                  type: float
+              - column:
+                  name: close
+                  type: float
+              - column:
+                  name: adj_close
+                  type: float

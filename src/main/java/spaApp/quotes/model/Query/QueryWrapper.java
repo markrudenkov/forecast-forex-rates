@@ -1,4 +1,4 @@
-package quotes.model.Query;
+package spaApp.quotes.model.Query;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
