@@ -3,13 +3,13 @@ package spaApp.utils.repository;
 import com.nurkiewicz.jdbcrepository.JdbcRepository;
 import com.nurkiewicz.jdbcrepository.RowUnmapper;
 import org.springframework.jdbc.core.RowMapper;
-import spaApp.utils.repository.model.DbModel;
+import spaApp.utils.repository.model.ModelDb;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BaseRepository<E extends DbModel> extends JdbcRepository<E, Long> {
+public abstract class BaseRepository<E extends ModelDb> extends JdbcRepository<E, Long> {
 
     public BaseRepository(
             RowMapper<E> rowMapper,
