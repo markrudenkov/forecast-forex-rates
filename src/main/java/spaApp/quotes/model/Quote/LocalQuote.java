@@ -4,9 +4,7 @@ import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
 
-/**
- * Created by mark on 16.9.22.
- */
+
 public class LocalQuote {
 
     private Long id;

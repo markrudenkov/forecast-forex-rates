@@ -67,6 +67,11 @@
             <artifactId>spring-data-jdbc-repository</artifactId>
             <version>${spring.data.jdbc.repository}</version>
         </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.4</version>
+        </dependency>
 
     </dependencies>
 

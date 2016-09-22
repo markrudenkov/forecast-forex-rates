@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import spaApp.quotes.repository.model.QuoteDb;
 import spaApp.utils.repository.BaseRepository;
 
+import java.sql.Timestamp;
+
 @Repository
 public class QuoteRepository extends BaseRepository<QuoteDb> {
 
@@ -26,7 +28,7 @@ public class QuoteRepository extends BaseRepository<QuoteDb> {
 
     private static final RowUnmapper<QuoteDb> ROW_UNMAPPER = quoteDb -> mapOf(
       "id",quoteDb.getId(),
-            "date", quoteDb.getDate(),
+            "date", new Timestamp(quoteDb.getDate().getMillis()),
             "symbol",quoteDb.getSymbol(),
             "open", quoteDb.getOpen(),
             "high", quoteDb.getHigh(),

@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import spaApp.quotes.model.Query.QueryWrapper;
+import spaApp.quotes.service.QuoteService;
 
-/**
+/*
  Generator of YQL has not been created yet!!!!!!!!!
  */
 
@@ -19,11 +20,15 @@ public class QuoteController {
     @Autowired
     RestTemplate restTemplate = new RestTemplate();
 
-    @RequestMapping("/greeting")
+    @Autowired
+    QuoteService quoteService = new QuoteService();
+
+    @RequestMapping("/query")
     public
     @ResponseBody
     String retrieve() {
         QueryWrapper response = restTemplate.getForObject(quote2, QueryWrapper.class);
+            quoteService.appendQuerryWrapperToDB(response);
         return response.toString();
     }
 }

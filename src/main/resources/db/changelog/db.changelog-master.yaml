@@ -16,8 +16,6 @@ databaseChangeLog:
               - column:
                   name: date
                   type: timestamp
-                  constraints:
-                    nullable: false
               - column:
                   name: symbol
                   type: varchar(10)

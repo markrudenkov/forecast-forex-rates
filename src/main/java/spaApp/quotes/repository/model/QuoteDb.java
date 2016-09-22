@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 /**
  * Created by mark on 16.9.9.
  */
+
+
 public class QuoteDb extends ModelDb {
     private Long id;
     private String symbol;
@@ -84,5 +86,17 @@ public class QuoteDb extends ModelDb {
         this.adjustedClose = adjustedClose;
     }
 
-
+    @Override
+    public String toString() {
+        return "QuoteDb{" +
+                "id=" + id +
+                ", symbol='" + symbol + '\'' +
+                ", date=" + date +
+                ", open=" + open +
+                ", high=" + high +
+                ", low=" + low +
+                ", close=" + close +
+                ", adjustedClose=" + adjustedClose +
+                '}';
+    }
 }
