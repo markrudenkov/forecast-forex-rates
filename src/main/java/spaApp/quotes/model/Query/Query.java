@@ -2,9 +2,6 @@ package spaApp.quotes.model.Query;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * Created by mark on 16.9.8.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Query {
 
