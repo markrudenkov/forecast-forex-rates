@@ -15,7 +15,7 @@ You need to install the MySQL
 
 ### Installing
 
-Clone or download the project. Make sure if are changed database user and password in ../src/main/resources/application.properties file.
+Clone or download the project. Make sure if are changed username and password of your database in ../src/main/resources/application.properties file.
 In terminal go to the folder with pom.xml file and invoke:
 
 
