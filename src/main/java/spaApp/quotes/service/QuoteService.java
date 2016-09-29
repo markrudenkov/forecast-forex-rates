@@ -26,12 +26,11 @@ public class QuoteService {
     public List<QuoteDb> appendQuerryWrapperToDB(QueryWrapper api)  {
         List<QuoteDb> quoteDbList =  quoteService.QueryWrapperMapToQuoteDbList(api);
         quoteService.createQuoteRecordInDB(quoteDbList);
-       return quoteDbList;
+       return null;
     }
 
     @Transactional
     public List<QuoteDb> createQuoteRecordInDB (List<QuoteDb> db) {
-        /*List<QuoteDb> quoteDbList = db;*/
         for(QuoteDb quoteDb : db){
             repository.create(quoteDb);
         }
