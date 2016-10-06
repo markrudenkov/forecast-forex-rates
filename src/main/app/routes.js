@@ -1,5 +1,5 @@
 var angular = require('angular');
-var module = angular.module('AngularSpringRestDemo');
+var module = angular.module('spaApp');
 console.log("mark1");
 module.config(function($stateProvider, $urlRouterProvider) {
 

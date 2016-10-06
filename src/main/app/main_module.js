@@ -13,6 +13,6 @@ require('angular-img-http-src');
 
 require("bootstrap/dist/css/bootstrap.css");
 
-var _module = angular.module('AngularSpringRestDemo', ['ui.router', 'ngMessages', 'ngCookies', 'angular-jwt','ui.bootstrap']);
+var _module = angular.module('spaApp', ['ui.router', 'ngMessages', 'ngCookies', 'angular-jwt','ui.bootstrap']);
 
 module.exports = _module;
