@@ -9,7 +9,8 @@ The application is under continuous development.
 
 ### Prerequisities
 
-You need to install the MySQL
+You need to install MySQL
+You need to install Maven
 
 
 
