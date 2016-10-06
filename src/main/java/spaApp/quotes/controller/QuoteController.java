@@ -14,8 +14,8 @@ import spaApp.quotes.service.QuoteService;
 
 @RestController
 public class QuoteController {
-
-    private static String quote2 = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"EUR=x\" and startDate= \"2016-08-01\" and endDate= \"2016-08-04\"&format=json&env=store://datatables.org/alltableswithkeys";
+    //https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.historicaldata%20where%20symbol%20%3D%20%22EUR%3DX%22%20and%20startDate%20%3D%20%222009-09-11%22%20and%20endDate%20%3D%20%222010-03-10%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
+    private static String quote2 = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"EUR=X\" and startDate= \"2016-08-01\" and endDate= \"2016-08-04\"&format=json&env=store://datatables.org/alltableswithkeys";
 
     @Autowired
     RestTemplate restTemplate = new RestTemplate();
@@ -29,6 +29,7 @@ public class QuoteController {
     String retrieve() {
         QueryWrapper response = restTemplate.getForObject(quote2, QueryWrapper.class);
             quoteService.appendQuerryWrapperToDB(response);
+
         return response.toString();
     }
 }
