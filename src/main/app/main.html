@@ -1,5 +1,21 @@
 
 <div class="container">
+
+    <nav class="navbar navbar-default navbar-fixed-top ">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a ng-show="true" class="navbar-brand" >Forex quotes</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li ui-sref="root.home"><a >Home</a></li>
+                <li ><a >About</a></li>
+                <li ><a >Contact</a></li>
+                <li ui-sref="root.quotes"><a >Get forex quotes</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
     <h3>Angular Spring spa App </h3>
     <div class="msi-content" ui-view ng-cloak></div>
 

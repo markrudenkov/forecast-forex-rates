@@ -1,7 +1,7 @@
 var angular = require('angular');
 var module = angular.module('spaApp');
 console.log("mark1");
-module.config(function($stateProvider, $urlRouterProvider) {
+module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
 
 console.log('mark1');
   // For any unmatched url, redirect to /
@@ -14,11 +14,24 @@ console.log('mark1');
     })
     .state('root.home', {
       url: '/',
-      template: "<h4>This is home</h4>",
+      template: "<home-first></home-first>",
+      data: {
+        isPublic: true
+      }
+    })
+    .state('root.quotes', {
+      url: '/',
+      template: "<quote-list></quote-list>",
       data: {
         isPublic: true
       }
     })
 
+
+
 });
+
+module.run(['$http', function($http){
+
+}]);
 

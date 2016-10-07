@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -21,7 +21,6 @@
         <spring.data.jdbc.repository>0.5.0</spring.data.jdbc.repository>
         <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
         <spring.oauth.version>2.0.10.RELEASE</spring.oauth.version>
-        <joda.time.version>2.9.4</joda.time.version>
     </properties>
 
     <build>
@@ -88,6 +87,7 @@
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -144,7 +144,7 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>${joda.time.version}</version>
+            <version>2.9.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
@@ -161,11 +161,6 @@
         </dependency>
 
     </dependencies>
-
-
-
-
-
 
 
 </project>
