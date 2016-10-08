@@ -1,3 +1,12 @@
-<div class="container">
-    <h3>Here you look through the quotes </h3>
+<div class="container spaap-quote-page">
+    <h3>Currencies </h3>
+
+    <div class="group">
+        <div class="btn-group" >
+           <!-- <button ng-repeat="currencyPair in $ctrl.currencyPairs" class="btn" type="button" ng-model="radio.model" btn-radio="{{currencyPair}}">{{currencyPair}}</button>-->
+            <label ng-repeat="currencyPair in $ctrl.currencyPairs" class="btn btn-primary" ng-model="$parent.radioModel" uib-btn-radio="'{{currencyPair}}'">{{currencyPair}}</label>
+        </div>
+    </div>
+    <pre>{{radioModel }}</pre>
+
 </div>

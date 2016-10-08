@@ -5,6 +5,7 @@ require('angular-messages');
 require('angular-cookies');
 require('angular-jwt');
 require('angular-animate');
+
 require('angular-ui-bootstrap');
 require('angular-img-http-src');
 
@@ -13,6 +14,12 @@ require('angular-img-http-src');
 
 require("bootstrap/dist/css/bootstrap.css");
 
-var _module = angular.module('spaApp', ['ui.router', 'ngMessages', 'ngCookies', 'angular-jwt','ui.bootstrap']);
+var _module = angular.module('spaApp', [
+      'ui.router',
+      'ngMessages',
+      'ngCookies',
+      'angular-jwt',
+      'ngAnimate',
+      'ui.bootstrap']);
 
 module.exports = _module;

@@ -2,12 +2,13 @@ var module = require('main_module');
 function Controller ($scope, QuoteService){
 
    var vm = this;
-    vm.quotes;
 
-    vm.$onInit =function(){
+   vm.quotes;
+   vm.params;
+   vm.errors=[];
+   vm.currencyPairs=["EURUSD=X","JPY=X","GBPUSD=X","AUDUSD=X","NZDUSD=X","EURJPY=X","GBPJPY=X","EURGBP=X","EURCAD=X","EURCHF=X"];
 
-    }
-
+   $scope.radioModel;
 
     function getQuotes(){
           QuoteService.getQuotes().then(
@@ -16,7 +17,12 @@ function Controller ($scope, QuoteService){
                     console.log('ItWorks');
                 },
                 function(err){
-                    console.log('Error',err);
+                    if(err.status === 400){
+                        vm.errors=err.data;
+                    }else {
+                        console.log('Error',err);
+                    }
+
                 });
     }
 }
