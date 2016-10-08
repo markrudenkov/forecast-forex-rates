@@ -20,7 +20,7 @@ console.log('mark1');
       }
     })
     .state('root.quotes', {
-      url: '/',
+      url: '/forex',
       template: "<quote-list></quote-list>",
       data: {
         isPublic: true
