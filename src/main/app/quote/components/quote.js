@@ -10,6 +10,10 @@ function Controller ($scope, QuoteService){
    vm.getQuotes=getQuotes;
    $scope.radioModel=vm.currencyPairs[0];
 
+    vm.$onInit = function(){
+           getQuotes();
+       }
+
     function getQuotes(){
              symbolAndDate.symbol=$scope.radioModel;
              symbolAndDate.startDate=$scope.startDate;

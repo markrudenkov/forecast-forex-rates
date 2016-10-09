@@ -36,7 +36,7 @@
 
     <pre>{{$ctrl.symbolAndDate}}</pre>
 
-    <table table class="table table-bordered " ng-show="(items | filter:date).length">
+    <table table class="table table-bordered ">
     <thead>
         <tr>
             <td>Symbol</td>
@@ -49,7 +49,7 @@
         </tr>
     </thead>
     <tbody ng-if="$ctrl.quotes != null">
-        <tr  ng-repeat="quote in $ctrl.quotes | orderBy : date ">
+        <tr  ng-repeat="quote in $ctrl.quotes | orderBy : date">
             <td>{{quote.symbol}}</td>
             <td>{{quote.date | date:'yyyy.MM.dd'}}</td>
             <td>{{quote.open}}</td>
