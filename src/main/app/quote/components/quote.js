@@ -2,7 +2,8 @@ var module = require('main_module');
 function Controller ($scope, QuoteService){
 
    var vm = this;
-
+   params={};
+   vm.params=params;
    vm.quotes;
    vm.pair;
    vm.errors=[];
@@ -10,8 +11,9 @@ function Controller ($scope, QuoteService){
    vm.startDate;
    vm.endDate;
    vm.getRates=getRates;
-   params={};
-   vm.params=params;
+   vm.getQuotes=getQuotes;
+
+
 
 
    function getRates(){
@@ -24,6 +26,25 @@ function Controller ($scope, QuoteService){
 
    }
 
+    function getQuotes(){
+             params.symbol=$scope.radioModel;
+             params.startDate=$scope.startDate;
+             params.endDate = $scope.endDate;
+
+             QuoteService.getQuotes(params).then(
+                   function(response){
+                       vm.quotes = response.data;
+                       console.log('ItWorks');
+                   },
+                   function(err){
+                       if(err.status === 400){
+                           vm.errors=err.data;
+                       }else {
+                           console.log('Error',err);
+                       }
+
+                   });
+     }
 
 
     //Datepicker
@@ -83,25 +104,7 @@ function Controller ($scope, QuoteService){
 
 
 
-    function getQuotes(){
-          params.symbol=$scope.radioModel;
-          params.startDate=$scope.startDate;
-          params.endDate = $scope.endDate;
 
-          QuoteService.getQuotes(params).then(
-                function(response){
-                    vm.quotes = response.data;
-                    console.log('ItWorks');
-                },
-                function(err){
-                    if(err.status === 400){
-                        vm.errors=err.data;
-                    }else {
-                        console.log('Error',err);
-                    }
-
-                });
-    }
 }
 
 Controller.$inject = ['$scope','QuoteService'];

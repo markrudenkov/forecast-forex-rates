@@ -3,15 +3,23 @@ package spaApp.quotes.repository;
 
 import com.nurkiewicz.jdbcrepository.RowUnmapper;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import spaApp.quotes.model.Instrument.Instrument;
 import spaApp.quotes.repository.model.QuoteDb;
 import spaApp.utils.repository.BaseRepository;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Repository
 public class QuoteRepository extends BaseRepository<QuoteDb> {
+
+    @Autowired
+    private JdbcTemplate template;
+    public static final String SELECT_QUOTES__BY_SYMBOL_AND_DATE = "SELECT * FROM quotes WHERE symbol = ? AND date BETWEEN ? AND ?";
 
     private static final RowMapper<QuoteDb> ROW_MAPPER=(rs,rowNum)->{
         QuoteDb quoteDb = new QuoteDb();
@@ -38,8 +46,16 @@ public class QuoteRepository extends BaseRepository<QuoteDb> {
 
     );
 
-
     public QuoteRepository() {
         super(ROW_MAPPER, ROW_UNMAPPER, "quotes", "id");
     }
+
+    public List<QuoteDb> selectQuoteDb (Instrument instrument){
+        List<QuoteDb> quoteDb =template.query(
+                SELECT_QUOTES__BY_SYMBOL_AND_DATE,
+                new Object[] {instrument.getSymbol(),new Timestamp(instrument.getStartDate().getMillis()), new Timestamp(instrument.getEndDate().getMillis())},
+                ROW_MAPPER);
+        return quoteDb;
+}
+
 }

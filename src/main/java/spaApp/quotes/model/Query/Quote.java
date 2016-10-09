@@ -18,6 +18,8 @@ public class Quote {
     private BigDecimal close;
     private BigDecimal adjustedClose;
 
+
+
     public Quote(
             @JsonProperty("Symbol") String symbol,
             @JsonProperty("Date") DateTime date,
@@ -34,6 +36,7 @@ public class Quote {
         this.close = close;
         this.adjustedClose = adjustedClose;
     }
+
 
     public String getSymbol() {
         return symbol;
