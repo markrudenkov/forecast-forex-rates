@@ -2,39 +2,24 @@ var module = require('main_module');
 function Controller ($scope, QuoteService){
 
    var vm = this;
-   params={};
-   vm.params=params;
-   vm.quotes;
-   vm.pair;
-   vm.errors=[];
-   vm.currencyPairs=["EURUSD=X","JPY=X","GBPUSD=X","AUDUSD=X","NZDUSD=X","EURJPY=X","GBPJPY=X","EURGBP=X","EURCAD=X","EURCHF=X"];
-   vm.startDate;
-   vm.endDate;
-   vm.getRates=getRates;
+   symbolAndDate={};
+   vm.symbolAndDate=symbolAndDate;
+   vm.quotes={};
+   vm.errors={};
+   vm.currencyPairs=["EUR%3dX","JPY=X","GBPUSD=X","AUDUSD=X","NZDUSD=X","EURJPY=X","GBPJPY=X","EURGBP=X","EURCAD=X","EURCHF=X"];
    vm.getQuotes=getQuotes;
-
-
-
-
-   function getRates(){
-
-        /*vm.params=[$scope.endDate,vm.startDate,vm.endDate];*/
-        params.symbol=$scope.radioModel;
-        params.startDate=$scope.startDate;
-        params.endDate = $scope.endDate;
-
-
-   }
+   $scope.radioModel=vm.currencyPairs[0];
 
     function getQuotes(){
-             params.symbol=$scope.radioModel;
-             params.startDate=$scope.startDate;
-             params.endDate = $scope.endDate;
+             symbolAndDate.symbol=$scope.radioModel;
+             symbolAndDate.startDate=$scope.startDate;
+             symbolAndDate.endDate = $scope.endDate;
 
-             QuoteService.getQuotes(params).then(
+             QuoteService.getQuotes(symbolAndDate).then(
                    function(response){
                        vm.quotes = response.data;
                        console.log('ItWorks');
+                       console.log(vm.quote);
                    },
                    function(err){
                        if(err.status === 400){
@@ -49,11 +34,11 @@ function Controller ($scope, QuoteService){
 
     //Datepicker
 
-   $scope.today = function() {
-        $scope.startDate = new Date();
-        $scope.endDate = new Date();
+   $scope.preset = function() {
+        $scope.startDate = new Date("2016-08-01");
+        $scope.endDate = new Date("2016-08-04");
    };
-   $scope.today();
+   $scope.preset();
 
    $scope.inlineOptions = {
 

@@ -74,6 +74,7 @@ public class QuoteService {
         LocalQuote api =new LocalQuote();
         api.setId(db.getId());
         api.setSymbol(db.getSymbol());
+        api.setDate(db.getDate());
         api.setOpen(db.getOpen());
         api.setHigh(db.getHigh());
         api.setLow(db.getLow());
