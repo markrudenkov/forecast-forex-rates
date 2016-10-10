@@ -3,6 +3,7 @@ package spaApp.quotes.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spaApp.quotes.model.Instrument.Instrument;
 import spaApp.quotes.model.Query.QueryWrapper;
 import spaApp.quotes.model.Query.Quote;
 import spaApp.quotes.model.Quote.LocalQuote;
@@ -21,6 +22,15 @@ public class QuoteService {
 
     @Autowired
     private QuoteService quoteService;
+
+
+    public List<LocalQuote> selectInstrument(Instrument api){
+        List<LocalQuote> selectedInstrument = new ArrayList();
+        for(QuoteDb quoteDb: repository.selectQuoteDb(api)){
+            selectedInstrument.add(mapToLocalQuote(quoteDb));
+        }
+        return selectedInstrument;
+    }
 
     @Transactional
     public List<QuoteDb> appendQuerryWrapperToDB(QueryWrapper api)  {
@@ -64,6 +74,7 @@ public class QuoteService {
         LocalQuote api =new LocalQuote();
         api.setId(db.getId());
         api.setSymbol(db.getSymbol());
+        api.setDate(db.getDate());
         api.setOpen(db.getOpen());
         api.setHigh(db.getHigh());
         api.setLow(db.getLow());

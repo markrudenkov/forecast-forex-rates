@@ -1,0 +1,57 @@
+<div class="container spaap-quote-page">
+    <h3>Currencies </h3>
+    <div class="group">
+        <div class="btn-group" >
+            <label ng-repeat="currencyPair in $ctrl.currencyPairs" class="btn btn-primary" ng-model="$parent.radioModel" uib-btn-radio="'{{currencyPair}}'">{{currencyPair}}</label>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.getQuotes()" >Submit</button>
+            </div>
+        </div>
+    </div>
+    <table table class="table table-bordered ">
+    <thead>
+        <tr>
+            <td>Symbol</td>
+            <td>Date</td>
+            <td>Open</td>
+            <td>High</td>
+            <td>Low</td>
+            <td>Close</td>
+            <td>Adjusted Close</td>
+        </tr>
+    </thead>
+    <tbody ng-if="$ctrl.quotes != null">
+        <tr  ng-repeat="quote in $ctrl.quotes | orderBy : 'date' ">
+            <td>{{quote.symbol}}</td>
+            <td>{{quote.date | date:'yyyy.MM.dd'}}</td>
+            <td>{{quote.open}}</td>
+            <td>{{quote.high}}</td>
+            <td>{{quote.low}}</td>
+            <td>{{quote.close}}</td>
+            <td>{{quote.adjustedClose}}</td>
+        </tr>
+    </tbody>
+    </table>
+</div>
