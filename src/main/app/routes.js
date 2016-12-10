@@ -19,9 +19,9 @@ console.log('mark1');
         isPublic: true
       }
     })
-    .state('root.quotes', {
-      url: '/forex',
-      template: "<quote-list></quote-list>",
+    .state('root.rates', {
+      url: '/rates',
+      template: "<rates-list></rates-list>",
       data: {
         isPublic: true
       }

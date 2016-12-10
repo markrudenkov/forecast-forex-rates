@@ -1,4 +1,4 @@
-package spaApp.quotes.model.Query;
+package spaApp.rates.model.Query;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -8,23 +8,23 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Results {
 
-    private List<Quote> quote;
+    private List<Rate> rate;
 
     public Results() {
     }
 
-    public List<Quote> getQuote() {
-        return quote;
+    public List<Rate> getRate() {
+        return rate;
     }
 
-    public void setQuote(List<Quote> quote) {
-        this.quote = quote;
+    public void setRate(List<Rate> rate) {
+        this.rate = rate;
     }
 
     @Override
     public String toString() {
         return "Results{" +
-                "quote=" + quote +
+                "rate=" + rate +
                 '}';
     }
 }

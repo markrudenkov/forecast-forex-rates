@@ -89,11 +89,11 @@ function Controller ($scope, QuoteService){
 }
 
 Controller.$inject = ['$scope','QuoteService'];
-require('./quote.scss');
+require('./rates.scss');
 
 
-module.component('quoteList', {
+module.component('ratesList', {
     controller: Controller,
-    templateUrl: require('./quote.html')
+    templateUrl: require('./rates.html')
 
 });

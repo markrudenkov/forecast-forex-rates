@@ -2,7 +2,7 @@ require('main_module');
 require('main_component');
 require('routes');
 require('home');
-require('quote');
+require('rates');
 
 
 angular.bootstrap(document, ['spaApp']);

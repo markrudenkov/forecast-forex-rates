@@ -1,12 +1,17 @@
-package spaApp.quotes.model.Quote;
+package spaApp.rates.repository.model;
+
 
 import org.joda.time.DateTime;
+import spaApp.utils.repository.model.ModelDb;
 
 import java.math.BigDecimal;
 
+/**
+ * Created by mark on 16.9.9.
+ */
 
-public class LocalQuote {
 
+public class QuoteDb extends ModelDb {
     private Long id;
     private String symbol;
     private DateTime date;
@@ -15,6 +20,7 @@ public class LocalQuote {
     private BigDecimal low;
     private BigDecimal close;
     private BigDecimal adjustedClose;
+
 
     public Long getId() {
         return id;
@@ -30,6 +36,14 @@ public class LocalQuote {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public DateTime getDate() {
+        return date;
+    }
+
+    public void setDate(DateTime date) {
+        this.date = date;
     }
 
     public BigDecimal getOpen() {
@@ -72,18 +86,11 @@ public class LocalQuote {
         this.adjustedClose = adjustedClose;
     }
 
-    public DateTime getDate() {
-        return date;
-    }
-
-    public void setDate(DateTime date) {
-        this.date = date;
-    }
-
     @Override
     public String toString() {
-        return "Quote{" +
-                "symbol='" + symbol + '\'' +
+        return "QuoteDb{" +
+                "id=" + id +
+                ", symbol='" + symbol + '\'' +
                 ", date=" + date +
                 ", open=" + open +
                 ", high=" + high +

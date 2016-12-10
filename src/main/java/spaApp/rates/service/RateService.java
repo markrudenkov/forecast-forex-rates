@@ -1,31 +1,33 @@
-package spaApp.quotes.service;
+package spaApp.rates.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import spaApp.quotes.model.Instrument.Instrument;
-import spaApp.quotes.model.Query.QueryWrapper;
-import spaApp.quotes.model.Query.Quote;
-import spaApp.quotes.model.Quote.LocalQuote;
-import spaApp.quotes.repository.QuoteRepository;
-import spaApp.quotes.repository.model.QuoteDb;
+import spaApp.rates.model.Instrument.Instrument;
+import spaApp.rates.model.Query.QueryWrapper;
+
+
+import spaApp.rates.model.Query.Rate;
+import spaApp.rates.model.Rate.LocalRate;
+import spaApp.rates.repository.RateRepository;
+import spaApp.rates.repository.model.QuoteDb;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
-public class QuoteService {
+public class RateService {
 
     @Autowired
-    private QuoteRepository repository;
+    private RateRepository repository;
 
     @Autowired
-    private QuoteService quoteService;
+    private RateService rateService;
 
 
-    public List<LocalQuote> selectInstrument(Instrument api){
-        List<LocalQuote> selectedInstrument = new ArrayList();
+    public List<LocalRate> selectInstrument(Instrument api){
+        List<LocalRate> selectedInstrument = new ArrayList();
         for(QuoteDb quoteDb: repository.selectQuoteDb(api)){
             selectedInstrument.add(mapToLocalQuote(quoteDb));
         }
@@ -34,8 +36,8 @@ public class QuoteService {
 
     @Transactional
     public List<QuoteDb> appendQuerryWrapperToDB(QueryWrapper api)  {
-        List<QuoteDb> quoteDbList =  quoteService.QueryWrapperMapToQuoteDbList(api);
-        quoteService.createQuoteRecordInDB(quoteDbList);
+        List<QuoteDb> quoteDbList =  rateService.QueryWrapperMapToQuoteDbList(api);
+        rateService.createQuoteRecordInDB(quoteDbList);
        return null;
     }
 
@@ -50,14 +52,14 @@ public class QuoteService {
     @Transactional
     public List<QuoteDb> QueryWrapperMapToQuoteDbList (QueryWrapper api) {
         List<QuoteDb> quoteDbList = new ArrayList();
-        for(Quote quote: api.getQuery().getResults().getQuote()){
-            quoteDbList.add(mapToQuoteDB(quote));
+        for(Rate rate: api.getQuery().getResults().getRate()){
+            quoteDbList.add(mapToQuoteDB(rate));
         }
         return  quoteDbList;
 
     }
 
-    public static QuoteDb mapToQuoteDB (Long id, Quote api){
+    public static QuoteDb mapToQuoteDB (Long id, Rate api){
         QuoteDb db = new QuoteDb();
         db.setSymbol(api.getSymbol());
         db.setDate(api.getDate());
@@ -70,8 +72,8 @@ public class QuoteService {
         return db;
     }
 
-    public static LocalQuote mapToLocalQuote (QuoteDb db){
-        LocalQuote api =new LocalQuote();
+    public static LocalRate mapToLocalQuote (QuoteDb db){
+        LocalRate api =new LocalRate();
         api.setId(db.getId());
         api.setSymbol(db.getSymbol());
         api.setDate(db.getDate());
@@ -84,7 +86,7 @@ public class QuoteService {
         return api;
     }
 
-    private static QuoteDb mapToQuoteDB (Quote api){
+    private static QuoteDb mapToQuoteDB (Rate api){
         return mapToQuoteDB(null,api);
     }
 

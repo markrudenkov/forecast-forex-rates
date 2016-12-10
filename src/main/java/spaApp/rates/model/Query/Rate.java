@@ -1,4 +1,4 @@
-package spaApp.quotes.model.Query;
+package spaApp.rates.model.Query;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Quote {
+public class Rate {
 
     private String symbol;
     private DateTime date;
@@ -20,7 +20,7 @@ public class Quote {
 
 
 
-    public Quote(
+    public Rate(
             @JsonProperty("Symbol") String symbol,
             @JsonProperty("Date") DateTime date,
             @JsonProperty("Open") BigDecimal open,
@@ -96,7 +96,7 @@ public class Quote {
 
     @Override
     public String toString() {
-        return "Quote{" +
+        return "Rate{" +
                 "symbol='" + symbol + '\'' +
                 ", date=" + date +
                 ", open=" + open +

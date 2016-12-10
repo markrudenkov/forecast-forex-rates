@@ -1,4 +1,4 @@
-package spaApp.quotes.model.Instrument;
+package spaApp.rates.model.Instrument;
 
 import org.joda.time.DateTime;
 
