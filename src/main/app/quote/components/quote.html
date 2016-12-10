@@ -2,7 +2,7 @@
     <h3>Currencies </h3>
     <div class="group">
         <div class="btn-group" >
-            <label ng-repeat="currencyPair in $ctrl.currencyPairs" class="btn btn-primary" ng-model="$parent.radioModel" uib-btn-radio="'{{currencyPair}}'">{{currencyPair}}</label>
+            <label ng-repeat="(index, currency) in $ctrl.currencyPairs" class="btn btn-primary" ng-model="$parent.radioModel" uib-btn-radio="'{{currency.code}}'">{{currency.name}}</label>
         </div>
     </div>
     <div class="container">

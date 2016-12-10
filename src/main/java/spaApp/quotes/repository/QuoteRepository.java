@@ -19,7 +19,7 @@ public class QuoteRepository extends BaseRepository<QuoteDb> {
 
     @Autowired
     private JdbcTemplate template;
-    public static final String SELECT_QUOTES__BY_SYMBOL_AND_DATE = "SELECT * FROM quotes WHERE symbol = ? AND date BETWEEN ? AND ?";
+    public static final String SELECT_QUOTES__BY_SYMBOL_AND_DATE = "SELECT * FROM rates WHERE symbol = ? AND date BETWEEN ? AND ?";
 
     private static final RowMapper<QuoteDb> ROW_MAPPER=(rs,rowNum)->{
         QuoteDb quoteDb = new QuoteDb();
@@ -47,7 +47,7 @@ public class QuoteRepository extends BaseRepository<QuoteDb> {
     );
 
     public QuoteRepository() {
-        super(ROW_MAPPER, ROW_UNMAPPER, "quotes", "id");
+        super(ROW_MAPPER, ROW_UNMAPPER, "rates", "id");
     }
 
     public List<QuoteDb> selectQuoteDb (Instrument instrument){

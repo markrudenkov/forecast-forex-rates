@@ -6,9 +6,9 @@ function Controller ($scope, QuoteService){
    vm.symbolAndDate=symbolAndDate;
    vm.quotes=[];
    vm.errors={};
-   vm.currencyPairs=["EUR%3dX","JPY=X","GBPUSD=X","AUDUSD=X","NZDUSD=X","EURJPY=X","GBPJPY=X","EURGBP=X","EURCAD=X","EURCHF=X"];
+   vm.currencyPairs=[ {name:"EURUSD" , code: "EUR%3dX"}, {name : "GBPUSD", code :"GBPUSD%3dX"}, {name : "AUDUSD", code :"AUDUSD%3dX"},{name : "NZDUSD", code :"NZDUSD%3dX"}];
    vm.getQuotes=getQuotes;
-   $scope.radioModel=vm.currencyPairs[0];
+   $scope.radioModel= vm.currencyPairs[0].code;
 
     vm.$onInit = function(){
            getQuotes();
