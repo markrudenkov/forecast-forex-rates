@@ -21,7 +21,8 @@ public class UpdateService {
 
     private static String quote2 = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"EUR=X\" and startDate= \"2010-08-01\" and endDate= \"2010-08-04\"&format=json&env=store://datatables.org/alltableswithkeys";
 
-    int daysInterval=200;
+    int daysInterval = 200;
+    int NonUpdatePeriod = 3;
 
     @Autowired
     RestTemplate restTemplate = new RestTemplate();
@@ -34,31 +35,35 @@ public class UpdateService {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    public void checkUpdate(String symbol, DateTime endDate) {
+    public void currencyUpdate(String symbol, DateTime endDate) {
         DateTime startDate = getLastEntry(symbol).getDate();
-        if(checkToUpdate(startDate, endDate)){
-            if (!checkAppropriateInteral(startDate, endDate)) {
-                while (!checkAppropriateInteral(startDate, endDate)) {
-                    endDate = startDate.plusDays(daysInterval);
-                    updateCurrency(symbol,startDate, endDate);
-                    startDate = getLastEntry(symbol).getDate();
-                }
-            }
-            updateCurrency(symbol,startDate, endDate);
+        if (checkToUpdate(startDate, endDate)) {
+            getUpdate(symbol, startDate, endDate);
         }
+    }
+
+    public void getUpdate(String symbol, DateTime startDate, DateTime endDate) {
+        if (!checkAppropriateInteral(startDate, endDate)) {
+            while (!checkAppropriateInteral(startDate, endDate)) {
+                endDate = startDate.plusDays(daysInterval);
+                updateCurrency(symbol, startDate, endDate);
+                startDate = getLastEntry(symbol).getDate();
+            }
+        }
+        updateCurrency(symbol, startDate, endDate);
     }
 
     @ResponseBody
     public void updateCurrency(String symbol, DateTime startDate, DateTime endDate) {
-        String query = getQuery("GBP=X",startDate, endDate);
+        String query = getQuery(symbol, startDate, endDate);
         QueryWrapper response = restTemplate.getForObject(query, QueryWrapper.class);
 
         rateService.appendQuerryWrapperToDB(response);
 
     }
 
-    boolean checkToUpdate(DateTime startDate, DateTime endDate){
-        return (getDaysInterval(startDate, endDate) >= 3);
+    boolean checkToUpdate(DateTime startDate, DateTime endDate) {
+        return (getDaysInterval(startDate, endDate) >= NonUpdatePeriod);
 
     }
 

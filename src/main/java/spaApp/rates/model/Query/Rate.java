@@ -28,7 +28,7 @@ public class Rate {
             @JsonProperty("Low") BigDecimal low,
             @JsonProperty("Close") BigDecimal close,
             @JsonProperty("Adj_Close") BigDecimal adjustedClose) {
-        this.symbol = symbol;
+        this.symbol = symbol.replace("%3d","=");
         this.date = date;
         this.open = open;
         this.high = high;

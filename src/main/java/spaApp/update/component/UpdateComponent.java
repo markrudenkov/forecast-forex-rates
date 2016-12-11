@@ -24,7 +24,7 @@ public class UpdateComponent {
 
     @Scheduled(fixedRate = 5000)
     public void reportCurrentTime() {
-        updateService.checkUpdate("GBP%3dX",new DateTime());
+        updateService.currencyUpdate("GBP=X",new DateTime());
         log.info("The time is now {}", dateFormat.format(new Date()));
     }
 
