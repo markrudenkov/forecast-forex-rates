@@ -6,12 +6,7 @@ import spaApp.utils.repository.model.ModelDb;
 
 import java.math.BigDecimal;
 
-/**
- * Created by mark on 16.9.9.
- */
-
-
-public class QuoteDb extends ModelDb {
+public class RateDb extends ModelDb {
     private Long id;
     private String symbol;
     private DateTime date;
@@ -88,7 +83,7 @@ public class QuoteDb extends ModelDb {
 
     @Override
     public String toString() {
-        return "QuoteDb{" +
+        return "RateDb{" +
                 "id=" + id +
                 ", symbol='" + symbol + '\'' +
                 ", date=" + date +

@@ -29,7 +29,7 @@ mvn spring-boot:run
 
 Application is started on localhost:8080
 
-So far try localhost:8080/query
+
 
 
 
