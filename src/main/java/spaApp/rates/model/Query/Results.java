@@ -8,23 +8,23 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Results {
 
-    private List<Rate> rate;
+    private List<Rate> quote;
 
     public Results() {
     }
 
-    public List<Rate> getRate() {
-        return rate;
+    public List<Rate> getQuote() {
+        return quote;
     }
 
-    public void setRate(List<Rate> rate) {
-        this.rate = rate;
+    public void setQuote(List<Rate> quote) {
+        this.quote = quote;
     }
 
     @Override
     public String toString() {
         return "Results{" +
-                "rate=" + rate +
+                "quote=" + quote +
                 '}';
     }
 }

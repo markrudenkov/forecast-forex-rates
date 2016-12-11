@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 public class RateController {
-    private static String quote2 = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"EUR=X\" and startDate= \"2016-08-01\" and endDate= \"2016-08-04\"&format=json&env=store://datatables.org/alltableswithkeys";
+    private static String quote2 = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"GBP=X\" and startDate= \"2016-08-01\" and endDate= \"2016-08-04\"&format=json&env=store://datatables.org/alltableswithkeys";
 
     @Autowired
     RestTemplate restTemplate = new RestTemplate();
