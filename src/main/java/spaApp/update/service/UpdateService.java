@@ -3,6 +3,7 @@ package spaApp.update.service;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +23,7 @@ public class UpdateService {
     private static String quote2 = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"EUR=X\" and startDate= \"2010-08-01\" and endDate= \"2010-08-04\"&format=json&env=store://datatables.org/alltableswithkeys";
 
     int daysInterval = 200;
-    int NonUpdatePeriod = 3;
+    int NonUpdatePeriod = 4;
 
     @Autowired
     RestTemplate restTemplate = new RestTemplate();
@@ -48,6 +49,7 @@ public class UpdateService {
                 endDate = startDate.plusDays(daysInterval);
                 updateCurrency(symbol, startDate, endDate);
                 startDate = getLastEntry(symbol).getDate();
+                endDate = startDate.plusDays(daysInterval);
             }
         }
         updateCurrency(symbol, startDate, endDate);

@@ -46,3 +46,116 @@ databaseChangeLog:
                   type: float
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 2
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: date
+                value: "2016-02-11 11:02:57"
+            - column:
+                name: symbol
+                value: 'GBP=X'
+            - column:
+                name: open
+                value: '0.9'
+            - column:
+                name: high
+                value: '0.9'
+            - column:
+                name: low
+                value: '0.9'
+            - column:
+                name: close
+                value: '0.9'
+            - column:
+                name: adj_close
+                value: '0.9'
+            tableName: rates
+
+  - changeSet:
+      id: 3
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: date
+                value: "2016-02-11 11:02:57"
+            - column:
+                name: symbol
+                value: 'EUR=X'
+            - column:
+                name: open
+                value: '0.9'
+            - column:
+                name: high
+                value: '0.9'
+            - column:
+                name: low
+                value: '0.9'
+            - column:
+                name: close
+                value: '0.9'
+            - column:
+                name: adj_close
+                value: '0.9'
+            tableName: rates
+  - changeSet:
+      id: 4
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: date
+                value: "2016-02-11 11:02:57"
+            - column:
+                name: symbol
+                value: 'AUD=X'
+            - column:
+                name: open
+                value: '0.9'
+            - column:
+                name: high
+                value: '0.9'
+            - column:
+                name: low
+                value: '0.9'
+            - column:
+                name: close
+                value: '0.9'
+            - column:
+                name: adj_close
+                value: '0.9'
+            tableName: rates
+  - changeSet:
+      id: 5
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: date
+                value: "2016-02-11 11:02:57"
+            - column:
+                name: symbol
+                value: 'NZD=X'
+            - column:
+                name: open
+                value: '0.9'
+            - column:
+                name: high
+                value: '0.9'
+            - column:
+                name: low
+                value: '0.9'
+            - column:
+                name: close
+                value: '0.9'
+            - column:
+                name: adj_close
+                value: '0.9'
+            tableName: rates
