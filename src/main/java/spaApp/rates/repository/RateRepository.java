@@ -24,6 +24,7 @@ public class RateRepository extends BaseRepository<RateDb> {
     private JdbcTemplate template;
     public static final String SELECT_RATES__BY_SYMBOL_AND_DATE = "SELECT * FROM rates WHERE symbol = ? AND date BETWEEN ? AND ?";
     public static final String SELECT_THE_LAST_CURRENCY_RATE = "SELECT * FROM rates WHERE symbol = ? ORDER BY date DESC LIMIT 1";
+    public static final String SELECT_CURRENCY_RATES = "SELECT * FROM rates WHERE symbol = ? ORDER BY date ASC";
 
     private static final RowMapper<RateDb> ROW_MAPPER=(rs,rowNum)->{
         RateDb quoteDb = new RateDb();
@@ -66,4 +67,10 @@ public class RateRepository extends BaseRepository<RateDb> {
         List<RateDb> rateDb = template.query(SELECT_THE_LAST_CURRENCY_RATE, new Object[]{currency},  ROW_MAPPER);
         return rateDb.get(0);
     }
+
+    public List<RateDb> getAllCurrencyRates(String currency) {
+        List<RateDb> rateDb = template.query(SELECT_CURRENCY_RATES, new Object[]{currency},  ROW_MAPPER);
+        return rateDb;
+    }
+
 }

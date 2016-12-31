@@ -23,41 +23,48 @@ public class RateService {
     @Autowired
     private RateService rateService;
 
-
-    public List<LocalRate> selectInstrument(Instrument api){
+    public List<LocalRate> selectInstrument(Instrument api) {
         List<LocalRate> selectedInstrument = new ArrayList();
-        for(RateDb quoteDb: repository.selectQuoteDb(api)){
+        for (RateDb quoteDb : repository.selectQuoteDb(api)) {
             selectedInstrument.add(mapToLocalQuote(quoteDb));
         }
         return selectedInstrument;
     }
 
     @Transactional
-    public List<RateDb> appendQuerryWrapperToDB(QueryWrapper api)  {
-        List<RateDb> quoteDbList =  rateService.QueryWrapperMapToQuoteDbList(api);
+    public List<RateDb> appendQuerryWrapperToDB(QueryWrapper api) {
+        List<RateDb> quoteDbList = rateService.QueryWrapperMapToQuoteDbList(api);
         rateService.createQuoteRecordInDB(quoteDbList);
-       return null;
+        return null;
     }
 
     @Transactional
-    public List<RateDb> createQuoteRecordInDB (List<RateDb> db) {
-        for(RateDb quoteDb : db){
+    public List<RateDb> createQuoteRecordInDB(List<RateDb> db) {
+        for (RateDb quoteDb : db) {
             repository.create(quoteDb);
         }
         return db;
     }
 
     @Transactional
-    public List<RateDb> QueryWrapperMapToQuoteDbList (QueryWrapper api) {
+    public List<RateDb> QueryWrapperMapToQuoteDbList(QueryWrapper api) {
         List<RateDb> quoteDbList = new ArrayList();
-        for(Rate rate: api.getQuery().getResults().getQuote()){
+        for (Rate rate : api.getQuery().getResults().getQuote()) {
             quoteDbList.add(mapToQuoteDB(rate));
         }
-        return  quoteDbList;
-
+        return quoteDbList;
     }
 
-    public static RateDb mapToQuoteDB (Long id, Rate api){
+    @Transactional
+    public List<LocalRate> getAllCurrencyRates(String currency) {
+        List<LocalRate> rates = new ArrayList<>();
+        for (RateDb rate : repository.getAllCurrencyRates(currency)) {
+            rates.add(mapToLocalQuote(rate));
+        }
+        return rates;
+    }
+
+    public static RateDb mapToQuoteDB(Long id, Rate api) {
         RateDb db = new RateDb();
         db.setSymbol(api.getSymbol());
         db.setDate(api.getDate());
@@ -70,8 +77,8 @@ public class RateService {
         return db;
     }
 
-    public static LocalRate mapToLocalQuote (RateDb db){
-        LocalRate api =new LocalRate();
+    public static LocalRate mapToLocalQuote(RateDb db) {
+        LocalRate api = new LocalRate();
         api.setId(db.getId());
         api.setSymbol(db.getSymbol());
         api.setDate(db.getDate());
@@ -84,8 +91,8 @@ public class RateService {
         return api;
     }
 
-    private static RateDb mapToQuoteDB (Rate api){
-        return mapToQuoteDB(null,api);
+    private static RateDb mapToQuoteDB(Rate api) {
+        return mapToQuoteDB(null, api);
     }
 
 }
