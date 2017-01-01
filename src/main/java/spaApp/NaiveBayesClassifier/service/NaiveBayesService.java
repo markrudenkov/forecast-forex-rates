@@ -1,12 +1,17 @@
 package spaApp.NaiveBayesClassifier.service;
 
 
+import net.sf.javaml.classification.Classifier;
+import net.sf.javaml.classification.bayes.NaiveBayesClassifier;
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
+import net.sf.javaml.core.DenseInstance;
+import net.sf.javaml.core.Instance;
 import net.sf.javaml.filter.discretize.RecursiveMinimalEntropyPartitioning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spaApp.NaiveBayesClassifier.model.DataSet;
+import spaApp.NaiveBayesClassifier.model.RateInstance;
 import spaApp.rates.model.Rate.LocalRate;
 import spaApp.rates.service.RateService;
 
@@ -18,6 +23,9 @@ public class NaiveBayesService {
     @Autowired
     RateService rateService;
 
+    @Autowired
+    DataDiscretisationRMEP dataDiscretisationRMEP;
+
     public Dataset createDataSet(int atributes, String currency) {
         List<LocalRate> rates = rateService.getAllCurrencyRates(currency);
         DataSet dataset = new DataSet();
@@ -26,16 +34,24 @@ public class NaiveBayesService {
 
     }
 
-    public Dataset dataSetDicretisation(int atributes, String currency){
-        boolean sparse = false;
-        Dataset nonDicretizedDataSet = createDataSet( atributes,  currency);
-        Dataset dicretizedDataSet = nonDicretizedDataSet.copy();
-        RecursiveMinimalEntropyPartitioning recursiveMinimalEntropyPartitioning = new RecursiveMinimalEntropyPartitioning(sparse);
-        recursiveMinimalEntropyPartitioning.build(nonDicretizedDataSet);
-        recursiveMinimalEntropyPartitioning.filter(dicretizedDataSet);
-
-
-        return dicretizedDataSet;
+    public Instance getLastUnclasifiedINstance(int atributes,String currency) {
+        RateInstance rateInstance = new DataSet();
+        rateInstance.setAtributes(atributes);
+        List<LocalRate> rates= rateService.getLastCurrencyRates(atributes,currency );
+        Instance unclasifiedInstance = rateInstance.createUnclasifiedInstance(atributes, rates);
+        return  unclasifiedInstance;
     }
 
+    public Object classification(int atributes,String currency){
+        Dataset dicretizedDataSet = dataDiscretisationRMEP.dataSetDicretisation(atributes,currency);
+        Instance instanceForPrediction = getLastUnclasifiedINstance(atributes,currency);
+        dataDiscretisationRMEP.recursiveMinimalEntropyPartitioning.filter(instanceForPrediction);
+        boolean useLaplace = true;
+        boolean useLogs = true;
+        Classifier naiveBayesClassifier = new NaiveBayesClassifier(useLaplace, useLogs, false);
+        naiveBayesClassifier.buildClassifier(dicretizedDataSet);
+
+        Object predictedClassValue =naiveBayesClassifier.classify(instanceForPrediction);
+        return  predictedClassValue;
+    }
 }
