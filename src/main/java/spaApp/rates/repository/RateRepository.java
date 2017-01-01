@@ -29,7 +29,6 @@ public class RateRepository extends BaseRepository<RateDb> {
 
     private static final RowMapper<RateDb> ROW_MAPPER=(rs,rowNum)->{
         RateDb quoteDb = new RateDb();
-        quoteDb.setId(rs.getLong("id"));
         quoteDb.setDate(new DateTime(rs.getDate("date")));
         quoteDb.setSymbol(rs.getString("symbol"));
         quoteDb.setOpen(rs.getBigDecimal("open"));
@@ -41,7 +40,6 @@ public class RateRepository extends BaseRepository<RateDb> {
     };
 
     private static final RowUnmapper<RateDb> ROW_UNMAPPER = quoteDb -> mapOf(
-      "id",quoteDb.getId(),
             "date", new Timestamp(quoteDb.getDate().getMillis()),
             "symbol",quoteDb.getSymbol(),
             "open", quoteDb.getOpen(),

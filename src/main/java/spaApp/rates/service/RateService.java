@@ -90,7 +90,6 @@ public class RateService {
 
     public static LocalRate mapToLocalQuote(RateDb db) {
         LocalRate api = new LocalRate();
-        api.setId(db.getId());
         api.setSymbol(db.getSymbol());
         api.setDate(db.getDate());
         api.setOpen(db.getOpen());

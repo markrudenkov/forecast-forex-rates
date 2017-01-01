@@ -7,15 +7,10 @@ databaseChangeLog:
             tableName: rates
             columns:
               - column:
-                  name: id
-                  type: int
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
                   name: date
                   type: timestamp
+                  constraints:
+                    nullable: false
               - column:
                   name: symbol
                   type: varchar(10)
@@ -46,6 +41,11 @@ databaseChangeLog:
                   type: float
                   constraints:
                     nullable: false
+        - addPrimaryKey:
+            columnNames: date, symbol
+            constraintName: pk_rates
+            tableName: rates
+
   - changeSet:
       id: 2
       author: Mark
