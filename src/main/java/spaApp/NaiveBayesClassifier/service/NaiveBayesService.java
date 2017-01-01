@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spaApp.NaiveBayesClassifier.model.DataSet;
 import spaApp.NaiveBayesClassifier.model.RateInstance;
-import spaApp.rates.model.Rate.LocalRate;
+
+import spaApp.rates.model.Query.Rate;
 import spaApp.rates.service.RateService;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class NaiveBayesService {
     DataDiscretisationRMEP dataDiscretisationRMEP;
 
     public Dataset createDataSet(int atributes, String currency) {
-        List<LocalRate> rates = rateService.getAllCurrencyRates(currency);
+        List<Rate> rates = rateService.getAllCurrencyRates(currency);
         DataSet dataset = new DataSet();
         dataset.setAtributes(atributes);
         return dataset.buildDataSet(dataset.getAtributes(), rates);
@@ -37,7 +38,7 @@ public class NaiveBayesService {
     public Instance getLastUnclasifiedINstance(int atributes,String currency) {
         RateInstance rateInstance = new DataSet();
         rateInstance.setAtributes(atributes);
-        List<LocalRate> rates= rateService.getLastCurrencyRates(atributes,currency );
+        List<Rate> rates= rateService.getLastCurrencyRates(atributes,currency );
         Instance unclasifiedInstance = rateInstance.createUnclasifiedInstance(atributes, rates);
         return  unclasifiedInstance;
     }

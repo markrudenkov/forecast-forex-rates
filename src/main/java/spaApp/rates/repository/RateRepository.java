@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import spaApp.rates.model.Instrument.Instrument;
 import spaApp.rates.model.Query.Rate;
-import spaApp.rates.model.Rate.LocalRate;
+
 
 import spaApp.rates.repository.model.RateDb;
 import spaApp.utils.repository.BaseRepository;

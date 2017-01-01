@@ -3,33 +3,29 @@ package spaApp.NaiveBayesClassifier.model;
 import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;
 import org.apache.commons.lang3.ArrayUtils;
-import spaApp.rates.model.Rate.LocalRate;
-
+import spaApp.rates.model.Query.Rate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by mark on 17.1.1.
- */
 public class RateInstance {
 
-    private int atributes;
+    protected int atributes;
 
-    protected Instance createInstance(int classValuePosition, List<LocalRate> rates) {
+    protected Instance createInstance(int classValuePosition, List<Rate> rates) {
         Instance instance = new DenseInstance(getAtributesArray(classValuePosition, rates));
         instance.setClassValue(estimateClassValue(classValuePosition, rates));
         return instance;
     }
 
-    public  Instance createUnclasifiedInstance(int atributes, List<LocalRate> rates){
+    public  Instance createUnclasifiedInstance(int atributes, List<Rate> rates){
         Instance instance = new DenseInstance(getAtributesArray(atributes, rates));
         return instance;
     }
 
-    private double[] getAtributesArray(int classValuePosition, List<LocalRate> rates) {
+    private double[] getAtributesArray(int classValuePosition, List<Rate> rates) {
         List<Double> atributesList = new ArrayList<Double>();
         for (int j = classValuePosition - atributes; j < classValuePosition; j++) {
-            LocalRate rate = rates.get(j);
+            Rate rate = rates.get(j);
             atributesList.add(rate.getOpen().doubleValue());
             atributesList.add(rate.getHigh().doubleValue());
             atributesList.add(rate.getLow().doubleValue());
@@ -39,13 +35,13 @@ public class RateInstance {
         return instanceAtributes;
     }
 
-    private String estimateClassValue(int classValuePosition, List<LocalRate> rates) {
-        LocalRate rate = rates.get(classValuePosition);
+    private String estimateClassValue(int classValuePosition, List<Rate> rates) {
+        Rate rate = rates.get(classValuePosition);
         String classValue;
         if (rate.getOpen().doubleValue() - rate.getClose().doubleValue() > 0) {
             classValue = "black";
         } else {
-            classValue = "black";
+            classValue = "white";
         }
         return classValue;
     }

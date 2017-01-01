@@ -18,7 +18,8 @@ public class Rate {
     private BigDecimal close;
     private BigDecimal adjustedClose;
 
-
+    public Rate() {
+    }
 
     public Rate(
             @JsonProperty("Symbol") String symbol,

@@ -7,7 +7,7 @@ import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import spaApp.rates.model.Rate.LocalRate;
+import spaApp.rates.model.Query.Rate;
 import spaApp.rates.repository.RateRepository;
 import spaApp.rates.service.RateService;
 
@@ -25,11 +25,9 @@ public class DataSet extends RateInstance{
     @Autowired
     RateRepository rateRepository;
 
-    //RateInstance rateInstance;
-
-    public Dataset buildDataSet(int atributes, List<LocalRate> rates) {
+    public Dataset buildDataSet(int atributes, List<Rate> rates) {
         Dataset ratesDS = new DefaultDataset();
-       // rateInstance.setAtributes(atributes);
+        this.atributes =atributes;
         for (int i = atributes; i < rates.size(); i++) {
             ratesDS.add(createInstance(i, rates));
         }
