@@ -13,7 +13,7 @@ public class NaiveBayesController {
 
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/dataset")
-    public Dataset analysis() {
-        return naiveBayesService.createDataSet(4,"GBP=X");
+    public Object analysis() {
+        return naiveBayesService.classification(4,"GBP=X");
     }
 }

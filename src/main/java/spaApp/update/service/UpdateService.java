@@ -20,10 +20,8 @@ import java.text.SimpleDateFormat;
 @Service
 public class UpdateService {
 
-    private static String quote2 = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"EUR=X\" and startDate= \"2010-08-01\" and endDate= \"2010-08-04\"&format=json&env=store://datatables.org/alltableswithkeys";
 
     int daysInterval = 200;
-    int NonUpdatePeriod = 4;
 
     @Autowired
     RestTemplate restTemplate = new RestTemplate();
@@ -38,9 +36,7 @@ public class UpdateService {
 
     public void currencyUpdate(String symbol, DateTime endDate) {
         DateTime startDate = getLastEntry(symbol).getDate();
-        if (checkToUpdate(startDate, endDate)) {
-            getUpdate(symbol, startDate, endDate);
-        }
+        getUpdate(symbol, startDate, endDate);
     }
 
     public void getUpdate(String symbol, DateTime startDate, DateTime endDate) {
@@ -48,7 +44,7 @@ public class UpdateService {
             while (!checkAppropriateInteral(startDate, endDate)) {
                 endDate = startDate.plusDays(daysInterval);
                 updateCurrency(symbol, startDate, endDate);
-                startDate = getLastEntry(symbol).getDate();
+                startDate = getLastEntry(symbol).getDate().plusDays(1);
                 endDate = startDate.plusDays(daysInterval);
             }
         }
@@ -58,14 +54,15 @@ public class UpdateService {
     @ResponseBody
     public void updateCurrency(String symbol, DateTime startDate, DateTime endDate) {
         String query = getQuery(symbol, startDate, endDate);
-        QueryWrapper response = restTemplate.getForObject(query, QueryWrapper.class);
-
-        rateService.appendQuerryWrapperToDB(response);
-
-    }
-
-    boolean checkToUpdate(DateTime startDate, DateTime endDate) {
-        return (getDaysInterval(startDate, endDate) >= NonUpdatePeriod);
+        try
+        {
+            QueryWrapper response = restTemplate.getForObject(query, QueryWrapper.class);
+            rateService.appendQuerryWrapperToDB(response);
+        }
+        catch (Exception e)
+        {
+            //In this case error is caused by the lack of new data from Yahoo
+        }
 
     }
 

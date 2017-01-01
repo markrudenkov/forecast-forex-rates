@@ -25,10 +25,10 @@ public class RateRepository extends BaseRepository<RateDb> {
     public static final String SELECT_RATES__BY_SYMBOL_AND_DATE = "SELECT * FROM rates WHERE symbol = ? AND date BETWEEN ? AND ?";
     public static final String SELECT_THE_LAST_CURRENCY_RATE = "SELECT * FROM rates WHERE symbol = ? ORDER BY date DESC LIMIT 1";
     public static final String SELECT_CURRENCY_RATES = "SELECT * FROM rates WHERE symbol = ? ORDER BY date ASC";
+    public static final String SELECT_THE_LAST_CURRENCY_RATES = "SELECT * FROM rates WHERE symbol = ? ORDER BY date DESC LIMIT ?";
 
     private static final RowMapper<RateDb> ROW_MAPPER=(rs,rowNum)->{
         RateDb quoteDb = new RateDb();
-        quoteDb.setId(rs.getLong("id"));
         quoteDb.setDate(new DateTime(rs.getDate("date")));
         quoteDb.setSymbol(rs.getString("symbol"));
         quoteDb.setOpen(rs.getBigDecimal("open"));
@@ -40,7 +40,6 @@ public class RateRepository extends BaseRepository<RateDb> {
     };
 
     private static final RowUnmapper<RateDb> ROW_UNMAPPER = quoteDb -> mapOf(
-      "id",quoteDb.getId(),
             "date", new Timestamp(quoteDb.getDate().getMillis()),
             "symbol",quoteDb.getSymbol(),
             "open", quoteDb.getOpen(),
@@ -70,6 +69,11 @@ public class RateRepository extends BaseRepository<RateDb> {
 
     public List<RateDb> getAllCurrencyRates(String currency) {
         List<RateDb> rateDb = template.query(SELECT_CURRENCY_RATES, new Object[]{currency},  ROW_MAPPER);
+        return rateDb;
+    }
+
+    public List<RateDb> getLastCurrencyRates(int atributes,String currency){
+        List<RateDb> rateDb = template.query(SELECT_THE_LAST_CURRENCY_RATES, new Object[]{currency,atributes},  ROW_MAPPER);
         return rateDb;
     }
 

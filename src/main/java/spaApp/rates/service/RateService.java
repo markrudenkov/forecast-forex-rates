@@ -23,6 +23,8 @@ public class RateService {
     @Autowired
     private RateService rateService;
 
+
+
     public List<LocalRate> selectInstrument(Instrument api) {
         List<LocalRate> selectedInstrument = new ArrayList();
         for (RateDb quoteDb : repository.selectQuoteDb(api)) {
@@ -64,6 +66,15 @@ public class RateService {
         return rates;
     }
 
+    @Transactional
+    public List<LocalRate> getLastCurrencyRates(int atributes,String currency){
+        List<LocalRate> rates = new ArrayList<>();
+        for (RateDb rate : repository.getLastCurrencyRates(atributes,currency)) {
+            rates.add(mapToLocalQuote(rate));
+        }
+        return rates;
+    }
+
     public static RateDb mapToQuoteDB(Long id, Rate api) {
         RateDb db = new RateDb();
         db.setSymbol(api.getSymbol());
@@ -79,7 +90,6 @@ public class RateService {
 
     public static LocalRate mapToLocalQuote(RateDb db) {
         LocalRate api = new LocalRate();
-        api.setId(db.getId());
         api.setSymbol(db.getSymbol());
         api.setDate(db.getDate());
         api.setOpen(db.getOpen());
