@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import spaApp.NaiveBayesClassifier.model.DataSet;
 import spaApp.NaiveBayesClassifier.model.RateInstance;
 
+import spaApp.rates.model.Instrument.Instrument;
 import spaApp.rates.model.Query.Rate;
 import spaApp.rates.service.RateService;
 
@@ -54,5 +55,9 @@ public class NaiveBayesService {
 
         Object predictedClassValue =naiveBayesClassifier.classify(instanceForPrediction);
         return  predictedClassValue;
+    }
+
+    public Object getAnalysis (Instrument instrument){
+        return classification(4, instrument.getSymbol());
     }
 }

@@ -81,7 +81,7 @@ public class UpdateService {
     @Transactional
     Rate getLastEntry(String symbol) {
         RateDb lastEntryDB = rateRepository.selectLastEntry(symbol);
-        Rate lastEntry = rateService.mapToLocalQuote(lastEntryDB);
+        Rate lastEntry = rateService.mapToRate(lastEntryDB);
         return lastEntry;
     }
 

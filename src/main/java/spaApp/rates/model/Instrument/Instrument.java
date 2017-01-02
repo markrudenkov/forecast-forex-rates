@@ -6,6 +6,8 @@ public class Instrument {
     private String symbol;
     private DateTime startDate;
     private DateTime endDate;
+    private int atributes;
+    private String method;
 
     public String getSymbol() {
         return symbol;
@@ -29,6 +31,22 @@ public class Instrument {
 
     public void setEndDate(DateTime endDate) {
         this.endDate = endDate;
+    }
+
+    public int getAtributes() {
+        return atributes;
+    }
+
+    public void setAtributes(int atributes) {
+        this.atributes = atributes;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     @Override

@@ -2,7 +2,7 @@
     <h3>Currencies </h3>
     <div class="group">
         <div class="btn-group" >
-            <label ng-repeat="(index, currency) in $ctrl.currencyPairs" class="btn btn-primary" ng-model="$parent.radioModel" uib-btn-radio="'{{currency.code}}'">{{currency.name}}</label>
+            <label ng-repeat="(index, currency) in $ctrl.currencyPairs" class="btn btn-primary" ng-model="$parent.radioModel" uib-btn-radio="'{{index}}'">{{currency.name}}</label>
         </div>
     </div>
     <div class="container">
@@ -44,7 +44,7 @@
     </thead>
     <tbody ng-if="$ctrl.quotes != null">
         <tr  ng-repeat="quote in $ctrl.quotes | orderBy : 'date' ">
-            <td>{{quote.symbol}}</td>
+           <td>{{currentsymbol}}</td>
             <td>{{quote.date | date:'yyyy.MM.dd'}}</td>
             <td>{{quote.open}}</td>
             <td>{{quote.high}}</td>
