@@ -1,9 +1,9 @@
 var angular = require('angular');
 var module = angular.module('spaApp');
-console.log("mark1");
+
 module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
 
-console.log('mark1');
+
   // For any unmatched url, redirect to /
   $urlRouterProvider.otherwise("/");
   //
@@ -26,6 +26,13 @@ console.log('mark1');
         isPublic: true
       }
     })
+        .state('root.classifier', {
+          url: '/classifier',
+          template: "<classifier-List></classifier-List>",
+          data: {
+            isPublic: true
+          }
+        })
 
 
 

@@ -8,16 +8,18 @@ function Controller ($scope, QuoteService){
    vm.errors={};
    vm.currencyPairs=[ {name:"EURUSD" , code: "EUR=X"}, {name : "GBPUSD", code :"GBP=X"}, {name : "AUDUSD", code :"AUDUSD%3dX"},{name : "NZDUSD", code :"NZDUSD%3dX"}];
    vm.getQuotes=getQuotes;
-   $scope.radioModel= vm.currencyPairs[0].code;
+   $scope.radioModel= 0;
+   $scope.currentsymbol=vm.currencyPairs[$scope.radioModel].name;
 
     vm.$onInit = function(){
            getQuotes();
     }
 
     function getQuotes(){
-         symbolAndDate.symbol=$scope.radioModel;
+         symbolAndDate.symbol=vm.currencyPairs[$scope.radioModel].code;
          symbolAndDate.startDate=$scope.startDate;
          symbolAndDate.endDate = $scope.endDate;
+         $scope.currentsymbol=vm.currencyPairs[$scope.radioModel].name;
 
          QuoteService.getQuotes(symbolAndDate).then(
                function(response){

@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import spaApp.rates.model.Instrument.Instrument;
 import spaApp.rates.model.Query.QueryWrapper;
 import spaApp.rates.model.Query.Rate;
-import spaApp.rates.model.Rate.LocalRate;
+
 import spaApp.rates.repository.RateRepository;
 import spaApp.rates.repository.model.RateDb;
 
@@ -25,10 +25,10 @@ public class RateService {
 
 
 
-    public List<LocalRate> selectInstrument(Instrument api) {
-        List<LocalRate> selectedInstrument = new ArrayList();
+    public List<Rate> selectInstrument(Instrument api) {
+        List<Rate> selectedInstrument = new ArrayList();
         for (RateDb quoteDb : repository.selectQuoteDb(api)) {
-            selectedInstrument.add(mapToLocalQuote(quoteDb));
+            selectedInstrument.add(mapToRate(quoteDb));
         }
         return selectedInstrument;
     }
@@ -58,24 +58,24 @@ public class RateService {
     }
 
     @Transactional
-    public List<LocalRate> getAllCurrencyRates(String currency) {
-        List<LocalRate> rates = new ArrayList<>();
+    public List<Rate> getAllCurrencyRates(String currency) {
+        List<Rate> rates = new ArrayList<>();
         for (RateDb rate : repository.getAllCurrencyRates(currency)) {
-            rates.add(mapToLocalQuote(rate));
+            rates.add(mapToRate(rate));
         }
         return rates;
     }
 
     @Transactional
-    public List<LocalRate> getLastCurrencyRates(int atributes,String currency){
-        List<LocalRate> rates = new ArrayList<>();
+    public List<Rate> getLastCurrencyRates(int atributes,String currency){
+        List<Rate> rates = new ArrayList<>();
         for (RateDb rate : repository.getLastCurrencyRates(atributes,currency)) {
-            rates.add(mapToLocalQuote(rate));
+            rates.add(mapToRate(rate));
         }
         return rates;
     }
 
-    public static RateDb mapToQuoteDB(Long id, Rate api) {
+    public static RateDb mapToRateDB(Long id, Rate api) {
         RateDb db = new RateDb();
         db.setSymbol(api.getSymbol());
         db.setDate(api.getDate());
@@ -88,8 +88,8 @@ public class RateService {
         return db;
     }
 
-    public static LocalRate mapToLocalQuote(RateDb db) {
-        LocalRate api = new LocalRate();
+    public static Rate mapToRate(RateDb db) {
+        Rate api = new Rate();
         api.setSymbol(db.getSymbol());
         api.setDate(db.getDate());
         api.setOpen(db.getOpen());
@@ -102,7 +102,7 @@ public class RateService {
     }
 
     private static RateDb mapToQuoteDB(Rate api) {
-        return mapToQuoteDB(null, api);
+        return mapToRateDB(null, api);
     }
 
 }

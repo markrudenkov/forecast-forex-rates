@@ -5,12 +5,14 @@ import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import spaApp.rates.model.Query.QueryWrapper;
-import spaApp.rates.model.Rate.LocalRate;
+
+import spaApp.rates.model.Query.Rate;
 import spaApp.rates.repository.RateRepository;
 import spaApp.rates.repository.model.RateDb;
 import spaApp.rates.service.RateService;
@@ -76,9 +78,10 @@ public class UpdateService {
         return days.getDays();
     }
 
-    LocalRate getLastEntry(String symbol) {
+    @Transactional
+    Rate getLastEntry(String symbol) {
         RateDb lastEntryDB = rateRepository.selectLastEntry(symbol);
-        LocalRate lastEntry = rateService.mapToLocalQuote(lastEntryDB);
+        Rate lastEntry = rateService.mapToRate(lastEntryDB);
         return lastEntry;
     }
 
