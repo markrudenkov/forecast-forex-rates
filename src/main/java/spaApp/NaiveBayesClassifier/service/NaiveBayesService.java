@@ -11,6 +11,7 @@ import net.sf.javaml.filter.discretize.RecursiveMinimalEntropyPartitioning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spaApp.NaiveBayesClassifier.model.DataSet;
+import spaApp.NaiveBayesClassifier.model.Forecast;
 import spaApp.NaiveBayesClassifier.model.RateInstance;
 
 import spaApp.rates.model.Instrument.Instrument;
@@ -57,7 +58,10 @@ public class NaiveBayesService {
         return  predictedClassValue;
     }
 
-    public Object getAnalysis (Instrument instrument){
-        return classification(4, instrument.getSymbol());
+    public Forecast getAnalysis (Instrument instrument){
+        Forecast forecast = new Forecast();
+         forecast.setForecastedBar(classification(4, instrument.getSymbol()).toString() );
+         forecast.setSymbol(instrument.getSymbol());
+        return forecast;
     }
 }

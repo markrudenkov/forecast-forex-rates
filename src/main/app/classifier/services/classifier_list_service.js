@@ -3,7 +3,7 @@ var module = require('main_module');
 
 function Service ($http){
 
-    this.analyse=function(analysisPrameters){
+    this.analyse=function(params){
          return $http.post('/api/analysis',params);
     }
 

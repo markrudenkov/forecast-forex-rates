@@ -3,13 +3,15 @@
     <br>
     <p3>Select the currency pair</p3>
     <br>
+    <div class="container">
+
     <div class="group">
         <div class="btn-group" >
             <label ng-repeat="(index, currency) in $ctrl.currencyPairs1" class="btn btn-primary" ng-model="$parent.radioModel" uib-btn-radio="'{{index}}'">{{currency.name}}</label>
         </div>
     </div>
     <br>
-    <form name="myForm" >
+        <form name="myForm" >
         <p>Select clasification method</p>
         <div>
             <ul>
@@ -24,8 +26,29 @@
         </div>
     </form>
 
-    <div class="col-md-6">
+    <div >
         <button type="button" class="btn btn-primary" ng-click="$ctrl.analyse()">Analyse</button>
     </div>
+
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <table table class="table table-bordered ">
+        <thead>
+        <tr>
+            <td>Symbol</td>
+            <td>Forecast bar</td>
+
+        </tr>
+        </thead>
+        <tbody ng-if="$ctrl.analysisResults != null">
+        <tr  >
+            <td>{{$ctrl.analysisResults.symbol}}</td>
+            <td>{{$ctrl.analysisResults.forecastedBar}}</td>
+        </tr>
+        </tbody>
+    </table>
 
 
