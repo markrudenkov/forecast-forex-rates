@@ -21,6 +21,10 @@ module.exports = {
      plugins: [
          new ExtractTextPlugin("styles.bundle.css", {
             allChunks: true
+         }),
+         new webpack.ProvidePlugin({
+              $: "jquery",
+              jQuery: "jquery"
          })
      ],
      resolve: {

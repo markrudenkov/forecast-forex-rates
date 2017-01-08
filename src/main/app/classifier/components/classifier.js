@@ -10,7 +10,7 @@ function Controller($scope,ClassifierListService) {
     vm.analysisResults=[];
     $scope.radioModel= 0;
     $scope.currentsymbol1=vm.currencyPairs1[$scope.radioModel].name;
-    vm.classifiers =[ { name: "bayes" , disabled : 'false'},{ name: "svm", disabled : "true" },{ name: "som" , disabled : "true"}];
+    vm.classifiers =[ { name: "bayes" , disabled : 'false'},{ name: "svm", disabled : "true" },{ name: "weka" , disabled : "true"}];
     $scope.radioButton;
 
 

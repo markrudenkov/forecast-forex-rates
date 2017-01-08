@@ -1,23 +1,23 @@
 
-<div class="container">
 
-    <nav class="navbar navbar-default navbar-fixed-top ">
+<div class="bs-component">
+    <nav class="navbar navbar-default ">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a ng-show="true" class="navbar-brand" >Forex rates</a>
+                <a ng-show="true" class="navbar-brand" >Future rates</a>
             </div>
-            <ul class="nav navbar-nav">
-                <li ui-sref="root.home"><a >Home</a></li>
-                <li ><a >About</a></li>
-                <li ><a >Contact</a></li>
-                <li ui-sref="root.rates"><a >Get Forex rates</a></li>
-                <li ui-sref="root.classifier"><a >Analysis</a></li>
+                <ul class="nav navbar-nav">
+                    <li ui-sref="root.home"><a >Home</a></li>
+                    <li ui-sref="root.rates"><a >Get Forex rates</a></li>
+                    <li ui-sref="root.classifier"><a >Analysis</a></li>
 
-            </ul>
+                </ul>
+
         </div>
     </nav>
-
-    <h3> Forex rates analysis Inc. </h3>
-    <div class="msi-content" ui-view ng-cloak></div>
-
 </div>
+    <div class="bs-component">
+        <div class="msi-content" ui-view ng-cloak></div>
+    </div>
+
+
