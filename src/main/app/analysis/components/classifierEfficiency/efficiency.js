@@ -40,7 +40,7 @@ function Controller($scope,ClassifierListService) {
 Controller.$inject = ['$scope','ClassifierListService'];
 require('./efficiency.scss');
 
-module.component('efficiencyList', {
+module.component('classifierEfficiency', {
     controller: Controller,
     templateUrl: require('efficiency.html')
 

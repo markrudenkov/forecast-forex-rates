@@ -38,10 +38,10 @@ function Controller($scope,ClassifierListService) {
 
 
 Controller.$inject = ['$scope','ClassifierListService'];
-require('./classifier.scss');
+require('./forecast.scss');
 
-module.component('analysisList', {
+module.component('forecastPanel', {
     controller: Controller,
-    templateUrl: require('./classifier.html')
+    templateUrl: require('./forecast.html')
 
 });

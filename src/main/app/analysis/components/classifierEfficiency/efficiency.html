@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="container">
+    <div class="row">
+        <div>
+            <h1 id="tables">Classifier efficiency</h1>
+            <h2>Select the currency pair</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="group">
+            <div class="btn-group" >
+                <label ng-repeat="(index, currency) in $ctrl.currencyPairs1" class="btn btn-raised btn-primary" ng-model="$parent.radioModel" uib-btn-radio="'{{index}}'">{{currency.name}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <br>
+        <form name="myForm" >
+            <h2>Select clasification method</h2>
+            <div class="radio radio-primary">
+                <ul>
+                    <ol ng-repeat="classifier in $ctrl.classifiers">
+                        <label>{{classifier.name}}
+                            <input type="radio" ng-model="radioButton" id="optionsRadios1" name="name" ng-disabled='{{classifier.disabled}}' value="{{classifier.name}}" required  />
+                            <span class="circle"></span>
+                            <span class="check"></span>
+                        </label>
 
-</body>
-</html>
+                    </ol>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div >
+            <button type="button" class="btn btn-raised btn-success" ng-click="$ctrl.analyse()">Analyse</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="bs-component">
+            <table table class="table table-striped table-hover ">
+                <thead>
+                <tr>
+                    <td>Symbol</td>
+                    <td>Forecast bar</td>
+                </tr>
+                </thead>
+                <tbody ng-if="$ctrl.analysisResults != null">
+                <tr>
+                    <td>{{$ctrl.analysisResults.symbol}}</td>
+                    <td>{{$ctrl.analysisResults.forecastedBar}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
