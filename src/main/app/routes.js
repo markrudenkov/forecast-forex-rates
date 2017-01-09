@@ -26,9 +26,10 @@ module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
         isPublic: true
       }
     })
-        .state('root.classifier', {
-          url: '/classifier',
-          template: "<classifier-List></classifier-List>",
+
+    .state('root.analysis', {
+          url: '/analysis',
+          template: "<analysis-List></analysis-List>",
           data: {
             isPublic: true
           }

@@ -36,9 +36,9 @@ public class UpdateService {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    public void currencyUpdate(String symbol, DateTime endDate) {
-        DateTime startDate = getLastEntry(symbol).getDate();
-        getUpdate(symbol, startDate, endDate);
+    public void currencyUpdate(String symbol) {
+        DateTime startDate = getLastEntry(symbol).getDate().plusDays(1);
+        getUpdate(symbol, startDate, new DateTime());
     }
 
     public void getUpdate(String symbol, DateTime startDate, DateTime endDate) {

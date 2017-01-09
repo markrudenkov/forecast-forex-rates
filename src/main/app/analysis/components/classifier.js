@@ -22,7 +22,6 @@ function Controller($scope,ClassifierListService) {
             function(response){
             console.log(response);
                vm.analysisResults = response.data;
-               console.log('clasiffication done');
                console.log(vm.analysisResults);
            },
            function(err){
@@ -35,23 +34,13 @@ function Controller($scope,ClassifierListService) {
             );
 
     }
-
-
-
-
-
-    vm.$onInit = function() {
-       console.log('controlleriukas');
-    };
-
-
 }
 
 
 Controller.$inject = ['$scope','ClassifierListService'];
 require('./classifier.scss');
 
-module.component('classifierList', {
+module.component('analysisList', {
     controller: Controller,
     templateUrl: require('./classifier.html')
 

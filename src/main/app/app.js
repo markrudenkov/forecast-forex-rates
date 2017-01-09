@@ -3,7 +3,7 @@ require('main_component');
 require('routes');
 require('home');
 require('rates');
-require('classifier');
+require('analysis');
 
 
 angular.bootstrap(document, ['spaApp']);
