@@ -1,4 +1,4 @@
-package spaApp.NaiveBayesClassifier.service;
+package spaApp.classifier.service;
 
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
@@ -19,6 +19,8 @@ public class DataDiscretisationRMEP {
     private Dataset dicretizedDataSet = new DefaultDataset();
     private int atributes;
 
+
+
     @Autowired
     NaiveBayesService naiveBayesService;
 
@@ -32,6 +34,13 @@ public class DataDiscretisationRMEP {
         recursiveMinimalEntropyPartitioning.filter(dicretizedDataSet);
         return dicretizedDataSet;
     }
+
+ /*   public void trainingAndTestSetsDicretisation(Dataset trainingSet, Dataset testSet) {
+
+        recursiveMinimalEntropyPartitioning.build(trainingSet);
+        recursiveMinimalEntropyPartitioning.filter(dicretizedDataSet);
+        return dicretizedDataSet;
+    }*/
 
     public int getAtributes() {
         return atributes;

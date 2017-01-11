@@ -1,4 +1,4 @@
-package spaApp.NaiveBayesClassifier.model;
+package spaApp.classifier.model;
 
 import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;

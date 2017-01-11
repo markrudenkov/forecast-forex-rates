@@ -37,7 +37,7 @@ function Controller($scope,ClassifierListService) {
 }
 
 
-Controller.$inject = ['$scope','ClassifierListService'];
+Controller.$inject = ['$scope','ClassifierEfficiencyService'];
 require('./efficiency.scss');
 
 module.component('classifierEfficiency', {
