@@ -1,13 +1,10 @@
-package spaApp.NaiveBayesClassifier.controller;
+package spaApp.classifier.controller;
 
-import net.sf.javaml.core.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import spaApp.NaiveBayesClassifier.service.NaiveBayesService;
+import spaApp.classifier.model.Forecast;
+import spaApp.classifier.service.NaiveBayesService;
 import spaApp.rates.model.Instrument.Instrument;
-import spaApp.rates.model.Query.Rate;
-
-import java.util.List;
 
 @RestController
 public class NaiveBayesController {
@@ -23,7 +20,7 @@ public class NaiveBayesController {
 
 
     @RequestMapping(method = RequestMethod.POST, path = "/api/analysis")
-    public Object analysis (@RequestBody Instrument instrument)  {
+    public Forecast analysis (@RequestBody Instrument instrument)  {
         return naiveBayesService.getAnalysis(instrument);
     }
 }

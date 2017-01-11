@@ -1,17 +1,15 @@
-package spaApp.NaiveBayesClassifier.service;
+package spaApp.classifier.service;
 
 
 import net.sf.javaml.classification.Classifier;
 import net.sf.javaml.classification.bayes.NaiveBayesClassifier;
 import net.sf.javaml.core.Dataset;
-import net.sf.javaml.core.DefaultDataset;
-import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;
-import net.sf.javaml.filter.discretize.RecursiveMinimalEntropyPartitioning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spaApp.NaiveBayesClassifier.model.DataSet;
-import spaApp.NaiveBayesClassifier.model.RateInstance;
+import spaApp.classifier.model.DataSet;
+import spaApp.classifier.model.Forecast;
+import spaApp.classifier.model.RateInstance;
 
 import spaApp.rates.model.Instrument.Instrument;
 import spaApp.rates.model.Query.Rate;
@@ -57,7 +55,10 @@ public class NaiveBayesService {
         return  predictedClassValue;
     }
 
-    public Object getAnalysis (Instrument instrument){
-        return classification(4, instrument.getSymbol());
+    public Forecast getAnalysis (Instrument instrument){
+        Forecast forecast = new Forecast();
+         forecast.setForecastedBar(classification(4, instrument.getSymbol()).toString() );
+         forecast.setSymbol(instrument.getSymbol());
+        return forecast;
     }
 }

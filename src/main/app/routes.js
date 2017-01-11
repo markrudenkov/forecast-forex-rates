@@ -26,14 +26,22 @@ module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
         isPublic: true
       }
     })
-        .state('root.classifier', {
-          url: '/classifier',
-          template: "<classifier-List></classifier-List>",
+
+    .state('root.forecast', {
+          url: '/analysis/forecast',
+          template: "<forecast-panel></forecast-panel>",
           data: {
             isPublic: true
           }
         })
 
+     .state('root.efficiency', {
+              url: '/analysis/efficiency',
+              template: "<classifier-efficiency></classifier-efficiency>",
+              data: {
+                isPublic: true
+              }
+            })
 
 
 });

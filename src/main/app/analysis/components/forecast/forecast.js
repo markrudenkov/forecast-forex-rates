@@ -10,18 +10,18 @@ function Controller($scope,ClassifierListService) {
     vm.analysisResults=[];
     $scope.radioModel= 0;
     $scope.currentsymbol1=vm.currencyPairs1[$scope.radioModel].name;
-    vm.classifiers =[ { name: "bayes" , disabled : 'false'},{ name: "svm", disabled : "true" },{ name: "som" , disabled : "true"}];
+    vm.classifiers =[ { name: "bayes" , disabled : 'false'},{ name: "svm", disabled : "true" },{ name: "weka" , disabled : "true"}];
     $scope.radioButton;
 
 
     function analyse(){
-    vm.analysisPrameters.symbol=vm.currencyPairs[$scope.radioModel].code;
-    /*vm.analysisPrameters.method=radioButton;*/
+    vm.analysisPrameters.symbol=vm.currencyPairs1[$scope.radioModel].code;
+    vm.analysisPrameters.method=$scope.radioButton;
 
-  /*  ClassifierListService.analyse(analysisPrameters).then(
+   ClassifierListService.analyse(vm.analysisPrameters).then(
             function(response){
+            console.log(response);
                vm.analysisResults = response.data;
-               console.log('clasiffication done');
                console.log(vm.analysisResults);
            },
            function(err){
@@ -31,27 +31,17 @@ function Controller($scope,ClassifierListService) {
                   console.log('Error',err);
               }
           }
-            );*/
+            );
 
     }
-
-
-
-
-
-    vm.$onInit = function() {
-       console.log('controlleriukas');
-    };
-
-
 }
 
 
 Controller.$inject = ['$scope','ClassifierListService'];
-require('./classifier.scss');
+require('./forecast.scss');
 
-module.component('classifierList', {
+module.component('forecastPanel', {
     controller: Controller,
-    templateUrl: require('./classifier.html')
+    templateUrl: require('./forecast.html')
 
 });
