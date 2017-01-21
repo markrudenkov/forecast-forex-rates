@@ -1,7 +1,7 @@
-package spaApp.classifier.model;
+package spaApp.Classifier.model;
 
 
-public class Forecast {
+public class Analysis {
 
     String forecastedBar;
     String symbol;
