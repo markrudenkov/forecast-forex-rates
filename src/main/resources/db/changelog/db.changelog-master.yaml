@@ -159,3 +159,189 @@ databaseChangeLog:
                 name: adj_close
                 value: '0.9'
             tableName: rates
+
+  - changeSet:
+      id: 6
+      author: Mark
+      changes:
+        - createTable:
+            tableName: oauth_access_token
+            columns:
+              - column:
+                  name: authentication_id
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: token
+                  type: blob
+              - column:
+                  name: token_id
+                  type: varchar(255)
+              - column:
+                  name: user_name
+                  type: varchar(255)
+              - column:
+                  name: client_id
+                  type: varchar(255)
+              - column:
+                  name: authentication
+                  type: blob
+              - column:
+                  name: refresh_token
+                  type: varchar(255)
+
+  - changeSet:
+      id: 7
+      author: Mark
+      changes:
+        - createTable:
+            tableName: oauth_refresh_token
+            columns:
+              - column:
+                  name: token
+                  type: blob
+              - column:
+                  name: token_id
+                  type: varchar(255)
+              - column:
+                  name: authentication
+                  type: blob
+
+  - changeSet:
+      id: 8
+      author: Mark
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(60)
+              - column:
+                  name: enabled
+                  type: boolean
+              - column:
+                  name: name
+                  type: nvarchar(60)
+              - column:
+                  name: email
+                  type: nvarchar(60)
+              - column:
+                  name: phone
+                  type: nvarchar(60)
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: unique_usr_usrname
+            deferrable: true
+            disabled: true
+            initiallyDeferred: true
+            tableName: users
+        - addAutoIncrement:
+              columnDataType: int
+              columnName: id
+              incrementBy: 1
+              startWith: 1
+              tableName: users
+  - changeSet:
+      id: 9
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: username
+                value: 'admin'
+            - column:
+                name: password
+                value: '$2a$10$goYUjJpDuhxXrFWO60lPkufOIEMoUQ9MmdkHYb2q6k0lVlEJH2Nve'
+            - column:
+                name: enabled
+                valueBoolean: true
+            - column:
+                name: name
+                value: 'adminas'
+            - column:
+                name: email
+                value: 'admin@gmail.com'
+            - column:
+                name: phone
+                value: '+37060000000'
+            tableName: users
+
+  - changeSet:
+      id: 10
+      author: Mark
+      changes:
+        - createTable:
+            tableName: authorities
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: authority
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: authorities
+            constraintName: fk_username_auth
+            referencedColumnNames: id
+            referencedTableName: users
+        - createIndex:
+            columns:
+              - column:
+                  name: username
+            indexName: idx_authorities_username
+            tableName: authorities
+        - addAutoIncrement:
+              columnDataType: int
+              columnName: id
+              incrementBy: 1
+              startWith: 1
+              tableName: authorities
+
+  - changeSet:
+      id: 11
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: user_id
+                value: 1
+            - column:
+                name: username
+                value: 'admin'
+            - column:
+                name: authority
+                value: 'ROLE_ADMIN'
+            tableName: authorities

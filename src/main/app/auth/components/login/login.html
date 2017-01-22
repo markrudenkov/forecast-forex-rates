@@ -1,0 +1,22 @@
+<div class="login-panel">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="spa-signin ">
+                <form>
+                    <label for="inputUsername" class="sr-only">Username</label>
+                    <input type="text" id="inputUsername"
+                           class="form-control"
+                           placeholder="Username" required autofocus
+                           ng-model="$ctrl.username">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword"
+                           class="form-control" placeholder="Password" required
+                           ng-model="$ctrl.password">
+                    <button class="btn btn-lg btn-block btn-raised btn-primary" type="submit" ng-click="$ctrl.login()">
+                        Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
