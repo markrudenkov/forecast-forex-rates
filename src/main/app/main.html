@@ -2,11 +2,12 @@
     <nav class="navbar navbar-default ">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a ng-show="true" class="navbar-brand" >Future rates</a>
+                <a ng-show="true" class="navbar-brand" >Future Rates</a>
             </div>
                 <ul class="nav navbar-nav">
                     <li ui-sref="root.home"><a >Home</a></li>
                     <li ui-sref="root.rates"><a >Get Forex rates</a></li>
+                    <li ui-sref="root.login"><a >login</a></li>
                     <li  class="dropdown" uib-dropdown>
                         <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
                         <ul class="dropdown-menu" uib-dropdown-menu>
@@ -14,8 +15,14 @@
                             <li ui-sref="root.efficiency"><a > Classifier accuracy</a></li>
                         </ul>
                     </li>
-
                 </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li ng-class="{active: $ctrl.getCurrentState() == 'root.login'}"><a ng-show="!$ctrl.isLoggedIn()" ui-sref="root.login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a ng-click="$ctrl.logout()" href="#" ng-show="$ctrl.isLogoutVisible()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+
         </div>
     </nav>
 </div>

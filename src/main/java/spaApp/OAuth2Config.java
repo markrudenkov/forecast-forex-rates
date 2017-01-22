@@ -1,4 +1,3 @@
-
 package spaApp;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class OAuth2Config implements AuthorizationServerConfigurer, ResourceServ
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter c = new JwtAccessTokenConverter();
-        c.setSigningKey("superrandomsigningkey");
+        c.setSigningKey("ombhurbhuvasvaha");
         return c;
     }
 //

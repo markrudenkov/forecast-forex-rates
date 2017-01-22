@@ -1,4 +1,4 @@
-package spaApp.classifier.model;
+package spaApp.Classifier.model;
 
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
@@ -15,16 +15,14 @@ public class DataSet extends RateInstance{
 
     private Dataset dataset;
     private double trainingDataSetPercentage = 0.7;
-    @Autowired
-    RateService rateService;
 
-    @Autowired
-    RateRepository rateRepository;
+    public DataSet(int atributes) {
+        super(atributes);
+    }
 
-    public Dataset buildDataSet(int atributes, List<Rate> rates) {
+    public Dataset buildDataSet(List<Rate> rates) {
         Dataset ratesDS = new DefaultDataset();
-        this.atributes =atributes;
-        for (int i = atributes; i < rates.size(); i++) {
+        for (int i = this.atributes; i < rates.size(); i++) {
             ratesDS.add(createInstance(i, rates));
         }
         return ratesDS;

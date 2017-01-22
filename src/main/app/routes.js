@@ -42,11 +42,18 @@ module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
                 isPublic: true
               }
             })
+    .state('root.login', {
+      url: "/login",
+      template: "<login></login>",
+      data: {
+        isPublic: true
+      }
+    })
 
 
 });
 
-module.run(['$http', function($http){
+module.run(['Session','$state','$http', function(Session,$state,$http){
 
 }]);
 

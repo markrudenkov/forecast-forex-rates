@@ -4,6 +4,6 @@ require('routes');
 require('home');
 require('rates');
 require('analysis');
-
+require('auth');
 
 angular.bootstrap(document, ['spaApp']);

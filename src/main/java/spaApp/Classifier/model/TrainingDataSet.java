@@ -1,7 +1,6 @@
-package spaApp.classifier.model;
+package spaApp.Classifier.model;
 
 import net.sf.javaml.core.Dataset;
-import net.sf.javaml.core.DefaultDataset;
 import spaApp.rates.model.Query.Rate;
 
 import java.util.ArrayList;
@@ -10,12 +9,16 @@ import java.util.List;
 
 public class TrainingDataSet extends DataSet {
 
+    public TrainingDataSet(int atributes) {
+        super(atributes);
+    }
+
     public Dataset buildTrainingDataSet(int atributes, List<Rate> rates){
         List<Rate> trainingRates = new ArrayList<>();
         for(int i=0; i < rates.size()*getTrainingDataSetPercentage();i++){
             trainingRates.add(rates.get(i));
         }
-        Dataset trainingDataset = buildDataSet(atributes,trainingRates);
+        Dataset trainingDataset = buildDataSet(trainingRates);
         return trainingDataset;
     }
 }

@@ -1,4 +1,4 @@
-package spaApp.classifier.model;
+package spaApp.Classifier.model;
 
 import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;
@@ -11,20 +11,24 @@ public class RateInstance {
 
     protected int atributes;
 
+    public RateInstance(int atributes) {
+        this.atributes = atributes;
+    }
+
     protected Instance createInstance(int classValuePosition, List<Rate> rates) {
         Instance instance = new DenseInstance(getAtributesArray(classValuePosition, rates));
         instance.setClassValue(estimateClassValue(classValuePosition, rates));
         return instance;
     }
 
-    public  Instance createUnclasifiedInstance(int atributes, List<Rate> rates){
-        Instance instance = new DenseInstance(getAtributesArray(atributes, rates));
+    public  Instance createUnclasifiedInstance(List<Rate> rates){
+        Instance instance = new DenseInstance(getAtributesArray(this.atributes, rates));
         return instance;
     }
 
     private double[] getAtributesArray(int classValuePosition, List<Rate> rates) {
         List<Double> atributesList = new ArrayList<Double>();
-        for (int j = classValuePosition - atributes; j < classValuePosition; j++) {
+        for (int j = classValuePosition - this.atributes; j < classValuePosition; j++) {
             Rate rate = rates.get(j);
             atributesList.add(rate.getOpen().doubleValue());
             atributesList.add(rate.getHigh().doubleValue());
@@ -47,7 +51,7 @@ public class RateInstance {
     }
 
     public int getAtributes() {
-        return atributes;
+        return this.atributes;
     }
 
     public void setAtributes(int atributes) {
