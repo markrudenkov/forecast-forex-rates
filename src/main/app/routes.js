@@ -4,6 +4,8 @@ var module = angular.module('spaApp');
 module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
 
 
+$httpProvider.interceptors.push('sessionInvalidationInterceptor');
+
   // For any unmatched url, redirect to /
   $urlRouterProvider.otherwise("/");
   //
@@ -52,6 +54,33 @@ module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
 
 
 });
+
+
+module.factory('sessionInvalidationInterceptor', ['Session', '$state', '$q', function(Session, $state, $q) {
+      return {
+          request: function(config) {
+            if (Session.getToken()){
+                if (Session.isSessionActive()) {
+                    config.headers.Authorization = 'Bearer ' + Session.getToken();
+                } else {
+                    Session.invalidate();
+                    if (config.headers.Authorization) {
+                        delete config.headers.Authorization;
+                    }
+                    $state.go('root.login');
+                }
+            }
+            return config;
+          },
+          responseError: function(rejection){
+              if(rejection.status == 401){
+                  Session.invalidate();
+                  $state.go('root.login');
+              }
+              return $q.reject(rejection);
+          }
+      }
+}]);
 
 module.run(['Session','$state','$http', function(Session,$state,$http){
 

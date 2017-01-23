@@ -1,15 +1,14 @@
-package spaApp.Classifier.service;
+package spaApp.base_classifier.service;
 
 import net.sf.javaml.classification.Classifier;
-import net.sf.javaml.classification.bayes.NaiveBayesClassifier;
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.Instance;
 import net.sf.javaml.filter.discretize.RecursiveMinimalEntropyPartitioning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spaApp.Classifier.model.DataSet;
-import spaApp.Classifier.model.TestDataSet;
-import spaApp.Classifier.model.TrainingDataSet;
+import spaApp.base_classifier.model.DataSet;
+import spaApp.base_classifier.model.TestDataSet;
+import spaApp.base_classifier.model.TrainingDataSet;
 import spaApp.rates.model.Query.Rate;
 import spaApp.rates.service.RateService;
 
@@ -24,22 +23,24 @@ public class ClassifierService {
     RateService rateService;
 
     //Returns Classifiers performance of randomly generated sets
-    public double getAveragePerformance(int atributes,String currency, Classifier classifier,boolean datafilter){
+    public double getAveragePerformance(int atributes, String currency, Classifier classifier, boolean datafilter) {
         List<Rate> rates = rateService.getAllCurrencyRates(currency);
         List<Double> accuracySet = new ArrayList();
-        for(int i = 0;i <100;i++){
+        for (int i = 0; i < 100; i++) {
             Collections.shuffle(rates);
-            Dataset trainingSet = new TrainingDataSet(atributes).buildTrainingDataSet(atributes,rates);
-            Dataset testSet = new TestDataSet(atributes).buildTestDataSet(atributes,rates);
-            if (datafilter){filterTestSetAndTrainingSet(testSet,trainingSet);}
+            Dataset trainingSet = new TrainingDataSet(atributes).buildTrainingDataSet(rates);
+            Dataset testSet = new TestDataSet(atributes).buildTestDataSet(rates);
+            if (datafilter) {
+                filterTestSetAndTrainingSet(testSet, trainingSet);
+            }
             classifier.buildClassifier(trainingSet);
-            accuracySet.add(getClassifierPerformance(testSet,classifier));
+            accuracySet.add(getClassifierPerformance(testSet, classifier));
         }
-        return  countAveragePerformance(accuracySet);
+        return countAveragePerformance(accuracySet);
     }
 
     //Data dicretisation by Recursive Minimal Entropy Partitioning
-    protected void filterTestSetAndTrainingSet(Dataset testSet, Dataset trainingSet){
+    protected void filterTestSetAndTrainingSet(Dataset testSet, Dataset trainingSet) {
         RecursiveMinimalEntropyPartitioning rmep = new RecursiveMinimalEntropyPartitioning(true);
         rmep.build(trainingSet);
         rmep.filter(trainingSet);
@@ -47,24 +48,26 @@ public class ClassifierService {
     }
 
     //Returns Classifiers performance per dataset
-    protected double getClassifierPerformance(Dataset testSet, Classifier classifier){
-        int correct=0;
-        for(Instance instance : testSet){
-            Object predictedClassValue =classifier.classify(instance);
+    protected double getClassifierPerformance(Dataset testSet, Classifier classifier) {
+        int correct = 0;
+        for (Instance instance : testSet) {
+            Object predictedClassValue = classifier.classify(instance);
             Object realClassValue = instance.classValue();
-            if (predictedClassValue.equals(realClassValue)){correct++;}
+            if (predictedClassValue.equals(realClassValue)) {
+                correct++;
+            }
         }
-        double performance=correct*100/(testSet.size());
+        double performance = correct * 100 / (testSet.size());
         return performance;
     }
 
-    protected double countAveragePerformance(List<Double> accuracySet){
-        double averageAccurracy=0;
-        for (double accuracy : accuracySet){
-            averageAccurracy+=accuracy;
+    protected double countAveragePerformance(List<Double> accuracySet) {
+        double averageAccurracy = 0;
+        for (double accuracy : accuracySet) {
+            averageAccurracy += accuracy;
         }
-        averageAccurracy/=accuracySet.size();
-        return  averageAccurracy;
+        averageAccurracy /= accuracySet.size();
+        return averageAccurracy;
     }
 
     protected Dataset createDataSet(int atributes, String currency) {
@@ -73,7 +76,7 @@ public class ClassifierService {
         return dataset.buildDataSet(rates);
     }
 
-    protected void filterDatasetAndInstance(Dataset dataSet,Instance instance){
+    protected void filterDatasetAndInstance(Dataset dataSet, Instance instance) {
         RecursiveMinimalEntropyPartitioning rmep = new RecursiveMinimalEntropyPartitioning(true);    //Data dicretisation by Recursive Minimal Entropy Partitioning
         rmep.build(dataSet);
         rmep.filter(dataSet);

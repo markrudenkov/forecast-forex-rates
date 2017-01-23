@@ -29,8 +29,8 @@ public abstract class BaseRepository<E extends ModelDb> extends JdbcRepository<E
 
     protected static Map<String, Object> mapOf(Object... values) {
         Map<String, Object> map = new HashMap<>();
-        for (int i = 0; i < values.length - 1; i+=2) {
-            map.put(values[i].toString(), values[i+1]);
+        for (int i = 0; i < values.length - 1; i += 2) {
+            map.put(values[i].toString(), values[i + 1]);
         }
         return Collections.unmodifiableMap(map);
     }

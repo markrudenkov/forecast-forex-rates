@@ -1,4 +1,4 @@
-package spaApp.Classifier.model;
+package spaApp.base_classifier.model;
 
 
 public class Analysis {

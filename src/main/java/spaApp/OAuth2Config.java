@@ -36,29 +36,30 @@ public class OAuth2Config implements AuthorizationServerConfigurer, ResourceServ
         c.setSigningKey("ombhurbhuvasvaha");
         return c;
     }
-//
+
+    //
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer.tokenKeyAccess("isAnonymous() || hasAuthority('ROLE_TRUSTED_CLIENT')")
-                   .checkTokenAccess("hasAuthority('ROLE_TRUSTED_CLIENT')");
+                .checkTokenAccess("hasAuthority('ROLE_TRUSTED_CLIENT')");
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager)
-                 .accessTokenConverter(accessTokenConverter())
-                 .tokenStore(tokenStore());
+                .accessTokenConverter(accessTokenConverter())
+                .tokenStore(tokenStore());
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-               .withClient("web-ui")
-               .authorizedGrantTypes("password", "refresh_token", "implicit")
-              .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-               .scopes("read", "write", "trust")
-               .accessTokenValiditySeconds(60 * 30)
-               .refreshTokenValiditySeconds(60 * 60);
+                .withClient("web-ui")
+                .authorizedGrantTypes("password", "refresh_token", "implicit")
+                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+                .scopes("read", "write", "trust")
+                .accessTokenValiditySeconds(60 * 30)
+                .refreshTokenValiditySeconds(60 * 60);
     }
 
     @Override
