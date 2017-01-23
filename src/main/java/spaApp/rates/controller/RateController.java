@@ -15,7 +15,7 @@ public class RateController {
     RateService rateService = new RateService();
 
     @RequestMapping(method = RequestMethod.POST, path = "/api/query")
-    public List<Rate> selectInstrument (@RequestBody Instrument instrument)  {
+    public List<Rate> selectInstrument(@RequestBody Instrument instrument) {
         return rateService.selectInstrument(instrument);
     }
 

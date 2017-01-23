@@ -1,17 +1,14 @@
-package spaApp.Classifier.model;
+package spaApp.base_classifier.model;
 
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import spaApp.rates.model.Query.Rate;
-import spaApp.rates.repository.RateRepository;
-import spaApp.rates.service.RateService;
 
 import java.util.List;
 
 
-public class DataSet extends RateInstance{
+public class DataSet extends RateInstance {
 
     private Dataset dataset;
     private double trainingDataSetPercentage = 0.7;

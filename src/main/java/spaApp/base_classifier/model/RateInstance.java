@@ -1,9 +1,10 @@
-package spaApp.Classifier.model;
+package spaApp.base_classifier.model;
 
 import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;
 import org.apache.commons.lang3.ArrayUtils;
 import spaApp.rates.model.Query.Rate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class RateInstance {
         return instance;
     }
 
-    public  Instance createUnclasifiedInstance(List<Rate> rates){
+    public Instance createUnclasifiedInstance(List<Rate> rates) {
         Instance instance = new DenseInstance(getAtributesArray(this.atributes, rates));
         return instance;
     }

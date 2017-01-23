@@ -3,6 +3,7 @@ var module = angular.module('spaApp');
 
 module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
 
+$httpProvider.interceptors.push('sessionInvalidationInterceptor');
 
   // For any unmatched url, redirect to /
   $urlRouterProvider.otherwise("/");
@@ -23,7 +24,7 @@ module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
       url: '/rates',
       template: "<rates-list></rates-list>",
       data: {
-        isPublic: true
+        roles: ["ROLE_ADMIN"]
       }
     })
 
@@ -31,7 +32,7 @@ module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
           url: '/analysis/forecast',
           template: "<forecast-panel></forecast-panel>",
           data: {
-            isPublic: true
+            roles: ["ROLE_ADMIN"]
           }
         })
 
@@ -39,9 +40,10 @@ module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
               url: '/analysis/efficiency',
               template: "<classifier-efficiency></classifier-efficiency>",
               data: {
-                isPublic: true
+                roles: ["ROLE_ADMIN"]
               }
             })
+
     .state('root.login', {
       url: "/login",
       template: "<login></login>",
@@ -49,11 +51,60 @@ module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
         isPublic: true
       }
     })
-
-
 });
 
-module.run(['Session','$state','$http', function(Session,$state,$http){
+
+module.factory('sessionInvalidationInterceptor', ['Session', '$state', '$q', function(Session, $state, $q) {
+      return {
+          request: function(config) {
+            if (Session.getToken()){
+                if (Session.isSessionActive()) {
+                    config.headers.Authorization = 'Bearer ' + Session.getToken();
+                } else {
+                    Session.invalidate();
+                    if (config.headers.Authorization) {
+                        delete config.headers.Authorization;
+                    }
+                    $state.go('root.login');
+                }
+            }
+            return config;
+          },
+          responseError: function(rejection){
+              if(rejection.status == 401){
+                  Session.invalidate();
+                  $state.go('root.login');
+              }
+              return $q.reject(rejection);
+          }
+      }
+}]);
+
+module.run(['$transitions','Session','$state','$http', function($transitions,Session,$state,$http){
+
+     $transitions.onStart(
+        {
+          to: function (state) { return !state.data || !state.data.isPublic; }
+        },
+        function () {
+          if (!Session.isSessionActive()) {
+            return $state.target("root.login");
+          }else if (Session.getRole().indexOf("ROLE_ADMIN") < 0){
+            return $state.target('root.home');
+          }
+
+        });
+
+      /*   $transitions.onStart(
+                {
+                  to: function (state) { return state.data && state.data.roles && state.data.roles.indexOf("ROLE_ADMIN") >= 0; }
+                },
+                function () {
+                   if (Session.getRole().indexOf("ROLE_ADMIN") < 0) {
+                     return $state.target('root.home');
+                   }
+                });*/
+
 
 }]);
 

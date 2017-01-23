@@ -6,9 +6,8 @@
             </div>
                 <ul class="nav navbar-nav">
                     <li ui-sref="root.home"><a >Home</a></li>
-                    <li ui-sref="root.rates"><a >Get Forex rates</a></li>
-                    <li ui-sref="root.login"><a >login</a></li>
-                    <li  class="dropdown" uib-dropdown>
+                    <li ><a ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" ui-sref="root.rates">Get Forex rates</a></li>
+                    <li  ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" class="dropdown" uib-dropdown>
                         <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
                         <ul class="dropdown-menu" uib-dropdown-menu>
                             <li ui-sref="root.forecast"><a >Forecast</a></li>

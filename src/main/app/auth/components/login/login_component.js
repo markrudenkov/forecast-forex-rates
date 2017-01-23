@@ -27,7 +27,6 @@ function Controller($rootScope, $state, AuthService, Session) {
                     $state.go('root.home');
                  }
                 $rootScope.$emit('userLoggedIn', {});
-                console.log('event1');
             },
             function (err) {
                 vm.error = err.data.error_description;
