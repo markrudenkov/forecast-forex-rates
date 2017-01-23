@@ -36,9 +36,9 @@ $httpProvider.interceptors.push('sessionInvalidationInterceptor');
           }
         })
 
-     .state('root.efficiency', {
-              url: '/analysis/efficiency',
-              template: "<classifier-efficiency></classifier-efficiency>",
+     .state('root.performance', {
+              url: '/analysis/performance',
+              template: "<classifier-performance></classifier-performance>",
               data: {
                 roles: ["ROLE_ADMIN"]
               }
@@ -94,17 +94,6 @@ module.run(['$transitions','Session','$state','$http', function($transitions,Ses
           }
 
         });
-
-      /*   $transitions.onStart(
-                {
-                  to: function (state) { return state.data && state.data.roles && state.data.roles.indexOf("ROLE_ADMIN") >= 0; }
-                },
-                function () {
-                   if (Session.getRole().indexOf("ROLE_ADMIN") < 0) {
-                     return $state.target('root.home');
-                   }
-                });*/
-
 
 }]);
 

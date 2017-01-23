@@ -26,7 +26,7 @@ public class NaiveBayesController {
         return naiveBayesService.getForecast(instrument);
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/api/efficiency")
+    @RequestMapping(method = RequestMethod.POST, path = "/api/performance")
     public Analysis analysis(@RequestBody Instrument instrument) {
         return naiveBayesPerformanceService.getAnalysis(instrument);
     }

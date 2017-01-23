@@ -1,2 +1,2 @@
-require('classifierEfficiency/efficiency.js');
+require('classifierEfficiency/performance.js');
 require('forecast/forecast.js');

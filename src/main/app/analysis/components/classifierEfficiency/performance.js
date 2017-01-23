@@ -1,6 +1,6 @@
 var module = require('main_module');
 
-function Controller($scope,ClassifierListService) {
+function Controller($scope,ClassifierPerformanceService) {
     //Convention to call controller instance 'vm'
     var vm = this;
 
@@ -18,7 +18,7 @@ function Controller($scope,ClassifierListService) {
     vm.analysisPrameters.symbol=vm.currencyPairs1[$scope.radioModel].code;
     vm.analysisPrameters.method=$scope.radioButton;
 
-   ClassifierListService.analyse(vm.analysisPrameters).then(
+   ClassifierPerformanceService.analyse(vm.analysisPrameters).then(
             function(response){
             console.log(response);
                vm.analysisResults = response.data;
@@ -37,11 +37,11 @@ function Controller($scope,ClassifierListService) {
 }
 
 
-Controller.$inject = ['$scope','ClassifierEfficiencyService'];
-require('./efficiency.scss');
+Controller.$inject = ['$scope','ClassifierPerformanceService'];
+require('./performance.scss');
 
-module.component('classifierEfficiency', {
+module.component('classifierPerformance', {
     controller: Controller,
-    templateUrl: require('efficiency.html')
+    templateUrl: require('performance.html')
 
 });

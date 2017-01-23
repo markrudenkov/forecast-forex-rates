@@ -1,9 +1,21 @@
 # Description
 
 
-The purpose of this single page application (SPA) is to fetch the quotes from Yahoo.
+The purpose of this application is to analyse Forex rates with Bayes Classifier
+
+
+Source of the Forex rates - Yahoo.
 
 The application is under continuous development.
+
+
+
+### Functionalities
+
+You could:
+    get forecast bar estimated with Bayes Calssifier : white(price up)/ black (price down);
+    estimate performance of the classifier;
+
 
 
 
