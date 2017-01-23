@@ -3,7 +3,6 @@ var module = angular.module('spaApp');
 
 module.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
 
-
 $httpProvider.interceptors.push('sessionInvalidationInterceptor');
 
   // For any unmatched url, redirect to /
@@ -25,7 +24,7 @@ $httpProvider.interceptors.push('sessionInvalidationInterceptor');
       url: '/rates',
       template: "<rates-list></rates-list>",
       data: {
-        isPublic: true
+        roles: ["ROLE_ADMIN"]
       }
     })
 
@@ -33,7 +32,7 @@ $httpProvider.interceptors.push('sessionInvalidationInterceptor');
           url: '/analysis/forecast',
           template: "<forecast-panel></forecast-panel>",
           data: {
-            isPublic: true
+            roles: ["ROLE_ADMIN"]
           }
         })
 
@@ -41,9 +40,10 @@ $httpProvider.interceptors.push('sessionInvalidationInterceptor');
               url: '/analysis/efficiency',
               template: "<classifier-efficiency></classifier-efficiency>",
               data: {
-                isPublic: true
+                roles: ["ROLE_ADMIN"]
               }
             })
+
     .state('root.login', {
       url: "/login",
       template: "<login></login>",
@@ -51,8 +51,6 @@ $httpProvider.interceptors.push('sessionInvalidationInterceptor');
         isPublic: true
       }
     })
-
-
 });
 
 
@@ -82,7 +80,31 @@ module.factory('sessionInvalidationInterceptor', ['Session', '$state', '$q', fun
       }
 }]);
 
-module.run(['Session','$state','$http', function(Session,$state,$http){
+module.run(['$transitions','Session','$state','$http', function($transitions,Session,$state,$http){
+
+     $transitions.onStart(
+        {
+          to: function (state) { return !state.data || !state.data.isPublic; }
+        },
+        function () {
+          if (!Session.isSessionActive()) {
+            return $state.target("root.login");
+          }else if (Session.getRole().indexOf("ROLE_ADMIN") < 0){
+            return $state.target('root.home');
+          }
+
+        });
+
+      /*   $transitions.onStart(
+                {
+                  to: function (state) { return state.data && state.data.roles && state.data.roles.indexOf("ROLE_ADMIN") >= 0; }
+                },
+                function () {
+                   if (Session.getRole().indexOf("ROLE_ADMIN") < 0) {
+                     return $state.target('root.home');
+                   }
+                });*/
+
 
 }]);
 

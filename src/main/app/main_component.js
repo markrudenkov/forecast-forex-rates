@@ -7,6 +7,9 @@ function Controller( $state, Session, AuthService) {
     vm.isLoggedIn = isLoggedIn;
     vm.isLogoutVisible = isLogoutVisible;
     vm.logout = logout;
+    vm.isAdmin = isAdmin;
+    vm.isLoggedIn = isLoggedIn;
+    vm.getCurrentState = getCurrentState;
 
     function isLogoutVisible() {
         return Session.isSessionActive();
@@ -23,6 +26,20 @@ function Controller( $state, Session, AuthService) {
     function logout() {
             AuthService.logout();
             $state.go('root.login');
+    }
+
+     function isLoggedIn() {
+             return Session.isSessionActive();
+     }
+
+    function isAdmin() {
+              var role = Session.getRole();
+              role = role && role[0];
+              return "ROLE_ADMIN" == role;
+    }
+
+    function getCurrentState(){
+             return $state.current.name;
     }
 
  }
