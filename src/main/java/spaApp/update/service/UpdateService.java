@@ -3,50 +3,52 @@ package spaApp.update.service;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import spaApp.financial_instruments.model.FinInstrument;
+import spaApp.financial_instruments.service.FinInstrumentService;
 import spaApp.rates.model.Query.QueryWrapper;
-
-import spaApp.rates.model.Query.Rate;
-import spaApp.rates.repository.RateRepository;
-import spaApp.rates.repository.model.RateDb;
 import spaApp.rates.service.RateService;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Service
 public class UpdateService {
 
 
-    int daysInterval = 200;
+    private final int daysInterval = 200;
 
     @Autowired
     RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
-    private RateRepository rateRepository;
+    private RateService rateService;
 
     @Autowired
-    private RateService rateService;
+    private FinInstrumentService finInstrumentService;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    public void currencyUpdate(String symbol) {
-        DateTime startDate = getLastEntry(symbol).getDate().plusDays(1);
-        getUpdate(symbol, startDate, new DateTime());
+    public void updateAllInstruments(){
+        List<FinInstrument> finInstrumentList= finInstrumentService.getAllSymbolCodes();
+        for (FinInstrument finInstrument:finInstrumentList) {
+            currencyUpdate(finInstrument);
+        }
     }
 
-    public void getUpdate(String symbol, DateTime startDate, DateTime endDate) {
+    private  void currencyUpdate(FinInstrument finInstrument) {
+            DateTime startDate = rateService.getLastEntry(finInstrument.getYahooCode()).getDate().plusDays(1);
+            getUpdate(finInstrument.getYahooCode(), startDate, new DateTime());
+    }
+
+    private  void getUpdate(String symbol, DateTime startDate, DateTime endDate) {
         if (!checkAppropriateInteral(startDate, endDate)) {
             while (!checkAppropriateInteral(startDate, endDate)) {
                 endDate = startDate.plusDays(daysInterval);
                 updateCurrency(symbol, startDate, endDate);
-                startDate = getLastEntry(symbol).getDate().plusDays(1);
+                startDate = rateService.getLastEntry(symbol).getDate().plusDays(1);
                 endDate = startDate.plusDays(daysInterval);
             }
         }
@@ -54,7 +56,7 @@ public class UpdateService {
     }
 
     @ResponseBody
-    public void updateCurrency(String symbol, DateTime startDate, DateTime endDate) {
+    private void updateCurrency(String symbol, DateTime startDate, DateTime endDate) {
         String query = getQuery(symbol, startDate, endDate);
         try
         {
@@ -68,27 +70,20 @@ public class UpdateService {
 
     }
 
-    boolean checkAppropriateInteral(DateTime startDate, DateTime endDate) {
+    private boolean checkAppropriateInteral(DateTime startDate, DateTime endDate) {
         return (getDaysInterval(startDate, endDate) <= daysInterval);
     }
 
 
-    int getDaysInterval(DateTime startDate, DateTime endDate) {
+    private int getDaysInterval(DateTime startDate, DateTime endDate) {
         Days days = Days.daysBetween(startDate, endDate);
         return days.getDays();
     }
 
-    @Transactional
-    Rate getLastEntry(String symbol) {
-        RateDb lastEntryDB = rateRepository.selectLastEntry(symbol);
-        Rate lastEntry = rateService.mapToRate(lastEntryDB);
-        return lastEntry;
-    }
+
 
     private String getQuery(String symbol, DateTime startDate, DateTime endDate) {
-
-
-        String query = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"" +
+       String query = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"" +
                 symbol +
                 "\" and startDate= \"" +
                 startDate +

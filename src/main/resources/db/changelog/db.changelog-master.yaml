@@ -18,27 +18,27 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: open
-                  type: float
+                  type: decimal(10,7)
                   constraints:
                     nullable: false
               - column:
                   name: high
-                  type: float
+                  type: decimal(10,7)
                   constraints:
                     nullable: false
               - column:
                   name: low
-                  type: float
+                  type: decimal(10,7)
                   constraints:
                     nullable: false
               - column:
                   name: close
-                  type: float
+                  type: decimal(10,7)
                   constraints:
                     nullable: false
               - column:
                   name: adj_close
-                  type: float
+                  type: decimal(10,7)
                   constraints:
                     nullable: false
         - addPrimaryKey:
@@ -345,3 +345,212 @@ databaseChangeLog:
                 name: authority
                 value: 'ROLE_ADMIN'
             tableName: authorities
+
+  - changeSet:
+      id: 12
+      author: Mark
+      changes:
+        - createTable:
+            tableName: financial_instruments
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: symbol
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: yahoo_code
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: spread
+                  type: decimal(10,7)
+                  constraints:
+                    nullable: false
+        - addAutoIncrement:
+              columnDataType: int
+              columnName: id
+              incrementBy: 1
+              startWith: 1
+              tableName: financial_instruments
+  - changeSet:
+      id: 13
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: id
+                value: 1
+            - column:
+                name: symbol
+                value: "GBP/USD"
+            - column:
+                name: yahoo_code
+                value: 'GBP=X'
+            - column:
+                name: spread
+                value: '0.00046'
+            tableName: financial_instruments
+  - changeSet:
+      id: 14
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: id
+                value: 2
+            - column:
+                name: symbol
+                value: "USD/JPY"
+            - column:
+                name: yahoo_code
+                value: 'JPY=X'
+            - column:
+                name: spread
+                value: '0.048'
+            tableName: financial_instruments
+  - changeSet:
+      id: 15
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: id
+                value: 3
+            - column:
+                name: symbol
+                value: "EUR/USD"
+            - column:
+                name: yahoo_code
+                value: 'EUR=X'
+            - column:
+                name: spread
+                value: '0.00026'
+            tableName: financial_instruments
+  - changeSet:
+      id: 16
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: id
+                value: 4
+            - column:
+                name: symbol
+                value: "AUD/USD"
+            - column:
+                name: yahoo_code
+                value: 'AUD=X'
+            - column:
+                name: spread
+                value: '0.00018'
+            tableName: financial_instruments
+
+  - changeSet:
+      id: 17
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: id
+                value: 5
+            - column:
+                name: symbol
+                value: "NZD/USD"
+            - column:
+                name: yahoo_code
+                value: 'NZD=X'
+            - column:
+                name: spread
+                value: '0.00057'
+            tableName: financial_instruments
+
+  - changeSet:
+      id: 18
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: id
+                value: 6
+            - column:
+                name: symbol
+                value: "USD/CAD"
+            - column:
+                name: yahoo_code
+                value: 'CAD=X'
+            - column:
+                name: spread
+                value: 0.00045
+            tableName: financial_instruments
+
+  - changeSet:
+      id: 19
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: date
+                value: "2016-02-11 11:02:57"
+            - column:
+                name: symbol
+                value: 'JPY=X'
+            - column:
+                name: open
+                value: '0.9'
+            - column:
+                name: high
+                value: '0.9'
+            - column:
+                name: low
+                value: '0.9'
+            - column:
+                name: close
+                value: '0.9'
+            - column:
+                name: adj_close
+                value: '0.9'
+            tableName: rates
+  - changeSet:
+      id: 20
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: date
+                value: "2016-02-11 11:02:57"
+            - column:
+                name: symbol
+                value: 'CAD=X'
+            - column:
+                name: open
+                value: '0.9'
+            - column:
+                name: high
+                value: '0.9'
+            - column:
+                name: low
+                value: '0.9'
+            - column:
+                name: close
+                value: '0.9'
+            - column:
+                name: adj_close
+                value: '0.9'
+            tableName: rates
+

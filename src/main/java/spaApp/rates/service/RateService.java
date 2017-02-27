@@ -20,11 +20,6 @@ public class RateService {
     @Autowired
     private RateRepository repository;
 
-    @Autowired
-    private RateService rateService;
-
-
-
     public List<Rate> selectInstrument(Instrument api) {
         List<Rate> selectedInstrument = new ArrayList();
         for (RateDb quoteDb : repository.selectQuoteDb(api)) {
@@ -35,8 +30,8 @@ public class RateService {
 
     @Transactional
     public List<RateDb> appendQuerryWrapperToDB(QueryWrapper api) {
-        List<RateDb> quoteDbList = rateService.QueryWrapperMapToQuoteDbList(api);
-        rateService.createQuoteRecordInDB(quoteDbList);
+        List<RateDb> quoteDbList = QueryWrapperMapToQuoteDbList(api);
+        createQuoteRecordInDB(quoteDbList);
         return null;
     }
 
@@ -52,7 +47,7 @@ public class RateService {
     public List<RateDb> QueryWrapperMapToQuoteDbList(QueryWrapper api) {
         List<RateDb> quoteDbList = new ArrayList();
         for (Rate rate : api.getQuery().getResults().getQuote()) {
-            quoteDbList.add(mapToQuoteDB(rate));
+            quoteDbList.add(mapToRateDB(rate));
         }
         return quoteDbList;
     }
@@ -67,6 +62,13 @@ public class RateService {
     }
 
     @Transactional
+    public Rate getLastEntry(String symbol) {
+        RateDb lastEntryDB = repository.selectLastEntry(symbol);
+        Rate lastEntry = mapToRate(lastEntryDB);
+        return lastEntry;
+    }
+
+    @Transactional
     public List<Rate> getLastCurrencyRates(int atributes,String currency){
         List<Rate> rates = new ArrayList<>();
         for (RateDb rate : repository.getLastCurrencyRates(atributes,currency)) {
@@ -77,6 +79,7 @@ public class RateService {
 
     public static RateDb mapToRateDB(Long id, Rate api) {
         RateDb db = new RateDb();
+        db.setId(id);
         db.setSymbol(api.getSymbol());
         db.setDate(api.getDate());
         db.setOpen(api.getOpen());
@@ -84,7 +87,6 @@ public class RateService {
         db.setLow(api.getLow());
         db.setClose(api.getClose());
         db.setAdjustedClose(api.getAdjustedClose());
-
         return db;
     }
 
@@ -97,11 +99,10 @@ public class RateService {
         api.setLow(db.getLow());
         api.setClose(db.getClose());
         api.setAdjustedClose(db.getAdjustedClose());
-
         return api;
     }
 
-    private static RateDb mapToQuoteDB(Rate api) {
+    private static RateDb mapToRateDB(Rate api) {
         return mapToRateDB(null, api);
     }
 
