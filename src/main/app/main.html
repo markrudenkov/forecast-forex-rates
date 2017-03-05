@@ -5,13 +5,13 @@
                 <a ng-show="true" class="navbar-brand" >Future Rates</a>
             </div>
                 <ul class="nav navbar-nav">
-                    <li ui-sref="root.home"><a >Home</a></li>
-                    <li ><a ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" ui-sref="root.rates">Get Forex rates</a></li>
+                    <li> <a ui-sref="root.home"> Home</a></li>
+                    <li> <a ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" ui-sref="root.rates">Get Forex rates</a></li>
                     <li  ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" class="dropdown" uib-dropdown>
                         <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
                         <ul class="dropdown-menu" uib-dropdown-menu>
-                            <li ui-sref="root.forecast"><a >Forecast</a></li>
-                            <li ui-sref="root.performance"><a > Classifier performance</a></li>
+                            <li> <a ui-sref="root.forecast">Forecast</a></li>
+                            <li> <a ui-sref="root.performance">Classifier performance</a></li>
                         </ul>
                     </li>
                 </ul>

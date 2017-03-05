@@ -3,10 +3,10 @@ package spaApp.rates.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spaApp.financial_instruments.repository.FinInstrumentRepository;
 import spaApp.rates.model.Instrument.Instrument;
 import spaApp.rates.model.Query.QueryWrapper;
 import spaApp.rates.model.Query.Rate;
-
 import spaApp.rates.repository.RateRepository;
 import spaApp.rates.repository.model.RateDb;
 
@@ -20,6 +20,10 @@ public class RateService {
     @Autowired
     private RateRepository repository;
 
+    @Autowired
+    private FinInstrumentRepository finInstrumentRepository;
+
+
     public List<Rate> selectInstrument(Instrument api) {
         List<Rate> selectedInstrument = new ArrayList();
         for (RateDb quoteDb : repository.selectQuoteDb(api)) {
@@ -29,16 +33,25 @@ public class RateService {
     }
 
     @Transactional
-    public List<RateDb> appendQuerryWrapperToDB(QueryWrapper api) {
-        List<RateDb> quoteDbList = QueryWrapperMapToQuoteDbList(api);
-        createQuoteRecordInDB(quoteDbList);
-        return null;
+    public void appendYahooRatesToDB(QueryWrapper api) {
+        List<RateDb> rateDbList = QueryWrapperMapToQuoteDbList(api);
+        createRateRecordInDB(changeYahooCodeToSymbol(rateDbList));
+    }
+
+    private List<RateDb> changeYahooCodeToSymbol(List<RateDb> quoteDbList) {
+        String symbol = finInstrumentRepository.getFinInstrumentByYahooCode(quoteDbList.get(0).getSymbol()).getSymbol();
+        quoteDbList.stream().forEach(s -> s.setSymbol(symbol));
+        return quoteDbList;
+    }
+
+    private static void mapToSymbol(RateDb db, String symbol) {
+        db.setSymbol(symbol);
     }
 
     @Transactional
-    public List<RateDb> createQuoteRecordInDB(List<RateDb> db) {
-        for (RateDb quoteDb : db) {
-            repository.create(quoteDb);
+    public List<RateDb> createRateRecordInDB(List<RateDb> db) {
+        for (RateDb rateDb : db) {
+            repository.create(rateDb);
         }
         return db;
     }
@@ -69,9 +82,9 @@ public class RateService {
     }
 
     @Transactional
-    public List<Rate> getLastCurrencyRates(int atributes,String currency){
+    public List<Rate> getLastCurrencyRates(int atributes, String currency) {
         List<Rate> rates = new ArrayList<>();
-        for (RateDb rate : repository.getLastCurrencyRates(atributes,currency)) {
+        for (RateDb rate : repository.getLastCurrencyRates(atributes, currency)) {
             rates.add(mapToRate(rate));
         }
         return rates;

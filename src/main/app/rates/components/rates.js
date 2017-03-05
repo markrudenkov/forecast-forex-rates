@@ -16,7 +16,7 @@ function Controller ($scope, QuoteService){
     }
 
     function getQuotes(){
-         symbolAndDate.symbol=vm.currencyPairs[$scope.radioModel].code;
+         symbolAndDate.symbol=vm.currencyPairs[$scope.radioModel].name;
          symbolAndDate.startDate=$scope.startDate;
          symbolAndDate.endDate = $scope.endDate;
          $scope.currentsymbol=vm.currencyPairs[$scope.radioModel].name;

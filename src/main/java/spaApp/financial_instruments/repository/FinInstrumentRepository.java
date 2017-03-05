@@ -8,11 +8,15 @@ import org.springframework.stereotype.Repository;
 import spaApp.financial_instruments.repository.model.FinInstrumentDb;
 import spaApp.utils.repository.BaseRepository;
 
+import java.util.List;
+
 @Repository
 public class FinInstrumentRepository extends BaseRepository<FinInstrumentDb> {
 
     @Autowired
     private JdbcTemplate template;
+    public static final String SELECT_BY_YAHOO_CODE = "SELECT * FROM financial_instruments WHERE yahoo_code = ?";
+
 
     private static final RowMapper<FinInstrumentDb> ROW_MAPPER = (rs, rowNum) -> {
         FinInstrumentDb db = new FinInstrumentDb();
@@ -32,5 +36,10 @@ public class FinInstrumentRepository extends BaseRepository<FinInstrumentDb> {
 
     public FinInstrumentRepository() {
         super(ROW_MAPPER, ROW_UNMAPPER, "financial_instruments", "id");
+    }
+
+    public FinInstrumentDb getFinInstrumentByYahooCode(String yahooCode) {
+        List<FinInstrumentDb> finInstrumentDbList = template.query(SELECT_BY_YAHOO_CODE, new Object[]{yahooCode},  ROW_MAPPER);
+        return finInstrumentDbList.get(0);
     }
 }

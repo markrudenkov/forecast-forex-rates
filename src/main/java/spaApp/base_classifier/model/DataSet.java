@@ -11,7 +11,7 @@ import java.util.List;
 public class DataSet extends RateInstance {
 
     private Dataset dataset;
-    private double trainingDataSetPercentage = 0.7;
+    private final double trainingDataSetPercentage = 0.7;
 
     public DataSet(int atributes) {
         super(atributes);

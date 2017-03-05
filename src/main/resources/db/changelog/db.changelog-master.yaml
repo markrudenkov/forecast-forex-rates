@@ -553,4 +553,63 @@ databaseChangeLog:
                 name: adj_close
                 value: '0.9'
             tableName: rates
+  - changeSet:
+      id: 21
+      author: Mark
+      changes:
+        - createTable:
+            tableName: trading_results
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: financial_instrument
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: trading_start_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: trading_end_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: profit_points
+                  type: decimal(20,7)
+              - column:
+                  name: profit_usd
+                  type: decimal(20,7)
+              - column:
+                  name: stop_loss
+                  type: decimal(20,7)
+              - column:
+                  name: take_profit
+                  type: decimal(20,7)
+              - column:
+                  name: trailing_stop_loss
+                  type: decimal(20,7)
+              - column:
+                  name: trailing_take_profit
+                  type: decimal(20,7)
+              - column:
+                  name: classifier_type
+                  type: varchar(100)
+              - column:
+                  name: concept_instance_size
+                  type: int
+        - addAutoIncrement:
+              columnDataType: int
+              columnName: id
+              incrementBy: 1
+              startWith: 1
+              tableName: trading_results
+
 

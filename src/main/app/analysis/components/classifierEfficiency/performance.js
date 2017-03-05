@@ -6,7 +6,7 @@ function Controller($scope,ClassifierPerformanceService) {
 
     vm.analyse=analyse;
     vm.analysisPrameters={};
-    vm.currencyPairs1=[ {name:"EURUSD" , code: "EUR=X"}, {name : "GBPUSD", code :"GBP=X"}, {name : "AUDUSD", code :"AUDUSD%3dX"},{name : "NZDUSD", code :"NZDUSD%3dX"}];
+    vm.currencyPairs1=[ {name:"EUR/USD" , code: "EUR=X"}, {name : "GBP/USD", code :"GBP=X"}, {name : "AUD/USD", code :"AUDUSD%3dX"},{name : "NZD/USD", code :"NZDUSD%3dX"}];
     vm.analysisResults=[];
     $scope.radioModel= 0;
     $scope.currentsymbol1=vm.currencyPairs1[$scope.radioModel].name;
@@ -15,7 +15,7 @@ function Controller($scope,ClassifierPerformanceService) {
 
 
     function analyse(){
-    vm.analysisPrameters.symbol=vm.currencyPairs1[$scope.radioModel].code;
+    vm.analysisPrameters.symbol=vm.currencyPairs1[$scope.radioModel].name;
     vm.analysisPrameters.method=$scope.radioButton;
 
    ClassifierPerformanceService.analyse(vm.analysisPrameters).then(

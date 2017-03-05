@@ -17,7 +17,6 @@ import java.util.List;
 @Service
 public class UpdateService {
 
-
     private final int daysInterval = 200;
 
     @Autowired
@@ -31,19 +30,19 @@ public class UpdateService {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    public void updateAllInstruments(){
-        List<FinInstrument> finInstrumentList= finInstrumentService.getAllSymbolCodes();
-        for (FinInstrument finInstrument:finInstrumentList) {
+    public void updateAllInstruments() {
+        List<FinInstrument> finInstrumentList = finInstrumentService.getAllSymbolCodes();
+        for (FinInstrument finInstrument : finInstrumentList) {
             currencyUpdate(finInstrument);
         }
     }
 
-    private  void currencyUpdate(FinInstrument finInstrument) {
-            DateTime startDate = rateService.getLastEntry(finInstrument.getYahooCode()).getDate().plusDays(1);
-            getUpdate(finInstrument.getYahooCode(), startDate, new DateTime());
+    private void currencyUpdate(FinInstrument finInstrument) {
+        DateTime startDate = rateService.getLastEntry(finInstrument.getYahooCode()).getDate().plusDays(1);
+        getUpdate(finInstrument.getYahooCode(), startDate, new DateTime());
     }
 
-    private  void getUpdate(String symbol, DateTime startDate, DateTime endDate) {
+    private void getUpdate(String symbol, DateTime startDate, DateTime endDate) {
         if (!checkAppropriateInteral(startDate, endDate)) {
             while (!checkAppropriateInteral(startDate, endDate)) {
                 endDate = startDate.plusDays(daysInterval);
@@ -58,32 +57,25 @@ public class UpdateService {
     @ResponseBody
     private void updateCurrency(String symbol, DateTime startDate, DateTime endDate) {
         String query = getQuery(symbol, startDate, endDate);
-        try
-        {
+        try {
             QueryWrapper response = restTemplate.getForObject(query, QueryWrapper.class);
-            rateService.appendQuerryWrapperToDB(response);
-        }
-        catch (Exception e)
-        {
+            rateService.appendYahooRatesToDB(response);
+        } catch (Exception e) {
             //In this case error is caused by the lack of new data from Yahoo
         }
-
     }
 
     private boolean checkAppropriateInteral(DateTime startDate, DateTime endDate) {
         return (getDaysInterval(startDate, endDate) <= daysInterval);
     }
 
-
     private int getDaysInterval(DateTime startDate, DateTime endDate) {
         Days days = Days.daysBetween(startDate, endDate);
         return days.getDays();
     }
 
-
-
     private String getQuery(String symbol, DateTime startDate, DateTime endDate) {
-       String query = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"" +
+        String query = "https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol =\"" +
                 symbol +
                 "\" and startDate= \"" +
                 startDate +
@@ -92,5 +84,4 @@ public class UpdateService {
                 "\"&format=json&env=store://datatables.org/alltableswithkeys";
         return query;
     }
-
 }

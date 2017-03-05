@@ -2,13 +2,12 @@ package spaApp.base_classifier.service;
 
 import net.sf.javaml.classification.Classifier;
 import net.sf.javaml.core.Dataset;
+import net.sf.javaml.core.DefaultDataset;
 import net.sf.javaml.core.Instance;
 import net.sf.javaml.filter.discretize.RecursiveMinimalEntropyPartitioning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spaApp.base_classifier.model.DataSet;
-import spaApp.base_classifier.model.TestDataSet;
-import spaApp.base_classifier.model.TrainingDataSet;
 import spaApp.rates.model.Query.Rate;
 import spaApp.rates.service.RateService;
 
@@ -22,14 +21,18 @@ public class ClassifierService {
     @Autowired
     RateService rateService;
 
+    private final int  numberOfChecks = 100;
+    private final double trainingSetPart = 0.7;
+
     //Returns Classifiers performance of randomly generated sets
     public double getAveragePerformance(int atributes, String currency, Classifier classifier, boolean datafilter) {
         List<Rate> rates = rateService.getAllCurrencyRates(currency);
+        Dataset learningSet = new DataSet(atributes).buildDataSet(rates);
         List<Double> accuracySet = new ArrayList();
-        for (int i = 0; i < 100; i++) {
-            Collections.shuffle(rates);
-            Dataset trainingSet = new TrainingDataSet(atributes).buildTrainingDataSet(rates);
-            Dataset testSet = new TestDataSet(atributes).buildTestDataSet(rates);
+        for (int i = 0; i < numberOfChecks; i++) {
+            Collections.shuffle(learningSet);
+            Dataset trainingSet = getTrainigSet(learningSet);
+            Dataset testSet = getTestSet(learningSet);
             if (datafilter) {
                 filterTestSetAndTrainingSet(testSet, trainingSet);
             }
@@ -38,6 +41,21 @@ public class ClassifierService {
         }
         return countAveragePerformance(accuracySet);
     }
+
+    private Dataset getTrainigSet (Dataset learningSet){
+        Dataset trainingSet = new DefaultDataset();
+        learningSet.subList(0, (int) (learningSet.size()*trainingSetPart)).stream().forEach(s -> trainingSet.add(s));
+        return trainingSet;
+    }
+
+    private Dataset getTestSet (Dataset learningSet){
+        Dataset testSet = new DefaultDataset();
+        learningSet.subList((int) (learningSet.size()*trainingSetPart), learningSet.size()).stream().forEach(s -> testSet.add(s));
+        return testSet;
+    }
+
+
+
 
     //Data dicretisation by Recursive Minimal Entropy Partitioning
     protected void filterTestSetAndTrainingSet(Dataset testSet, Dataset trainingSet) {
