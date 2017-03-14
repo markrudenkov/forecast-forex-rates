@@ -616,6 +616,5 @@ databaseChangeLog:
             columnNames: username
             constraintName: unique_usr_usrname
             deferrable: true
-            disabled: true
             initiallyDeferred: true
             tableName: users
