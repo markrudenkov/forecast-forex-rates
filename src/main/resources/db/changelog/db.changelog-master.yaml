@@ -242,13 +242,9 @@ databaseChangeLog:
               - column:
                   name: phone
                   type: nvarchar(60)
-        - addUniqueConstraint:
-            columnNames: username
-            constraintName: unique_usr_usrname
-            deferrable: true
-            disabled: true
-            initiallyDeferred: true
-            tableName: users
+
+
+
         - addAutoIncrement:
               columnDataType: int
               columnName: id
@@ -612,4 +608,14 @@ databaseChangeLog:
               startWith: 1
               tableName: trading_results
 
-
+  - changeSet:
+      id: 22
+      author: Mark
+      changes:
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: unique_usr_usrname
+            deferrable: true
+            disabled: true
+            initiallyDeferred: true
+            tableName: users
