@@ -32,7 +32,7 @@
 
 
     <build>
-        <finalName>spaApp</finalName>
+        <finalName>com.future_rates</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
