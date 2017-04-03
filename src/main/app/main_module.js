@@ -18,7 +18,7 @@ require("bootstrap-material-design/dist/css/bootstrap-material-design.css");
 require("bootstrap-material-design/dist/css/ripples.css");
 
 $.material.init()
-var _module = angular.module('spaApp', [
+var _module = angular.module('forecastForexRates', [
       'ui.router',
       'ngMessages',
       'ngCookies',

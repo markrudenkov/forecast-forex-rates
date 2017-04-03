@@ -6,4 +6,4 @@ require('rates');
 require('analysis');
 require('auth');
 
-angular.bootstrap(document, ['spaApp']);
+angular.bootstrap(document, ['forecastForexRates']);
