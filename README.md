@@ -37,7 +37,7 @@ mvn install
 ```
 
 
-# Running
+### Running
 
 In terminal go to the folder with pom.xml file and invoke:
 
