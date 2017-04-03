@@ -13,8 +13,8 @@ The application is under continuous development.
 ### Functionalities
 
 You could:
-    get forecast bar estimated with Bayes Calssifier : white(price up)/ black (price down);
-    estimate performance of the classifier;
+* get forecast bar estimated with Bayes Calssifier (white -price up/ black - price down)
+* estimate performance of the classifier
 
 
 
@@ -27,22 +27,24 @@ You need to install MySQL and Maven
 
 ### Installing
 
-Clone or download the project. Make sure if are changed username and password of your database in ../src/main/resources/application.properties file.
+Clone or download the project. Make sure to change username and password of your database in ../src/main/resources/application.properties file.
 In terminal go to the folder with pom.xml file and invoke:
 
 
 
 ```
-mvn spring-boot:run
+mvn install
 ```
 
 
 # Running
 
+In terminal go to the folder with pom.xml file and invoke:
+
+```
+mvn spring-boot:run
+```
+
 Application is started on localhost:8080
-
-
-
-
 
 
