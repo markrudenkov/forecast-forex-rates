@@ -1,7 +1,7 @@
 # Description
 
 
-The purpose of this application is to analyse Forex rates with Bayes Classifier
+The purpose of this application is to forecast Forex rates with the classifiers of Machine Learning
 
 
 Source of the Forex rates - Yahoo.
