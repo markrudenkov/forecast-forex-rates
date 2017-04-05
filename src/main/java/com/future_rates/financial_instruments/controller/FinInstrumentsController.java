@@ -15,7 +15,7 @@ public class FinInstrumentsController {
     FinInstrumentService service;
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/instruments")
-    public ArrayNode selectInstrument() {
+    public ArrayNode getInstrumentList() {
         return service.getInstrumentList();
     }
 

@@ -19,6 +19,11 @@ public class RateController {
         return rateService.selectInstrument(instrument);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/api/allrates")
+    public List<Rate> selectAllInstrument() {
+        return rateService.selectAllInstrument();
+    }
+
 }
 
 

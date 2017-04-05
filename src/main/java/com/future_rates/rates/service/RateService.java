@@ -12,6 +12,7 @@ import com.future_rates.rates.repository.model.RateDb;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,6 +32,12 @@ public class RateService {
         }
         return selectedInstrument;
     }
+
+    public List<Rate> selectAllInstrument() {
+        return repository.findAll().stream().map(RateService::mapToRate).collect(Collectors.toList());
+    }
+
+
 
     @Transactional
     public void appendYahooRatesToDB(QueryWrapper api) {
@@ -118,5 +125,6 @@ public class RateService {
     private static RateDb mapToRateDB(Rate api) {
         return mapToRateDB(null, api);
     }
+
 
 }

@@ -8,7 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: date
-                  type: timestamp
+                  type: date
                   constraints:
                     nullable: false
               - column:
@@ -54,10 +54,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'GBP=X'
+                value: 'GBP/USD'
             - column:
                 name: open
                 value: '0.9'
@@ -83,10 +83,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'EUR=X'
+                value: 'EUR/USD'
             - column:
                 name: open
                 value: '0.9'
@@ -111,10 +111,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'AUD=X'
+                value: 'AUD/USD'
             - column:
                 name: open
                 value: '0.9'
@@ -139,10 +139,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'NZD=X'
+                value: 'NZD/USD'
             - column:
                 name: open
                 value: '0.9'
@@ -501,10 +501,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'JPY=X'
+                value: 'USD/JPY'
             - column:
                 name: open
                 value: '0.9'
@@ -529,10 +529,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'CAD=X'
+                value: 'USD/CAD'
             - column:
                 name: open
                 value: '0.9'
@@ -569,12 +569,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: trading_start_date
-                  type: timestamp
+                  type: date
                   constraints:
                     nullable: false
               - column:
                   name: trading_end_date
-                  type: timestamp
+                  type: date
                   constraints:
                     nullable: false
               - column:
