@@ -1,32 +1,37 @@
-<div class="bs-component">
+<div>
     <nav class="navbar navbar-default ">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a ng-show="true" class="navbar-brand" >Future Rates</a>
+                <a ng-show="true" class="navbar-brand">Future Rates</a>
             </div>
-                <ul class="nav navbar-nav">
-                    <li> <a ui-sref="root.home"> Home</a></li>
-                    <li> <a ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" ui-sref="root.rates">Get Forex rates</a></li>
-                    <li  ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" class="dropdown" uib-dropdown>
-                        <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
-                        <ul class="dropdown-menu" uib-dropdown-menu>
-                            <li> <a ui-sref="root.forecast">Forecast</a></li>
-                            <li> <a ui-sref="root.performance">Classifier performance</a></li>
-                        </ul>
-                    </li>
-                </ul>
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="root.home"> Home</a></li>
+                <li><a ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" ui-sref="root.rates">Get Forex rates</a></li>
+                <li ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" class="dropdown" uib-dropdown>
+                    <a href="#" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li><a ui-sref="root.forecast">Forecast</a></li>
+                        <li><a ui-sref="root.performance">Classifier performance</a></li>
+                    </ul>
+                </li>
+            </ul>
 
             <ul class="nav navbar-nav navbar-right">
 
-                <li ng-class="{active: $ctrl.getCurrentState() == 'root.login'}"><a ng-show="!$ctrl.isLoggedIn()" ui-sref="root.login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                <li><a ng-click="$ctrl.logout()" href="#" ng-show="$ctrl.isLogoutVisible()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li ng-class="{active: $ctrl.getCurrentState() == 'root.login'}"><a ng-show="!$ctrl.isLoggedIn()"
+                                                                                    ui-sref="root.login"><span
+                        class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a ng-click="$ctrl.logout()" href="#" ng-show="$ctrl.isLogoutVisible()"><span
+                        class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
 
         </div>
     </nav>
 </div>
-<div class="bs-component">
+<div class="container">
     <div class="msi-content" ui-view ng-cloak></div>
+
 </div>
 
 

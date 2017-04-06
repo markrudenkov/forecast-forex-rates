@@ -12,6 +12,7 @@ import com.future_rates.rates.repository.model.RateDb;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -32,6 +33,11 @@ public class RateService {
         return selectedInstrument;
     }
 
+    public List<Rate> selectAllInstrument() {
+        return repository.findAll().stream().map(RateService::mapToRate).collect(Collectors.toList());
+    }
+
+
     @Transactional
     public void appendYahooRatesToDB(QueryWrapper api) {
         List<RateDb> rateDbList = QueryWrapperMapToQuoteDbList(api);
@@ -49,11 +55,8 @@ public class RateService {
     }
 
     @Transactional
-    public List<RateDb> createRateRecordInDB(List<RateDb> db) {
-        for (RateDb rateDb : db) {
-            repository.create(rateDb);
-        }
-        return db;
+    public void createRateRecordInDB(List<RateDb> db) {
+        db.stream().forEach(rateDb -> repository.create(rateDb));
     }
 
     @Transactional
@@ -83,11 +86,7 @@ public class RateService {
 
     @Transactional
     public List<Rate> getLastCurrencyRates(int atributes, String currency) {
-        List<Rate> rates = new ArrayList<>();
-        for (RateDb rate : repository.getLastCurrencyRates(atributes, currency)) {
-            rates.add(mapToRate(rate));
-        }
-        return rates;
+        return repository.getLastCurrencyRates(atributes, currency).stream().map(RateService::mapToRate).collect(Collectors.toList());
     }
 
     public static RateDb mapToRateDB(Long id, Rate api) {

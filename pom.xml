@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>org.springframework</groupId>
-        <artifactId>spaApp</artifactId>
+        <artifactId>forecastForexRates</artifactId>
         <version>0.1.0</version>
     <packaging>jar</packaging>
 
@@ -176,6 +176,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4-1201-jdbc4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.2.4.RELEASE</version>
         </dependency>
 
     </dependencies>

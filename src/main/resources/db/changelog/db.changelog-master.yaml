@@ -7,8 +7,11 @@ databaseChangeLog:
             tableName: rates
             columns:
               - column:
+                  name: id
+                  type: integer
+              - column:
                   name: date
-                  type: timestamp
+                  type: date
                   constraints:
                     nullable: false
               - column:
@@ -19,32 +22,28 @@ databaseChangeLog:
               - column:
                   name: open
                   type: decimal(10,7)
-                  constraints:
-                    nullable: false
               - column:
                   name: high
                   type: decimal(10,7)
-                  constraints:
-                    nullable: false
               - column:
                   name: low
                   type: decimal(10,7)
-                  constraints:
-                    nullable: false
               - column:
                   name: close
                   type: decimal(10,7)
-                  constraints:
-                    nullable: false
               - column:
                   name: adj_close
                   type: decimal(10,7)
-                  constraints:
-                    nullable: false
         - addPrimaryKey:
             columnNames: date, symbol
             constraintName: pk_rates
             tableName: rates
+        - addAutoIncrement:
+              columnDataType: int
+              columnName: id
+              incrementBy: 1
+              startWith: 1
+              tableName: rates
 
   - changeSet:
       id: 2
@@ -54,10 +53,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'GBP=X'
+                value: 'GBP/USD'
             - column:
                 name: open
                 value: '0.9'
@@ -83,10 +82,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'EUR=X'
+                value: 'EUR/USD'
             - column:
                 name: open
                 value: '0.9'
@@ -111,10 +110,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'AUD=X'
+                value: 'AUD/USD'
             - column:
                 name: open
                 value: '0.9'
@@ -139,10 +138,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'NZD=X'
+                value: 'NZD/USD'
             - column:
                 name: open
                 value: '0.9'
@@ -242,15 +241,13 @@ databaseChangeLog:
               - column:
                   name: phone
                   type: nvarchar(60)
-
-
-
         - addAutoIncrement:
               columnDataType: int
               columnName: id
               incrementBy: 1
               startWith: 1
               tableName: users
+
   - changeSet:
       id: 9
       author: Mark
@@ -501,10 +498,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'JPY=X'
+                value: 'USD/JPY'
             - column:
                 name: open
                 value: '0.9'
@@ -529,10 +526,10 @@ databaseChangeLog:
             columns:
             - column:
                 name: date
-                value: "2016-02-11 11:02:57"
+                value: "2016-02-11"
             - column:
                 name: symbol
-                value: 'CAD=X'
+                value: 'USD/CAD'
             - column:
                 name: open
                 value: '0.9'
@@ -569,12 +566,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: trading_start_date
-                  type: timestamp
+                  type: date
                   constraints:
                     nullable: false
               - column:
                   name: trading_end_date
-                  type: timestamp
+                  type: date
                   constraints:
                     nullable: false
               - column:
