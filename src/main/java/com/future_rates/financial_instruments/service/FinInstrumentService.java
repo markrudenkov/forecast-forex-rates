@@ -19,7 +19,7 @@ public class FinInstrumentService {
     @Autowired
     FinInstrumentRepository finInstrumentRepository;
 
-    public List<FinInstrument> getAllFinInstruments() {
+    public List<FinInstrument> getAllSymbolCodes() {
         return finInstrumentRepository.findAll().stream().map(FinInstrumentService::mapToFinInstrument).collect(Collectors.toList());
     }
 

@@ -4,11 +4,10 @@ function Controller($scope, RateService) {
     var vm = this;
     symbolAndDate = {};
     vm.symbolAndDate = symbolAndDate;
-    vm.quotes = [];
+    vm.rates = [];
     vm.errors = {};
     vm.currencyPairs = {};
     vm.getRates = getRates;
-    // vm.getFinInstruments = getFinInstruments
     $scope.radioModel = 0;
 
     vm.$onInit = function () {
@@ -29,9 +28,9 @@ function Controller($scope, RateService) {
 
         RateService.getRates(vm.symbolAndDate).then(
             function (response) {
-                vm.quotes = response.data;
+                vm.rates = response.data;
                 console.log(vm.symbolAndDate.symbol);
-                console.log(vm.quotes);
+                console.log(vm.rates);
             },
             function (err) {
                 if (err.status === 400) {

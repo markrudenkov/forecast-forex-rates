@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>org.springframework</groupId>
-        <artifactId>spaApp</artifactId>
+        <artifactId>forecastForexRates</artifactId>
         <version>0.1.0</version>
     <packaging>jar</packaging>
 
