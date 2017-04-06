@@ -14,7 +14,6 @@ function Controller($scope, RateService) {
         RateService.getFinInstruments().then(
             function (response) {
                 vm.currencyPairs = response.data;
-                console.log(vm.currencyPairs);
                 getRates();
             }
         );
