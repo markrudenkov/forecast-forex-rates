@@ -568,12 +568,10 @@ databaseChangeLog:
                   name: trading_start_date
                   type: date
                   constraints:
-                    nullable: false
               - column:
                   name: trading_end_date
                   type: date
                   constraints:
-                    nullable: false
               - column:
                   name: profit_points
                   type: decimal(20,7)

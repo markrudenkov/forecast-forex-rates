@@ -5,6 +5,7 @@ import net.sf.javaml.core.Instance;
 import org.apache.commons.lang3.ArrayUtils;
 import com.future_rates.rates.model.Query.Rate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,4 +59,5 @@ public class RateInstance {
     public void setAtributes(int atributes) {
         this.atributes = atributes;
     }
+
 }

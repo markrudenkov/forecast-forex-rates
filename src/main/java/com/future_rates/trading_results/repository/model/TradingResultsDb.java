@@ -1,4 +1,4 @@
-package com.future_rates.results.repository.model;
+package com.future_rates.trading_results.repository.model;
 
 import org.joda.time.DateTime;
 import com.future_rates.utils.repository.model.ModelDb;

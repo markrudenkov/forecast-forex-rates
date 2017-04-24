@@ -42,23 +42,20 @@ public class ClassifierService {
         return countAveragePerformance(accuracySet);
     }
 
-    private Dataset getTrainigSet (Dataset learningSet){
+    public Dataset getTrainigSet (Dataset learningSet){
         Dataset trainingSet = new DefaultDataset();
         learningSet.subList(0, (int) (learningSet.size()*trainingSetPart)).stream().forEach(s -> trainingSet.add(s));
         return trainingSet;
     }
 
-    private Dataset getTestSet (Dataset learningSet){
+    public Dataset getTestSet (Dataset learningSet){
         Dataset testSet = new DefaultDataset();
         learningSet.subList((int) (learningSet.size()*trainingSetPart), learningSet.size()).stream().forEach(s -> testSet.add(s));
         return testSet;
     }
 
-
-
-
     //Data dicretisation by Recursive Minimal Entropy Partitioning
-    protected void filterTestSetAndTrainingSet(Dataset testSet, Dataset trainingSet) {
+    public void filterTestSetAndTrainingSet(Dataset testSet, Dataset trainingSet) {
         RecursiveMinimalEntropyPartitioning rmep = new RecursiveMinimalEntropyPartitioning(true);
         rmep.build(trainingSet);
         rmep.filter(trainingSet);
