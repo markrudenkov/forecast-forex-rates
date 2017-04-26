@@ -54,6 +54,12 @@ public class ClassifierService {
         return testSet;
     }
 
+    public DefaultDataset  getDefaultTestSet (Dataset learningSet){
+        DefaultDataset testSet = new DefaultDataset();
+        learningSet.subList((int) (learningSet.size()*trainingSetPart), learningSet.size()).stream().forEach(s -> testSet.add(s));
+        return testSet;
+    }
+
     //Data dicretisation by Recursive Minimal Entropy Partitioning
     public void filterTestSetAndTrainingSet(Dataset testSet, Dataset trainingSet) {
         RecursiveMinimalEntropyPartitioning rmep = new RecursiveMinimalEntropyPartitioning(true);
