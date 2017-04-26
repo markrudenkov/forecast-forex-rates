@@ -13,6 +13,7 @@ import net.sf.javaml.classification.bayes.NaiveBayesClassifier;
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
 import net.sf.javaml.core.Instance;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,22 +37,33 @@ public class TradingResultsService {
     Classifier classifier;
     Double profit;
     Double spread;
-    boolean dicretise=true;
+    boolean dicretise = true;
 
-    private TradingResultsService getDataForAnalysis(TradingResults tradingParameters) {
-        List<Rate> rates = rateService.getAllCurrencyRates(tradingParameters.getFinancialInstrument());
-        Dataset learningSet = new DataSet(tradingParameters.getConceptInstanceSize()).buildDataSet(rates);
-        Dataset trainingSet = classifierService.getTrainigSet(learningSet);
-        this.testSet = (DefaultDataset) classifierService.getDefaultTestSet(learningSet).copy();
-        this.refferenceTestSet = (DefaultDataset)classifierService.getTestSet(learningSet);
-        this.classifier = new NaiveBayesClassifier(true, true, false);;
+    private TradingResultsService getDataForAnalysis(TradingResults tradeParams) {
+        DateTime firstDate = rateService.getFirstEntry(tradeParams.getFinancialInstrument()).getDate();
+        Dataset trainingSet = (DefaultDataset) new DataSet(tradeParams.getConceptInstanceSize()).buildDataSet(
+                rateService.selectInstrument(
+                        tradeParams.getFinancialInstrument(),
+                        firstDate,
+                        tradeParams.getTradingStartDate())
+
+        );
+        this.testSet = (DefaultDataset) new DataSet(tradeParams.getConceptInstanceSize()).buildDataSet(
+                rateService.selectInstrument(
+                        tradeParams.getFinancialInstrument(),
+                        tradeParams.getTradingStartDate(),
+                        tradeParams.getTradingEndDate())
+
+        );
+        this.refferenceTestSet = (DefaultDataset) this.testSet.copy();
+        this.classifier = new NaiveBayesClassifier(true, true, false);
         if (this.dicretise) {
             classifierService.filterTestSetAndTrainingSet(testSet, trainingSet);
         }
         this.classifier.buildClassifier(trainingSet);
         this.profit = Double.valueOf(0);
         this.spread = finInstrumentRepository.getFinInstrumentBySymbol(
-                tradingParameters.getFinancialInstrument()).getSpread().doubleValue();
+                tradeParams.getFinancialInstrument()).getSpread().doubleValue();
         return this;
     }
 
@@ -64,18 +76,18 @@ public class TradingResultsService {
 
             if (predictedClassValue.equals(realClassValue)) {
                 // correct prediction
-                if(fb.getStopSide() > fb.getStopLoss()){
+                if (fb.getStopSide() > fb.getStopLoss()) {
                     this.profit += -fb.getStopLoss() - this.spread;
-                }else if((fb.getProfitSide() > fb.getTakeProfit()) && (fb.getTakeProfit() != 0)){
+                } else if ((fb.getProfitSide() > fb.getTakeProfit()) && (fb.getTakeProfit() != 0)) {
                     this.profit += fb.getTakeProfit() - this.spread;
-                }else {
+                } else {
                     this.profit += fb.getOpenCloseDifference() - this.spread;
                 }
             } else {
                 // incorrect prediction
-                if(fb.getProfitSide() > fb.getStopLoss()){
+                if (fb.getProfitSide() > fb.getStopLoss()) {
                     this.profit += -fb.getStopLoss() - this.spread;
-                }else {
+                } else {
                     this.profit += -fb.getOpenCloseDifference() - this.spread;
                 }
             }
@@ -140,7 +152,4 @@ public class TradingResultsService {
         api.setTrailingTakeProfitOrder(api.getTrailingTakeProfitOrder());
         return api;
     }
-
-
-
 }

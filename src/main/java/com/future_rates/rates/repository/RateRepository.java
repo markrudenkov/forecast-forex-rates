@@ -26,6 +26,7 @@ public class RateRepository extends BaseRepository<RateDb> {
     public static final String SELECT_THE_LAST_CURRENCY_RATE = "SELECT * FROM rates WHERE symbol = ? ORDER BY date DESC LIMIT 1";
     public static final String SELECT_CURRENCY_RATES = "SELECT * FROM rates WHERE symbol = ? ORDER BY date ASC";
     public static final String SELECT_THE_LAST_CURRENCY_RATES = "SELECT * FROM rates WHERE symbol = ? ORDER BY date DESC LIMIT ?";
+    public static final String SELECT_THE_FIRST_CURRENCY_RATE = "SELECT * FROM rates WHERE symbol = ? ORDER BY date ASC LIMIT 1";
 
     private static final RowMapper<RateDb> ROW_MAPPER = (rs, rowNum) -> {
         RateDb quoteDb = new RateDb();
@@ -60,10 +61,19 @@ public class RateRepository extends BaseRepository<RateDb> {
         super(ROW_MAPPER, ROW_UNMAPPER, "rates", "id");
     }
 
-    public List<RateDb> selectQuoteDb(Instrument instrument) {
+    public List<RateDb> getRatesBySymbolAndDate(Instrument instrument) {
         List<RateDb> quoteDb = template.query(
                 SELECT_RATES__BY_SYMBOL_AND_DATE,
                 new Object[]{instrument.getSymbol(), new Timestamp(instrument.getStartDate().getMillis()), new Timestamp(instrument.getEndDate().getMillis())},
+                ROW_MAPPER);
+        return quoteDb;
+    }
+
+
+    public List<RateDb> getRatesBySymbolAndDate(String symbol, DateTime startDate, DateTime endDate) {
+        List<RateDb> quoteDb = template.query(
+                SELECT_RATES__BY_SYMBOL_AND_DATE,
+                new Object[]{symbol, new Timestamp(startDate.getMillis()), new Timestamp(endDate.getMillis())},
                 ROW_MAPPER);
         return quoteDb;
     }
@@ -83,6 +93,10 @@ public class RateRepository extends BaseRepository<RateDb> {
         return rateDb;
     }
 
+    public RateDb selectFirstEntry(String symbol) {
+        List<RateDb> rateDb = template.query(SELECT_THE_FIRST_CURRENCY_RATE, new Object[]{symbol}, ROW_MAPPER);
+        return rateDb.get(0);
+    }
 }
 
 
