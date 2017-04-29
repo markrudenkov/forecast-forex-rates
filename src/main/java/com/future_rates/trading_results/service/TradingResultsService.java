@@ -2,6 +2,7 @@ package com.future_rates.trading_results.service;
 
 import com.future_rates.base_classifier.model.DataSet;
 import com.future_rates.base_classifier.service.ClassifierService;
+import com.future_rates.classifiers_wrapper.model.ClassifiersWrapper;
 import com.future_rates.financial_instruments.repository.FinInstrumentRepository;
 import com.future_rates.rates.model.Query.Rate;
 import com.future_rates.rates.service.RateService;
@@ -34,6 +35,7 @@ public class TradingResultsService {
 
     DefaultDataset testSet;
     DefaultDataset refferenceTestSet;
+    DefaultDataset trainingSet;
     Classifier classifier;
     Double profit;
     Double spread;
@@ -41,7 +43,7 @@ public class TradingResultsService {
 
     private TradingResultsService getDataForAnalysis(TradingResults tradeParams) {
         DateTime firstDate = rateService.getFirstEntry(tradeParams.getFinancialInstrument()).getDate();
-        Dataset trainingSet = (DefaultDataset) new DataSet(tradeParams.getConceptInstanceSize()).buildDataSet(
+        this.trainingSet = (DefaultDataset) new DataSet(tradeParams.getConceptInstanceSize()).buildDataSet(
                 rateService.selectInstrument(
                         tradeParams.getFinancialInstrument(),
                         firstDate,
@@ -56,15 +58,31 @@ public class TradingResultsService {
 
         );
         this.refferenceTestSet = (DefaultDataset) this.testSet.copy();
-        this.classifier = new NaiveBayesClassifier(true, true, false);
-        if (this.dicretise) {
-            classifierService.filterTestSetAndTrainingSet(testSet, trainingSet);
-        }
-        this.classifier.buildClassifier(trainingSet);
+        selectClassifier(tradeParams.getClassifier());
+        this.classifier.buildClassifier(this.trainingSet);
         this.profit = Double.valueOf(0);
         this.spread = finInstrumentRepository.getFinInstrumentBySymbol(
                 tradeParams.getFinancialInstrument()).getSpread().doubleValue();
         return this;
+    }
+
+    private void selectClassifier (String classifierName){
+        ClassifiersWrapper clfWrapper = new ClassifiersWrapper();
+        switch (classifierName){
+            case "bayes" :
+                this.classifier = clfWrapper.getBayes();
+               classifierService.filterTestSetAndTrainingSet(this.testSet, this.trainingSet);
+                break;
+            case "svm" :
+                this.classifier = clfWrapper.getSvm();
+                break;
+            case "rndForest" :
+                this.classifier = clfWrapper.getRndForest();
+                break;
+            case "svmSelfOpt" :
+                this.classifier = clfWrapper.getScmSelfOpt();
+                break;
+        }
     }
 
     private TradingResultsService getProfitWithOrders(TradingResults tradingResults) {
@@ -103,24 +121,6 @@ public class TradingResultsService {
     public TradingResults tradeWithOrders(TradingResults tradingResults) {
         return getDataForAnalysis(tradingResults).
                 getProfitWithOrders(tradingResults).updateTradingResults(tradingResults);
-    }
-
-    private TradingResultsService getProfitWithoutStopOrders() {
-        for (int i = 0; i < testSet.size() - 1; i++) {
-            Object predictedClassValue = this.classifier.classify(testSet.get(i));
-            Object realClassValue = testSet.get(i).classValue();
-            Instance predictedInstance = refferenceTestSet.get(i + 1);
-            if (predictedClassValue.equals(realClassValue)) {
-                double openCloseDifference = Math.abs(predictedInstance.get(predictedInstance.noAttributes() - 4) -
-                        predictedInstance.get(predictedInstance.noAttributes() - 1));
-                this.profit += openCloseDifference - spread;
-            } else {
-                double openCloseDifference = Math.abs(predictedInstance.get(predictedInstance.noAttributes() - 4) -
-                        predictedInstance.get(predictedInstance.noAttributes() - 1));
-                this.profit += -openCloseDifference - spread;
-            }
-        }
-        return this;
     }
 
     public static TradingResultsDb mapToTradingResultsDb(Long id, TradingResults api) {
