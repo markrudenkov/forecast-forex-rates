@@ -69,7 +69,9 @@ public class UpdateService {
                 QueryWrapper response = restTemplate.getForObject(query, QueryWrapper.class);
                 rateService.appendYahooRatesToDB(response);
             } catch (Exception e) {
-                System.out.print(e.getMessage());
+//                if(e.getMessage() != null){
+//                    System.out.print(e.getMessage());
+//                }
             }
         }
     }

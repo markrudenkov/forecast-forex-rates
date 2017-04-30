@@ -51,7 +51,7 @@ public class Query {
                 "count='" + count + '\'' +
                 ", created='" + created + '\'' +
                 ", lang='" + lang + '\'' +
-                ", results=" + results +
+                ", trading_results=" + results +
                 '}';
     }
 }

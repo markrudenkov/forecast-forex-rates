@@ -1,5 +1,6 @@
 package com.future_rates.rates.service;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +25,24 @@ public class RateService {
     @Autowired
     private FinInstrumentRepository finInstrumentRepository;
 
-
+    @Transactional
     public List<Rate> selectInstrument(Instrument api) {
         List<Rate> selectedInstrument = new ArrayList();
-        for (RateDb quoteDb : repository.selectQuoteDb(api)) {
+        for (RateDb quoteDb : repository.getRatesBySymbolAndDate(api)) {
             selectedInstrument.add(mapToRate(quoteDb));
         }
         return selectedInstrument;
     }
+
+    @Transactional
+    public List<Rate> selectInstrument(String symbol, DateTime startDate, DateTime endDate) {
+        List<Rate> selectedInstrument = new ArrayList();
+        for (RateDb quoteDb : repository.getRatesBySymbolAndDate(symbol,startDate,endDate )) {
+            selectedInstrument.add(mapToRate(quoteDb));
+        }
+        return selectedInstrument;
+    }
+
 
     public List<Rate> selectAllInstrument() {
         return repository.findAll().stream().map(RateService::mapToRate).collect(Collectors.toList());
@@ -80,8 +91,13 @@ public class RateService {
     @Transactional
     public Rate getLastEntry(String symbol) {
         RateDb lastEntryDB = repository.selectLastEntry(symbol);
-        Rate lastEntry = mapToRate(lastEntryDB);
-        return lastEntry;
+        return mapToRate(lastEntryDB);
+    }
+
+    @Transactional
+    public Rate getFirstEntry(String symbol) {
+        RateDb firstEntryDB = repository.selectFirstEntry(symbol);
+        return mapToRate(firstEntryDB);
     }
 
     @Transactional

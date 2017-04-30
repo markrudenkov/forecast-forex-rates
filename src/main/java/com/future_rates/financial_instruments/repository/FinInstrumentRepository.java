@@ -16,7 +16,7 @@ public class FinInstrumentRepository extends BaseRepository<FinInstrumentDb> {
     @Autowired
     private JdbcTemplate template;
     public static final String SELECT_BY_YAHOO_CODE = "SELECT * FROM financial_instruments WHERE yahoo_code = ?";
-
+    public static final String SELECT_BY_SYMBOL = "SELECT * FROM financial_instruments WHERE symbol = ?";
 
     private static final RowMapper<FinInstrumentDb> ROW_MAPPER = (rs, rowNum) -> {
         FinInstrumentDb db = new FinInstrumentDb();
@@ -40,6 +40,11 @@ public class FinInstrumentRepository extends BaseRepository<FinInstrumentDb> {
 
     public FinInstrumentDb getFinInstrumentByYahooCode(String yahooCode) {
         List<FinInstrumentDb> finInstrumentDbList = template.query(SELECT_BY_YAHOO_CODE, new Object[]{yahooCode},  ROW_MAPPER);
+        return finInstrumentDbList.get(0);
+    }
+
+    public FinInstrumentDb getFinInstrumentBySymbol(String symbol) {
+        List<FinInstrumentDb> finInstrumentDbList = template.query(SELECT_BY_SYMBOL, new Object[]{symbol},  ROW_MAPPER);
         return finInstrumentDbList.get(0);
     }
 }

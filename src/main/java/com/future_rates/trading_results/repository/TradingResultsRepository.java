@@ -1,4 +1,4 @@
-package com.future_rates.results.repository;
+package com.future_rates.trading_results.repository;
 
 import com.nurkiewicz.jdbcrepository.RowUnmapper;
 import org.joda.time.DateTime;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import com.future_rates.results.repository.model.TradingResultsDb;
+import com.future_rates.trading_results.repository.model.TradingResultsDb;
 import com.future_rates.utils.repository.BaseRepository;
 
 @Repository
