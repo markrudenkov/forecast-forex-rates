@@ -44,11 +44,11 @@ function Controller( $state, Session, AuthService) {
 
  }
 
-Controller.$inject = [ '$state', 'Session', 'AuthService'];
+ Controller.$inject = [ '$state', 'Session', 'AuthService'];
 
 var templateUrl = require('./main.html');
 require('main.scss');
 module.component('main', {
-    controller: Controller,
+     controller: Controller,
     templateUrl: templateUrl
 });

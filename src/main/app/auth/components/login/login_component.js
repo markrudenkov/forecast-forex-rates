@@ -1,7 +1,6 @@
 var module = require('main_module');
 
 function Controller($rootScope, $state, AuthService, Session) {
-    //console.log('event1')
     var vm = this;
     vm.username = undefined;
     vm.password = undefined;
@@ -14,7 +13,7 @@ function Controller($rootScope, $state, AuthService, Session) {
 
 
     vm.$onInit = function() {
-        //AuthService.redirectToHomePage();
+        AuthService.redirectToHomePage();
     }
 
     function login() {

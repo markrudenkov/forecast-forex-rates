@@ -17,14 +17,15 @@ require("bootstrap/dist/css/bootstrap.css");
 require("bootstrap-material-design/dist/css/bootstrap-material-design.css");
 require("bootstrap-material-design/dist/css/ripples.css");
 
-$.material.init()
+$.material.init();
 var _module = angular.module('forecastForexRates', [
-      'ui.router',
+       'ui.router',
       'ngMessages',
       'ngCookies',
       'angular-jwt',
       'ngAnimate',
       'ui.bootstrap',
-      'angular.img']);
+      'angular.img'
+    ]);
 
 module.exports = _module;
