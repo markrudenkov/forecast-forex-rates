@@ -1,0 +1,1 @@
+require('app/rates/components/rates');

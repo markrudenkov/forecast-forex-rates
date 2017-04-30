@@ -1,0 +1,1 @@
+require('app/auth/components/login/login_component');
