@@ -1,36 +1,44 @@
 var module = require('main_module');
-function Controller($scope, RateService) {
-
+console.log('trade sim');
+function Controller($scope, TradingSimulationService, RateService) {
+    //Convention to call controller instance 'vm'
     var vm = this;
-    symbolAndDate = {};
-    vm.symbolAndDate = symbolAndDate;
-    vm.rates = [];
-    vm.errors = {};
+
+    vm.tradeSimulation = tradeSimulation;
+    vm.analysisPrameters = {};
     vm.currencyPairs = {};
-    vm.getRates = getRates;
+    vm.analysisResults = [];
     $scope.radioModel = 0;
+    vm.classifiers = [{name: "Naive Bayes", code: "bayes"}, {
+        name: "Support Vector Machines",
+        code: "svm"
+    }, {name: "Random Forest", code: "rndForest"}];
+    vm.radioButton;
+    vm.ordersum;
+    // vm.classifiers =[ { name: "bayes" , disabled : "false"},{ name: "svm", disabled : "true" },{ name: "weka" , disabled : "true"}];
+    // $scope.radioButton;
+
 
     vm.$onInit = function () {
         RateService.getFinInstruments().then(
             function (response) {
                 vm.currencyPairs = response.data;
-                console.log(vm.currencyPairs);
-                getRates();
             }
         );
     }
 
 
-    function getRates() {
-        vm.symbolAndDate.symbol = vm.currencyPairs[$scope.radioModel].symbol;
-        vm.symbolAndDate.startDate = $scope.startDate;
-        vm.symbolAndDate.endDate = $scope.endDate;
+    function tradeSimulation() {
+        vm.analysisPrameters.financialInstrument = vm.currencyPairs[$scope.radioModel].symbol;
+        vm.analysisPrameters.tradingStartDate = $scope.startDate;
+        vm.analysisPrameters.tradingEndDate = $scope.endDate;
+        vm.analysisPrameters.classifier = vm.radioButton;
 
-        RateService.getRates(vm.symbolAndDate).then(
+        TradingSimulationService.tradeSimulation(vm.analysisPrameters).then(
             function (response) {
-                vm.rates = response.data;
-                console.log(vm.symbolAndDate.symbol);
-                console.log(vm.rates);
+                result = response.data;
+                result.profitUSD = result.profitPoints * vm.ordersum / 100;
+                vm.analysisResults.push(response.data);
             },
             function (err) {
                 if (err.status === 400) {
@@ -38,15 +46,15 @@ function Controller($scope, RateService) {
                 } else {
                     console.log('Error', err);
                 }
-
-            });
+            }
+        );
     }
 
     //Datepicker
 
     $scope.preset = function () {
-        $scope.startDate = new Date("2016-01-01");
-        $scope.endDate = new Date("2016-02-16");
+        $scope.startDate = new Date("2016-10-18");
+        $scope.endDate = new Date("2017-04-18");
     };
     $scope.preset();
 
@@ -93,14 +101,15 @@ function Controller($scope, RateService) {
     $scope.popup2 = {
         opened: false
     };
+
 }
 
-Controller.$inject = ['$scope', 'RateService'];
-require('./rates.scss');
 
+Controller.$inject = ['$scope', 'TradingSimulationService', 'RateService'];
+require('./trading_simulation.scss');
 
-module.component('ratesList', {
+module.component('tradingSimulation', {
     controller: Controller,
-    templateUrl: require('./rates.html')
+    templateUrl: require('trading_simulation.html')
 
 });

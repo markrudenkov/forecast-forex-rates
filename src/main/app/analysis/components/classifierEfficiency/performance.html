@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         <div class="group">
-            <div class="btn-group" >
+            <div class="btn-group">
                 <label ng-repeat="(index, currency) in $ctrl.currencyPairs"
                        class="btn btn-raised btn-primary" ng-model="$parent.radioModel"
                        uib-btn-radio="'{{index}}'">{{currency.symbol}}</label>
@@ -16,13 +16,14 @@
     </div>
     <div class="row">
         <br>
-        <form name="myForm" >
+        <form name="myForm">
             <h2>Select clasification method</h2>
             <div class="radio radio-primary">
                 <ul>
                     <ol ng-repeat="classifier in $ctrl.classifiers">
                         <label>{{classifier.name}}
-                            <input type="radio" ng-model="radioButton" id="optionsRadios1" name="name" ng-disabled='{{classifier.disabled}}' value="{{classifier.name}}" required  />
+                            <input type="radio" ng-model="radioButton" id="optionsRadios1" name="name"
+                                   ng-disabled="false" value="{{classifier.name}}" required/>
                             <span class="circle"></span>
                             <span class="check"></span>
                         </label>
@@ -33,7 +34,7 @@
         </form>
     </div>
     <div class="row">
-        <div >
+        <div>
             <button type="button" class="btn btn-raised btn-success" ng-click="$ctrl.analyse()">Analyse</button>
         </div>
     </div>

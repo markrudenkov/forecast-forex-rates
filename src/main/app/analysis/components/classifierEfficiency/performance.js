@@ -9,7 +9,7 @@ function Controller($scope,ClassifierPerformanceService,RateService) {
     vm.currencyPairs = {};
     vm.analysisResults=[];
     $scope.radioModel= 0;
-    vm.classifiers =[ { name: "bayes" , disabled : 'false'},{ name: "svm", disabled : "true" },{ name: "weka" , disabled : "true"}];
+    vm.classifiers =[ { name: "bayes" , disabled : "false"},{ name: "svm", disabled : "true" },{ name: "weka" , disabled : "true"}];
     $scope.radioButton;
 
 
@@ -23,9 +23,10 @@ function Controller($scope,ClassifierPerformanceService,RateService) {
     }
 
     function analyse(){
-    vm.analysisPrameters.symbol=m.currencyPairs[$scope.radioModel].symbol;
+        console.log('submit')
+    vm.analysisPrameters.symbol=vm.currencyPairs[$scope.radioModel].symbol;
     vm.analysisPrameters.method=$scope.radioButton;
-
+        console.log('parameters')
    ClassifierPerformanceService.analyse(vm.analysisPrameters).then(
             function(response){
             console.log(response);

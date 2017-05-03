@@ -14,7 +14,7 @@ public class ForecastedBar{
     private double stopLoss;
     private double takeProfit;
 
-    public ForecastedBar(Instance predictedInstance, TradingResults tradingResults) {
+    public ForecastedBar(Instance predictedInstance, TradingSimulation tradingSimulation) {
         this.setOpen(predictedInstance.get(predictedInstance.noAttributes() - 4));
         this.setHigh(predictedInstance.get(predictedInstance.noAttributes() - 3));
         this.setLow(predictedInstance.get(predictedInstance.noAttributes() - 2));
@@ -22,8 +22,8 @@ public class ForecastedBar{
         this.setOpenCloseDifference(Math.abs(this.getOpen() - this.getClose()));
         this.setStopSide(getStopSide());
         this.setProfitSide(getProfitSide());
-        this.setStopLoss(tradingResults.getStopLossOrder().doubleValue());
-        this.setTakeProfit(tradingResults.getTakeProfitOrder().doubleValue());
+        this.setStopLoss(tradingSimulation.getStopLossOrder().doubleValue());
+        this.setTakeProfit(tradingSimulation.getTakeProfitOrder().doubleValue());
         if(getOpen() - getClose() > 0){
             //white bar
             setStopSide(Math.abs(getOpen() - getLow()));

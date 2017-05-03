@@ -15,6 +15,7 @@
                         <li><a ui-sref="root.performance">Classifier performance</a></li>
                     </ul>
                 </li>
+                <li><a ng-show="$ctrl.isAdmin() && $ctrl.isLoggedIn()" ui-sref="root.trading_simulation">Trading Simulation</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

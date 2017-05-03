@@ -4,14 +4,11 @@ import com.future_rates.base_classifier.model.DataSet;
 import com.future_rates.base_classifier.service.ClassifierService;
 import com.future_rates.classifiers_wrapper.model.ClassifiersWrapper;
 import com.future_rates.financial_instruments.repository.FinInstrumentRepository;
-import com.future_rates.rates.model.Query.Rate;
 import com.future_rates.rates.service.RateService;
 import com.future_rates.trading_results.model.ForecastedBar;
-import com.future_rates.trading_results.model.TradingResults;
+import com.future_rates.trading_results.model.TradingSimulation;
 import com.future_rates.trading_results.repository.model.TradingResultsDb;
 import net.sf.javaml.classification.Classifier;
-import net.sf.javaml.classification.bayes.NaiveBayesClassifier;
-import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
 import net.sf.javaml.core.Instance;
 import org.joda.time.DateTime;
@@ -19,7 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class TradingResultsService {
@@ -41,7 +39,7 @@ public class TradingResultsService {
     Double spread;
     boolean dicretise = true;
 
-    private TradingResultsService getDataForAnalysis(TradingResults tradeParams) {
+    private TradingResultsService getDataForAnalysis(TradingSimulation tradeParams) {
         DateTime firstDate = rateService.getFirstEntry(tradeParams.getFinancialInstrument()).getDate();
         this.trainingSet = (DefaultDataset) new DataSet(tradeParams.getConceptInstanceSize()).buildDataSet(
                 rateService.selectInstrument(
@@ -69,14 +67,14 @@ public class TradingResultsService {
     private void selectClassifier (String classifierName){
         ClassifiersWrapper clfWrapper = new ClassifiersWrapper();
         switch (classifierName){
-            case "bayes" :
+            case "Naive Bayes" :
                 this.classifier = clfWrapper.getBayes();
                classifierService.filterTestSetAndTrainingSet(this.testSet, this.trainingSet);
                 break;
-            case "svm" :
+            case "Support Vector Machines" :
                 this.classifier = clfWrapper.getSvm();
                 break;
-            case "rndForest" :
+            case "Random Forest" :
                 this.classifier = clfWrapper.getRndForest();
                 break;
             case "svmSelfOpt" :
@@ -85,12 +83,12 @@ public class TradingResultsService {
         }
     }
 
-    private TradingResultsService getProfitWithOrders(TradingResults tradingResults) {
+    private TradingResultsService getProfitWithOrders(TradingSimulation tradingSimulation) {
         for (int i = 0; i < this.testSet.size() - 1; i++) {
             Object predictedClassValue = this.classifier.classify(this.testSet.get(i));
             Object realClassValue = this.testSet.get(i).classValue();
             Instance predictedInstance = this.refferenceTestSet.get(i + 1);
-            ForecastedBar fb = new ForecastedBar(predictedInstance, tradingResults);
+            ForecastedBar fb = new ForecastedBar(predictedInstance, tradingSimulation);
 
             if (predictedClassValue.equals(realClassValue)) {
                 // correct prediction
@@ -113,17 +111,31 @@ public class TradingResultsService {
         return this;
     }
 
-    private TradingResults updateTradingResults(TradingResults tradingResults) {
-        tradingResults.setProfitPoints(BigDecimal.valueOf(this.profit));
-        return tradingResults;
+    private TradingResultsService basePointCounter(TradingSimulation tradingSimulation){
+        Pattern p = Pattern.compile(".*JPY");
+        Matcher m = p.matcher(tradingSimulation.getFinancialInstrument());
+        if(!m.matches()){
+            profit= Double.valueOf(Math.round(profit*=10000));
+        }else{
+            profit= Double.valueOf(Math.round(profit*=100));
+        }
+        return this;
     }
 
-    public TradingResults tradeWithOrders(TradingResults tradingResults) {
-        return getDataForAnalysis(tradingResults).
-                getProfitWithOrders(tradingResults).updateTradingResults(tradingResults);
+
+    private TradingSimulation updateTradingResults(TradingSimulation tradingSimulation) {
+        tradingSimulation.setProfitPoints(BigDecimal.valueOf(this.profit));
+        return tradingSimulation;
     }
 
-    public static TradingResultsDb mapToTradingResultsDb(Long id, TradingResults api) {
+    public TradingSimulation tradeWithOrders(TradingSimulation tradingSimulation) {
+        return getDataForAnalysis(tradingSimulation).
+                getProfitWithOrders(tradingSimulation).
+                basePointCounter(tradingSimulation).
+                updateTradingResults(tradingSimulation);
+    }
+
+    public static TradingResultsDb mapToTradingResultsDb(Long id, TradingSimulation api) {
         TradingResultsDb db = new TradingResultsDb();
         db.setId(api.getId());
         db.setFinancialInstrument(api.getFinancialInstrument());
@@ -138,8 +150,8 @@ public class TradingResultsService {
         return db;
     }
 
-    public static TradingResults mapToTradingResults(TradingResultsDb db) {
-        TradingResults api = new TradingResults();
+    public static TradingSimulation mapToTradingResults(TradingResultsDb db) {
+        TradingSimulation api = new TradingSimulation();
         api.setId(db.getId());
         api.setFinancialInstrument(db.getFinancialInstrument());
         api.setProfitPoints(api.getProfitPoints());

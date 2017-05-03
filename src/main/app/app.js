@@ -4,6 +4,7 @@ require('routes');
 require('home');
 require('rates');
 require('analysis');
+require('trading_simulation');
 require('auth');
 
 angular.bootstrap(document, ['forecastForexRates']);

@@ -1,0 +1,1 @@
+require('trading_simulation_service')

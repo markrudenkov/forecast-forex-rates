@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 import java.math.BigDecimal;
 
 
-public class TradingResults {
+public class TradingSimulation {
 
     private Long id;
     private String financialInstrument;

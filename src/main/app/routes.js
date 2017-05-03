@@ -1,13 +1,12 @@
 var angular = require('angular');
 var module = angular.module('forecastForexRates');
 
- module.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-
+module.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
 
     $httpProvider.interceptors.push('sessionInvalidationInterceptor');
 
-   // For any unmatched url, redirect to /
+    // For any unmatched url, redirect to /
     $urlRouterProvider.otherwise("/");
 
     // Now set up the states
@@ -22,6 +21,7 @@ var module = angular.module('forecastForexRates');
                 isPublic: true
             }
         })
+
         .state('root.rates', {
             url: '/rates',
             template: "<rates-list></rates-list>",
@@ -30,21 +30,28 @@ var module = angular.module('forecastForexRates');
             }
         })
 
-       .state('root.forecast', {
-             url: '/analysis/forecast',
-             template: "<forecast-panel></forecast-panel>",
-             data: {
-               roles: ["ROLE_ADMIN"]
-             }
-           })
+        .state('root.forecast', {
+            url: '/analysis/forecast',
+            template: "<forecast-panel></forecast-panel>",
+            data: {
+                roles: ["ROLE_ADMIN"]
+            }
+        })
 
         .state('root.performance', {
-                 url: '/analysis/performance',
-                 template: "<classifier-performance></classifier-performance>",
-                 data: {
-                   roles: ["ROLE_ADMIN"]
-                 }
-               })
+            url: '/analysis/performance',
+            template: "<classifier-performance></classifier-performance>",
+            data: {
+                roles: ["ROLE_ADMIN"]
+            }
+        })
+        .state('root.trading_simulation', {
+            url: '/trading_simulation',
+            template: "<trading-simulation></trading-simulation>",
+            data: {
+                roles: ["ROLE_ADMIN"]
+            }
+        })
 
         .state('root.login', {
             url: "/login",

@@ -4,12 +4,15 @@ function Controller($scope, ClassifierListService, RateService) {
     //Convention to call controller instance 'vm'
     var vm = this;
 
-    vm.analyse = analyse;
+    vm.title ="Forecast price of next day";
+    vm.button1_function = forecast;
+    vm.button1_label = "Forecast";
+    vm.analysisResult = "Forecasted bar";
     vm.analysisPrameters = {};
     vm.currencyPairs = {};
     vm.analysisResults = [];
     $scope.radioModel = 0;
-    vm.classifiers = [{name: "bayes", disabled: 'false'}, {name: "svm", disabled: "true"}, {
+    vm.classifiers = [{name: "bayes", disabled: "false"}, {name: "svm", disabled: "true"}, {
         name: "weka",
         disabled: "true"
     }];
@@ -23,8 +26,8 @@ function Controller($scope, ClassifierListService, RateService) {
             }
         );
     }
-    function analyse() {
-        vm.analysisPrameters.symbol = m.currencyPairs[$scope.radioModel].symbol;
+    function forecast() {
+        vm.analysisPrameters.symbol = vm.currencyPairs[$scope.radioModel].symbol;
         vm.analysisPrameters.method = $scope.radioButton;
 
         ClassifierListService.analyse(vm.analysisPrameters).then(
@@ -51,6 +54,6 @@ require('./forecast.scss');
 
 module.component('forecastPanel', {
     controller: Controller,
-    templateUrl: require('./forecast.html')
+    templateUrl: require('../analysis.html')
 
 });

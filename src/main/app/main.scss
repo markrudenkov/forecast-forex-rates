@@ -3,5 +3,23 @@
 }
 
 
+.centered {
+    max-width: 360px;
+    margin: 0 auto;
 
+    .submit-button{
+        padding-left: 25%;
+    }
 
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.panel-info{
+    .panel-heading{
+        background-color: #1E88E5 !important;
+    }
+}
