@@ -1,6 +1,6 @@
 var module = require('main_module');
 
-function Controller($scope, ClassifierListService, RateService) {
+function Controller($scope, ForecastService, RateService) {
     //Convention to call controller instance 'vm'
     var vm = this;
 
@@ -12,10 +12,8 @@ function Controller($scope, ClassifierListService, RateService) {
     vm.currencyPairs = {};
     vm.analysisResults = [];
     $scope.radioModel = 0;
-    vm.classifiers = [{name: "bayes", disabled: "false"}, {name: "svm", disabled: "true"}, {
-        name: "weka",
-        disabled: "true"
-    }];
+    vm.classifiers = [{name: "Naive Bayes"}, {name: "Support Vector Machines"}, {
+        name: "Random Forest" }];
     $scope.radioButton;
 
     vm.$onInit = function () {
@@ -28,9 +26,9 @@ function Controller($scope, ClassifierListService, RateService) {
     }
     function forecast() {
         vm.analysisPrameters.symbol = vm.currencyPairs[$scope.radioModel].symbol;
-        vm.analysisPrameters.method = $scope.radioButton;
-
-        ClassifierListService.analyse(vm.analysisPrameters).then(
+        vm.analysisPrameters.classifierName = vm.radioButton;
+        console.log(vm.analysisPrameters);
+        ForecastService.forecast(vm.analysisPrameters).then(
             function (response) {
                 console.log(response);
                 vm.analysisResults = response.data;
@@ -49,7 +47,7 @@ function Controller($scope, ClassifierListService, RateService) {
 }
 
 
-Controller.$inject = ['$scope', 'ClassifierListService', 'RateService'];
+Controller.$inject = ['$scope', 'ForecastService', 'RateService'];
 require('./forecast.scss');
 
 module.component('forecastPanel', {

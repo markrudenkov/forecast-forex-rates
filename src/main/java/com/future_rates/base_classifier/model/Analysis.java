@@ -3,9 +3,10 @@ package com.future_rates.base_classifier.model;
 
 public class Analysis {
 
-    String forecastedBar;
+
     String symbol;
     String accuraccy;
+    String forecastedBar;
 
     public String getForecastedBar() {
         return forecastedBar;

@@ -29,10 +29,10 @@ function Controller($scope, TradingSimulationService, RateService) {
 
 
     function tradeSimulation() {
-        vm.analysisPrameters.financialInstrument = vm.currencyPairs[$scope.radioModel].symbol;
-        vm.analysisPrameters.tradingStartDate = $scope.startDate;
-        vm.analysisPrameters.tradingEndDate = $scope.endDate;
-        vm.analysisPrameters.classifier = vm.radioButton;
+        vm.analysisPrameters.symbol = vm.currencyPairs[$scope.radioModel].symbol;
+        // vm.analysisPrameters.tradingStartDate = $scope.startDate;
+        // vm.analysisPrameters.tradingEndDate = $scope.endDate;
+        vm.analysisPrameters.classifierName = vm.radioButton;
 
         TradingSimulationService.tradeSimulation(vm.analysisPrameters).then(
             function (response) {

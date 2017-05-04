@@ -6,8 +6,10 @@ public class Instrument {
     private String symbol;
     private DateTime startDate;
     private DateTime endDate;
-    private int atributes;
-    private String method;
+    private int instancePeriod;
+    private String classifierName;
+    private String accuraccy;
+    private String forecastedBar;
 
     public String getSymbol() {
         return symbol;
@@ -33,28 +35,49 @@ public class Instrument {
         this.endDate = endDate;
     }
 
-    public int getAtributes() {
-        return atributes;
+
+    public int getInstancePeriod() {
+        return instancePeriod;
     }
 
-    public void setAtributes(int atributes) {
-        this.atributes = atributes;
+    public void setInstancePeriod(int instancePeriod) {
+        this.instancePeriod = instancePeriod;
     }
 
-    public String getMethod() {
-        return method;
+    public String getClassifierName() {
+        return classifierName;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
+    public void setClassifierName(String classifierName) {
+        this.classifierName = classifierName;
+    }
+
+    public String getAccuraccy() {
+        return accuraccy;
+    }
+
+    public void setAccuraccy(String accuraccy) {
+        this.accuraccy = accuraccy;
+    }
+
+    public String getForecastedBar() {
+        return forecastedBar;
+    }
+
+    public void setForecastedBar(String forecastedBar) {
+        this.forecastedBar = forecastedBar;
     }
 
     @Override
     public String toString() {
-        return "selectedInstrument{" +
+        return "Instrument{" +
                 "symbol='" + symbol + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", instancePeriod=" + instancePeriod +
+                ", classifierName='" + classifierName + '\'' +
+                ", accuraccy='" + accuraccy + '\'' +
+                ", forecastedBar='" + forecastedBar + '\'' +
                 '}';
     }
 }

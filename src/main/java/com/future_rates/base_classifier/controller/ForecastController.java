@@ -23,7 +23,7 @@ public class ForecastController {
 
 
     @RequestMapping(method = RequestMethod.POST, path = "/api/forecast/classifier")
-    public Analysis forecast(@RequestBody Instrument instrument) {
+    public Instrument forecast(@RequestBody Instrument instrument) {
         return forecastService.getForecast(instrument);
     }
 
