@@ -15,6 +15,7 @@ function Controller($scope, ForecastService, RateService) {
     vm.classifiers = [{name: "Naive Bayes"}, {name: "Support Vector Machines"}, {
         name: "Random Forest" }];
     $scope.radioButton;
+    vm.response= vm.analysisResults.forecastedBar;
 
     vm.$onInit = function () {
         RateService.getFinInstruments().then(
@@ -27,12 +28,10 @@ function Controller($scope, ForecastService, RateService) {
     function forecast() {
         vm.analysisPrameters.symbol = vm.currencyPairs[$scope.radioModel].symbol;
         vm.analysisPrameters.classifierName = vm.radioButton;
-        console.log(vm.analysisPrameters);
         ForecastService.forecast(vm.analysisPrameters).then(
             function (response) {
-                console.log(response);
                 vm.analysisResults = response.data;
-                console.log(vm.analysisResults);
+                vm.response= vm.analysisResults.forecastedBar;
             },
             function (err) {
                 if (err.status === 400) {
@@ -48,7 +47,7 @@ function Controller($scope, ForecastService, RateService) {
 
 
 Controller.$inject = ['$scope', 'ForecastService', 'RateService'];
-require('./forecast.scss');
+require('../analysis.scss');
 
 module.component('forecastPanel', {
     controller: Controller,

@@ -1,4 +1,4 @@
-package com.future_rates.base_classifier.model;
+package com.future_rates.classifier.model;
 
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;

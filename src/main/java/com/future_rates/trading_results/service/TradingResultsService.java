@@ -1,7 +1,7 @@
 package com.future_rates.trading_results.service;
 
-import com.future_rates.base_classifier.model.DataSet;
-import com.future_rates.base_classifier.service.ClassifierService;
+import com.future_rates.classifier.model.DataSet;
+import com.future_rates.classifier.service.ClassifierService;
 import com.future_rates.classifiers_wrapper.model.ClassifiersWrapper;
 import com.future_rates.financial_instruments.repository.FinInstrumentRepository;
 import com.future_rates.rates.service.RateService;

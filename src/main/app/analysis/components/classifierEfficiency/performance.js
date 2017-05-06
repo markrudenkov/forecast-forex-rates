@@ -4,13 +4,18 @@ function Controller($scope,ClassifierPerformanceService,RateService) {
     //Convention to call controller instance 'vm'
     var vm = this;
 
-    vm.analyse=analyse;
+    vm.title ="Estimate performance of classifier";
+    vm.button1_function = getPerformance;
+    vm.button1_label = "Submit";
+    vm.analysisResult = "Performance";
     vm.analysisPrameters={};
     vm.currencyPairs = {};
     vm.analysisResults=[];
     $scope.radioModel= 0;
-    vm.classifiers =[ { name: "bayes" , disabled : "false"},{ name: "svm", disabled : "true" },{ name: "weka" , disabled : "true"}];
+    vm.classifiers = [{name: "Naive Bayes"}, {name: "Support Vector Machines"}, {
+        name: "Random Forest" }];
     $scope.radioButton;
+
 
 
     vm.$onInit = function () {
@@ -22,16 +27,14 @@ function Controller($scope,ClassifierPerformanceService,RateService) {
         );
     }
 
-    function analyse(){
-        console.log('submit')
-    vm.analysisPrameters.symbol=vm.currencyPairs[$scope.radioModel].symbol;
-    vm.analysisPrameters.method=$scope.radioButton;
-        console.log('parameters')
-   ClassifierPerformanceService.analyse(vm.analysisPrameters).then(
+    function getPerformance(){
+        vm.analysisPrameters.symbol = vm.currencyPairs[$scope.radioModel].symbol;
+        vm.analysisPrameters.classifierName = vm.radioButton;
+        ClassifierPerformanceService.getPerformance(vm.analysisPrameters).then(
             function(response){
-            console.log(response);
                vm.analysisResults = response.data;
-               console.log(vm.analysisResults);
+               vm.response= vm.analysisResults.accuraccy;
+               console.log(response.data);
            },
            function(err){
               if(err.status === 400){
@@ -47,10 +50,10 @@ function Controller($scope,ClassifierPerformanceService,RateService) {
 
 
 Controller.$inject = ['$scope','ClassifierPerformanceService','RateService'];
-require('./performance.scss');
+require('../analysis.scss');
 
 module.component('classifierPerformance', {
     controller: Controller,
-    templateUrl: require('performance.html')
+    templateUrl: require('../analysis.html')
 
 });

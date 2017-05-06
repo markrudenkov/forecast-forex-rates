@@ -1,4 +1,4 @@
-package com.future_rates.base_classifier.model;
+package com.future_rates.classifier.model;
 
 
 public class Analysis {

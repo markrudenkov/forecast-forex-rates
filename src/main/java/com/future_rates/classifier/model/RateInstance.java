@@ -1,11 +1,10 @@
-package com.future_rates.base_classifier.model;
+package com.future_rates.classifier.model;
 
 import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;
 import org.apache.commons.lang3.ArrayUtils;
 import com.future_rates.rates.model.Query.Rate;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 

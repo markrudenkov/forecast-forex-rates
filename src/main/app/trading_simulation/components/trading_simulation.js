@@ -15,8 +15,7 @@ function Controller($scope, TradingSimulationService, RateService) {
     }, {name: "Random Forest", code: "rndForest"}];
     vm.radioButton;
     vm.ordersum;
-    // vm.classifiers =[ { name: "bayes" , disabled : "false"},{ name: "svm", disabled : "true" },{ name: "weka" , disabled : "true"}];
-    // $scope.radioButton;
+
 
 
     vm.$onInit = function () {
@@ -29,10 +28,10 @@ function Controller($scope, TradingSimulationService, RateService) {
 
 
     function tradeSimulation() {
-        vm.analysisPrameters.symbol = vm.currencyPairs[$scope.radioModel].symbol;
-        // vm.analysisPrameters.tradingStartDate = $scope.startDate;
-        // vm.analysisPrameters.tradingEndDate = $scope.endDate;
-        vm.analysisPrameters.classifierName = vm.radioButton;
+        vm.analysisPrameters.financialInstrument = vm.currencyPairs[$scope.radioModel].symbol;
+        vm.analysisPrameters.tradingStartDate = $scope.startDate;
+        vm.analysisPrameters.tradingEndDate = $scope.endDate;
+        vm.analysisPrameters.classifier = vm.radioButton;
 
         TradingSimulationService.tradeSimulation(vm.analysisPrameters).then(
             function (response) {

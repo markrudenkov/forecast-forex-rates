@@ -1,6 +1,6 @@
-package com.future_rates.base_classifier.service;
+package com.future_rates.classifier.service;
 
-import com.future_rates.base_classifier.model.RateInstance;
+import com.future_rates.classifier.model.RateInstance;
 import com.future_rates.classifiers_wrapper.model.ClassifiersWrapper;
 import com.future_rates.rates.model.Instrument.Instrument;
 import com.future_rates.rates.model.Query.Rate;
@@ -46,21 +46,21 @@ public class ForecastService extends ClassifierService {
         return this;
     }
 
-    Object selectClassifier(String classifierName) {
-        ClassifiersWrapper clfWrapper = new ClassifiersWrapper();
-        Object classifier = new Object();
-        switch (classifierName) {
-            case "Naive Bayes":
-                classifier = clfWrapper.getBayes();
-            case "Support Vector Machines":
-                classifier = clfWrapper.getSvm();
-            case "Random Forest":
-                classifier = clfWrapper.getRndForest();
-            case "svmSelfOpt":
-                classifier = clfWrapper.getScmSelfOpt();
-        }
-        return classifier;
-    }
+//    private Object selectClassifier(String classifierName) {
+//        ClassifiersWrapper clfWrapper = new ClassifiersWrapper();
+//        Object classifier = new Object();
+//        switch (classifierName) {
+//            case "Naive Bayes":
+//                classifier = clfWrapper.getBayes();
+//            case "Support Vector Machines":
+//                classifier = clfWrapper.getSvm();
+//            case "Random Forest":
+//                classifier = clfWrapper.getRndForest();
+//            case "svmSelfOpt":
+//                classifier = clfWrapper.getScmSelfOpt();
+//        }
+//        return classifier;
+//    }
 
 
     public Instrument getForecast(Instrument api) {
