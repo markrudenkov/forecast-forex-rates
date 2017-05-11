@@ -20,7 +20,7 @@ public class UpdateComponent {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 600000)
     public void updateRates() {
         updateService.updateAllInstruments();
         log.info("Currency rates updated{}", dateFormat.format(new Date()));
