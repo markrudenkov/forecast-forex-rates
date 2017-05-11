@@ -1,5 +1,5 @@
 var module = require('main_module');
-console.log('trade sim');
+
 function Controller($scope, TradingSimulationService, RateService) {
     //Convention to call controller instance 'vm'
     var vm = this;
@@ -15,7 +15,6 @@ function Controller($scope, TradingSimulationService, RateService) {
     }, {name: "Random Forest", code: "rndForest"}];
     vm.radioButton;
     vm.ordersum;
-
 
 
     vm.$onInit = function () {

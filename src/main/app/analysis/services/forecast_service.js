@@ -1,10 +1,10 @@
 var module = require('main_module');
 
 
-function Service ($http){
+function Service($http) {
 
-    this.forecast=function(params){
-         return $http.post('/api/analysis/forecast',params);
+    this.forecast = function (params) {
+        return $http.post('/api/analysis/forecast', params);
     }
 }
 

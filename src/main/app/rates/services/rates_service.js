@@ -10,7 +10,6 @@ function Service($http) {
     }
 }
 
-
 Service.$inject = ['$http'];
 module.service('RateService', Service);
 

@@ -4,6 +4,7 @@ function Controller($rootScope, $state, AuthService, Session) {
     var vm = this;
     vm.username = undefined;
     vm.password = undefined;
+    vm.background = 'home_background.png';
 
     vm.login = login;
     vm.error = undefined;
@@ -12,7 +13,7 @@ function Controller($rootScope, $state, AuthService, Session) {
     var ROLE_ADMIN = "ROLE_ADMIN";
 
 
-    vm.$onInit = function() {
+    vm.$onInit = function () {
         AuthService.redirectToHomePage();
     }
 
@@ -24,7 +25,7 @@ function Controller($rootScope, $state, AuthService, Session) {
                 role = role && role[0];
                 if (ROLE_ADMIN == role) {
                     $state.go('root.home');
-                 }
+                }
                 $rootScope.$emit('userLoggedIn', {});
             },
             function (err) {

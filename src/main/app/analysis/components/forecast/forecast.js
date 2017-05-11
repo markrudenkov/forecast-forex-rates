@@ -4,7 +4,7 @@ function Controller($scope, ForecastService, RateService) {
     //Convention to call controller instance 'vm'
     var vm = this;
 
-    vm.title ="Forecast price of next day";
+    vm.title = "Forecast price of next day";
     vm.button1_function = forecast;
     vm.button1_label = "Forecast";
     vm.analysisResult = "Forecasted bar";
@@ -13,15 +13,14 @@ function Controller($scope, ForecastService, RateService) {
     vm.analysisResults = [];
     $scope.radioModel = 0;
     vm.classifiers = [{name: "Naive Bayes"}, {name: "Support Vector Machines"}, {
-        name: "Random Forest" }];
+        name: "Random Forest"
+    }];
     $scope.radioButton;
-    vm.response= vm.analysisResults.forecastedBar;
 
     vm.$onInit = function () {
         RateService.getFinInstruments().then(
             function (response) {
                 vm.currencyPairs = response.data;
-                console.log(vm.currencyPairs);
             }
         );
     }
@@ -31,7 +30,7 @@ function Controller($scope, ForecastService, RateService) {
         ForecastService.forecast(vm.analysisPrameters).then(
             function (response) {
                 vm.analysisResults = response.data;
-                vm.response= vm.analysisResults.forecastedBar;
+                vm.response = vm.analysisResults.forecastedBar;
             },
             function (err) {
                 if (err.status === 400) {

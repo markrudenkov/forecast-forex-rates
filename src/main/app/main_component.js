@@ -1,6 +1,6 @@
 var module = require('main_module');
 
-function Controller( $state, Session, AuthService) {
+function Controller($state, Session, AuthService) {
 
     var vm = this;
     vm.isLogoutVisible = isLogoutVisible;
@@ -16,39 +16,39 @@ function Controller( $state, Session, AuthService) {
     }
 
     function isLoggedIn() {
-         return Session.isSessionActive();
+        return Session.isSessionActive();
     }
 
     function isLogoutVisible() {
-            return Session.isSessionActive();
-        }
+        return Session.isSessionActive();
+    }
 
     function logout() {
-            AuthService.logout();
-            $state.go('root.login');
+        AuthService.logout();
+        $state.go('root.login');
     }
 
-     function isLoggedIn() {
-             return Session.isSessionActive();
-     }
+    function isLoggedIn() {
+        return Session.isSessionActive();
+    }
 
     function isAdmin() {
-              var role = Session.getRole();
-              role = role && role[0];
-              return "ROLE_ADMIN" == role;
+        var role = Session.getRole();
+        role = role && role[0];
+        return "ROLE_ADMIN" == role;
     }
 
-    function getCurrentState(){
-             return $state.current.name;
+    function getCurrentState() {
+        return $state.current.name;
     }
 
- }
+}
 
- Controller.$inject = [ '$state', 'Session', 'AuthService'];
+Controller.$inject = ['$state', 'Session', 'AuthService'];
 
 var templateUrl = require('./main.html');
 require('main.scss');
 module.component('main', {
-     controller: Controller,
+    controller: Controller,
     templateUrl: templateUrl
 });
